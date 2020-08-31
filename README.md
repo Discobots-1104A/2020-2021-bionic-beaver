@@ -11,7 +11,8 @@ As of now, it is private.  Will probably make public end of season.
 
 Firstly, install Git.  
 Secondly, navigate to the directory you want to clone to.  
-Open a terminal in said directory and run `git clone https://github.com/IonicArgon/cpp_practice.git`.  
+Open a terminal in said directory and run  
+`git clone https://github.com/IonicArgon/2020-2021-bionic-beaver.git`.  
 
 ## Building
 
