@@ -9,6 +9,7 @@ using mEnc      = pros::motor_encoder_units_e;      // Type alias, motor encoder
 using mBreak    = pros::motor_brake_mode_e;         // Type alias, motor break modes.
 using cAnalog   = pros::controller_analog_e_t;      // Type alias, controller analog buttons.
 using cDigital  = pros::controller_digital_e_t;     // Type alias, controller digital buttons.
+using cID       = pros::controller_id_e_t;          // Type alias, controller ID.
 
 /* Drive Motors */
 extern pros::Motor mLF;  // Drive, left front.
@@ -31,6 +32,9 @@ extern pros::ADIEncoder aEncL;      // Encoder, left.
 extern pros::ADIEncoder aEncR;      // Encoder, right.
 extern pros::ADIEncoder aEncM;      // Encoder, middle.
 //extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
+
+/* Controllers */
+extern::pros::Controller cMaster;   // Conrtoller, master.
 
 namespace kHardware
 {

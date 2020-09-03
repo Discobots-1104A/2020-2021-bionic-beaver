@@ -35,3 +35,6 @@ pros::ADIEncoder aEncR { kHardware::k_aEncRT, kHardware::k_aEncRB, false };
 pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, false };
 // Limit switch, ball detection.
 //pros::ADIDigitalIn aLim { kHardware::k_aLim };
+
+/* Controllers */
+pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
