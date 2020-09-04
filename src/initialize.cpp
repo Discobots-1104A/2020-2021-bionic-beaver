@@ -6,19 +6,19 @@
 
 #include "main.h"
 
-/* disabled function */
+/* Disabled Function */
 void disabled()
 {
 
 }
 
-/* comp init function */
+/* Comp Initialization Function */
 void competition_initialize()
 {
 
 }
 
-/* initialize function */
+/* Initialize Function */
 void initialize()
 {
     // TODO: create auton selector

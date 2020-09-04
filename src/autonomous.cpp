@@ -6,7 +6,7 @@
 
 #include "main.h"
 
-/* autonomous function */
+/* Autonomous Function */
 void autonomous()
 {
     

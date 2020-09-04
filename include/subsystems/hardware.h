@@ -1,7 +1,13 @@
-#include "main.h"
+/* Discobots 1104A comp code.
+ * Marco Tan, Neil Sachdeva
+ * 
+ * Hardware objects and functions declared here.
+ */
 
 #ifndef HARDWARE_H
 #define HARDWARE_H
+
+#include "main.h"
 
 /* Type Aliases */
 using mCart     = pros::motor_gearset_e;            // Type alias, motor cartridges.
@@ -35,6 +41,16 @@ extern pros::ADIEncoder aEncM;      // Encoder, middle.
 
 /* Controllers */
 extern::pros::Controller cMaster;   // Conrtoller, master.
+
+/* Motor Control Functions */
+/* These functions are for when we do not want to control 
+ * individual motors for a big subsystem like the drive.
+ */
+
+auto Drive_Voltage(int left, int right) -> void;
+auto Drive_Velocity(int left, int right) -> void;
+auto Pow_Intake_Convy(int intake, int convy = 0) -> void;
+
 
 namespace kHardware
 {

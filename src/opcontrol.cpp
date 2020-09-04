@@ -6,8 +6,9 @@
 
 #include "main.h"
 
-/* driver control function */
+/* Driver Control Function */
 void opcontrol()
 {
     // TODO: add tasks for driver control related functions.
+
 }

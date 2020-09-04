@@ -1,3 +1,9 @@
+/* Discobots 1104A comp code.
+ * Marco Tan, Neil Sachdeva
+ * 
+ * Hardware objects and functions defined here.
+ */
+
 #include "subsystems/hardware.h"
 
 /* Drive Motors */
@@ -12,13 +18,13 @@ pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MO
 
 /* Conveyor and Intake Motors */
 // Intake, left.
-pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Intake, right.
-pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, left.
-pros::Motor mCB { kHardware::k_mCB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mCB { kHardware::k_mCB, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, right.
-pros::Motor mCT { kHardware::k_mCT, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mCT { kHardware::k_mCT, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 
 /* Smart Sensors */
 // Smart sensor, IMU.
@@ -38,3 +44,49 @@ pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, false };
 
 /* Controllers */
 pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
+
+/* Motor Control Functions */
+/* These functions are for when we do not want to control 
+ * individual motors for a big subsystem like the drive.
+ */
+
+/* Move the drive motors with an integer voltage value from -127 to 127. 
+ *
+ * \param left
+ *      Integer voltage value for the left side motors.
+ * \param right
+ *      Integer voltage value for the right side motors.
+ */
+auto Drive_Voltage(int left, int right) -> void
+{
+    mLF = left;     mLB = left;
+    mRF = right;    mRB = right;
+}
+
+/* Move the drive motors with an integer velocity value from -200 to 200. 
+ *
+ * \param left
+ *      Integer velocity value for the left side motors.
+ * \param right
+ *      Integer velocity value for the right side motors.
+ */
+auto Drive_Velocity(int left, int right) -> void
+{
+    mLF.move(left);     mLB.move(left);
+    mRF.move(right);    mRB.move(right);
+}
+
+/* Control the intake and conveyor motors with an integer velocity value from -600 to 600. 
+ * These two subsystems usually work in tandem, so it's easier to control them together.
+ * 
+ * \param intake
+ *      Integer velocity value for the intake motors.
+ * \param convy
+ *      Integer velocity value for the conveyor motors.
+ */
+auto Pow_Intake_Convy(int intake, int convy) -> void
+{
+    mIL.move_velocity(intake);      mIR.move_velocity(intake);
+    mCT.move_velocity(convy);       mCB.move_velocity(convy);
+}
+
