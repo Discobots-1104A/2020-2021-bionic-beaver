@@ -6,8 +6,13 @@
 
 #include "subsystems/misc.h"
 
-
-inline auto Check_Deadzone(int x, int y) -> int
+/* Compare x to y. If x is bigger, return x. Otherwise, return 0.
+ * \param x
+ *      An integer value to be compared.
+ * \param y
+ *      An integer value to compare against.
+ */
+inline auto misc::Check_Deadzone(int x, int y) -> int
 {
-    return ((x > y) ? x : 0);
+    return ((std::abs(x) > y) ? x : 0);
 }

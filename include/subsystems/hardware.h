@@ -42,16 +42,6 @@ extern pros::ADIEncoder aEncM;      // Encoder, middle.
 /* Controllers */
 extern::pros::Controller cMaster;   // Conrtoller, master.
 
-/* Motor Control Functions */
-/* These functions are for when we do not want to control 
- * individual motors for a big subsystem like the drive.
- */
-
-auto Drive_Voltage(int left, int right) -> void;
-auto Drive_Velocity(int left, int right) -> void;
-auto Pow_Intake_Convy(int intake, int convy = 0) -> void;
-
-
 namespace kHardware
 {
     /* Drive Port Numbers */
@@ -78,6 +68,15 @@ namespace kHardware
     inline constexpr int k_aEncMT{ 0 };     // Analog sensor, aEncM, top.
     inline constexpr int k_aEncMB{ 0 };     // Analog sensor, aEncM, bottom.
     //inline constexpr int k_aLim{ 0 };   // Analog sensor, aLim.
+
+    /* Motor Control Functions */
+    /* These functions are for when we do not want to control 
+    * individual motors for a big subsystem like the drive.
+    */
+
+    auto Drive_Voltage(int left, int right) -> void;
+    auto Drive_Velocity(int left, int right) -> void;
+    auto Pow_Intake_Convy(int intake, int convy = 0) -> void;
 }
 
 #endif // HARDWARE_H

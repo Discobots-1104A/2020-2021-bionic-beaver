@@ -11,7 +11,13 @@
 
 namespace misc
 {
+    /* Miscellaneous Functions */
+
     inline auto Check_Deadzone(int x, int y) -> int;
+
+    /* Miscellaneous Constants */
+    inline constexpr int k_cDeadzone{ 10 };     // Controller deadzone constant.
+    
 }
 
 #endif

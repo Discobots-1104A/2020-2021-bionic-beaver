@@ -57,7 +57,7 @@ pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
  * \param right
  *      Integer voltage value for the right side motors.
  */
-auto Drive_Voltage(int left, int right) -> void
+auto kHardware::Drive_Voltage(int left, int right) -> void
 {
     mLF = left;     mLB = left;
     mRF = right;    mRB = right;
@@ -70,7 +70,7 @@ auto Drive_Voltage(int left, int right) -> void
  * \param right
  *      Integer velocity value for the right side motors.
  */
-auto Drive_Velocity(int left, int right) -> void
+auto kHardware::Drive_Velocity(int left, int right) -> void
 {
     mLF.move(left);     mLB.move(left);
     mRF.move(right);    mRB.move(right);
@@ -84,7 +84,7 @@ auto Drive_Velocity(int left, int right) -> void
  * \param convy
  *      Integer velocity value for the conveyor motors.
  */
-auto Pow_Intake_Convy(int intake, int convy) -> void
+auto kHardware::Pow_Intake_Convy(int intake, int convy) -> void
 {
     mIL.move_velocity(intake);      mIR.move_velocity(intake);
     mCT.move_velocity(convy);       mCB.move_velocity(convy);
