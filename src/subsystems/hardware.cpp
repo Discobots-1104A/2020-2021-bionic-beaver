@@ -12,15 +12,15 @@ pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MO
 // Drive, left back.
 pros::Motor mLB { kHardware::k_mLB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right front.
-pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right back.
-pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 
 /* Conveyor and Intake Motors */
 // Intake, left.
 pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Intake, right.
-pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, left.
 pros::Motor mCB { kHardware::k_mCB, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, right.
