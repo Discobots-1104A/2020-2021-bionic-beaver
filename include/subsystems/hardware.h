@@ -42,6 +42,7 @@ extern pros::ADIEncoder aEncM;      // Encoder, middle.
 /* Controllers */
 extern::pros::Controller cMaster;   // Conrtoller, master.
 
+/* Hardware namespace */
 namespace kHardware
 {
     /* Drive Port Numbers */

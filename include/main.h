@@ -78,6 +78,9 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+#include <cmath>
+#include <vector>
+
 #endif
 
 #endif  // _PROS_MAIN_H_

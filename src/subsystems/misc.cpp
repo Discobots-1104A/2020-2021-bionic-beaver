@@ -12,7 +12,7 @@
  * \param y
  *      An integer value to compare against.
  */
-inline auto misc::Check_Deadzone(int x, int y) -> int
+auto kMisc::Check_Deadzone(int x, int y) -> int
 {
     return ((std::abs(x) > y) ? x : 0);
 }
