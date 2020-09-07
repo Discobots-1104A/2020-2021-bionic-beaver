@@ -77,7 +77,7 @@ namespace kHardware
 
     auto Drive_Voltage(int left, int right) -> void;
     auto Drive_Velocity(int left, int right) -> void;
-    auto Pow_Intake_Convy(int intake = 0, int convy = 0) -> void;
+    auto Pow_Intake_Convy(int intake = 0, int convy1 = 0, int convy2 = 0) -> void;
 }
 
 #endif // HARDWARE_H

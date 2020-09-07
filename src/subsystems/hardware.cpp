@@ -8,19 +8,19 @@
 
 /* Drive Motors */
 // Drive, left front.
-pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, left back.
-pros::Motor mLB { kHardware::k_mLB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mLB { kHardware::k_mLB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right front.
-pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right back.
-pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 
 /* Conveyor and Intake Motors */
 // Intake, left.
-pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_06, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Intake, right.
-pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, Bottom.
 pros::Motor mCB { kHardware::k_mCB, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, Top.
@@ -84,9 +84,9 @@ auto kHardware::Drive_Velocity(int left, int right) -> void
  * \param convy
  *      Integer velocity value for the conveyor motors.
  */
-auto kHardware::Pow_Intake_Convy(int intake, int convy) -> void
+auto kHardware::Pow_Intake_Convy(int intake, int convy1, int convy2) -> void
 {
     mIL.move_velocity(intake);      mIR.move_velocity(intake);
-    mCT.move_velocity(convy);       mCB.move_velocity(convy);
+    mCT.move_velocity(convy1);       mCB.move_velocity(convy2);
 }
 
