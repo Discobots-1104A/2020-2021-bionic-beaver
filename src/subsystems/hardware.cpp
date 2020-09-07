@@ -18,9 +18,9 @@ pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOT
 
 /* Conveyor and Intake Motors */
 // Intake, left.
-pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_36, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIL { kHardware::k_mIL, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Intake, right.
-pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_36, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mIR { kHardware::k_mIR, mCart::E_MOTOR_GEARSET_06, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, Bottom.
 pros::Motor mCB { kHardware::k_mCB, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Conveyor, Top.

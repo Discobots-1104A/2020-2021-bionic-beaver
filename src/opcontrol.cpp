@@ -31,16 +31,16 @@ auto Op_Control_Intk_Convy() -> void
         int convy_pow{};
 
         if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R2))
-            intake_pow = 100;
+            intake_pow = 600;
         else if (cMaster.get_analog(cAnalog::E_CONTROLLER_ANALOG_LEFT_Y))
-            intake_pow = -100;
+            intake_pow = -600;
         else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_UP))
             convy_pow = 600;
         else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_DOWN))
             convy_pow = -600;
         else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R1))
         {
-            intake_pow = -100;
+            intake_pow = -600;
             convy_pow = -600;
         }
         else
