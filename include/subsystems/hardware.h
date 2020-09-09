@@ -31,13 +31,13 @@ extern pros::Motor mCT;  // Conveyor, top.
 
 /* Smart Sensors */
 extern pros::Imu sIMU;            // Smart sensor, IMU.
-//extern pros::Vision sVision;      // Smart sensor, Vision.
+extern pros::Vision sVision;      // Smart sensor, Vision.
 
 /* Analog Sensors */
 extern pros::ADIEncoder aEncL;      // Encoder, left.
 extern pros::ADIEncoder aEncR;      // Encoder, right.
 extern pros::ADIEncoder aEncM;      // Encoder, middle.
-//extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
+extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
 
 /* Controllers */
 extern::pros::Controller cMaster;   // Conrtoller, master.
@@ -59,7 +59,7 @@ namespace kHardware
 
     /* Smart Sensor Port Numbers*/
     inline constexpr int k_sIMU{ 6 };         // Smart sensor, senIMU.
-    //inline constexpr int k_sVision{ 0 };      // Smart sensor, senVision.
+    inline constexpr int k_sVision{ 0 };      // Smart sensor, senVision.
     
     /* Analog Sensor ADI Ports */
     inline constexpr int k_aEncLT{ 0 };     // Analog sensor, aEncL, top.
@@ -68,7 +68,7 @@ namespace kHardware
     inline constexpr int k_aEncRB{ 0 };     // Analog sensor, aEncR, bottom.
     inline constexpr int k_aEncMT{ 0 };     // Analog sensor, aEncM, top.
     inline constexpr int k_aEncMB{ 0 };     // Analog sensor, aEncM, bottom.
-    //inline constexpr int k_aLim{ 0 };   // Analog sensor, aLim.
+    inline constexpr int k_aLim{ 0 };   // Analog sensor, aLim.
 
     /* Motor Control Functions */
     /* These functions are for when we do not want to control 

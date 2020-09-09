@@ -30,7 +30,7 @@ pros::Motor mCT { kHardware::k_mCT, mCart::E_MOTOR_GEARSET_06, false, mEnc::E_MO
 // Smart sensor, IMU.
 pros::Imu sIMU { kHardware::k_sIMU };
 // Smart sensor, Vision.
-//pros::Vision sVision { kHardware::k_sVision };
+pros::Vision sVision { kHardware::k_sVision };
 
 /* Analog Sensors */
 // Encoder, left.
@@ -40,7 +40,7 @@ pros::ADIEncoder aEncR { kHardware::k_aEncRT, kHardware::k_aEncRB, false };
 // Encoder. middle.
 pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, false };
 // Limit switch, ball detection.
-//pros::ADIDigitalIn aLim { kHardware::k_aLim };
+pros::ADIDigitalIn aLim { kHardware::k_aLim };
 
 /* Controllers */
 pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
@@ -87,6 +87,6 @@ auto kHardware::Drive_Velocity(int left, int right) -> void
 auto kHardware::Pow_Intake_Convy(int intake, int convy1, int convy2) -> void
 {
     mIL.move_velocity(intake);      mIR.move_velocity(intake);
-    mCT.move_velocity(convy1);       mCB.move_velocity(convy2);
+    mCT.move_velocity(convy1);      mCB.move_velocity(convy2);
 }
 

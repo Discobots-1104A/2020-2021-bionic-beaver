@@ -9,9 +9,6 @@
 
 #include "main.h"
 
-// Have to define Pi as a macro because doubles aren't accurate enough
-#define M_PI 3.14159
-
 /* Misc namespace */
 namespace kMisc
 {
@@ -40,6 +37,7 @@ namespace kMath
     inline constexpr double k_mtwLen { 0.0 };           // Length from center of robot to middle tracking wheel.
     inline constexpr double k_Robot_Len { 0.0 };        // Robot length.
     inline constexpr double k_Robot_Wid { 0.0 };        // Robot width.
+    inline constexpr double k_Pi() { return std::acos(-1); }     // Returns pi.
 }
 
 #endif
