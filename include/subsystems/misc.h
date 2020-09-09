@@ -9,6 +9,9 @@
 
 #include "main.h"
 
+// Have to define Pi as a macro because doubles aren't accurate enough
+#define M_PI 3.14159
+
 /* Misc namespace */
 namespace kMisc
 {
@@ -32,7 +35,6 @@ namespace kMath
     inline constexpr int k_OSR_Max_Ticks { 360 };       // Max optical shaft encoder ticks.
     inline constexpr int k_mMax_Vel { 200 };            // Max motor velocity.
     inline constexpr double k_mGear_Ratio { 0.0 };      // Gear ratio if it is made later.
-    inline constexpr double k_Pi { 3.141592653589793 }; // Close approximation to pi.
     inline constexpr double k_twDiameter { 2.75 };      // Tracking wheel diameter.
     inline constexpr double k_Wheelbase_Len { 0.0 };    // Wheelbase length.
     inline constexpr double k_mtwLen { 0.0 };           // Length from center of robot to middle tracking wheel.
