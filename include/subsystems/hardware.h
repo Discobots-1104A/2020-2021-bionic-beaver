@@ -46,29 +46,29 @@ extern::pros::Controller cMaster;   // Conrtoller, master.
 namespace kHardware
 {
     /* Drive Port Numbers */
-    inline constexpr int k_mLF{ 19 };    // Drive port, mLF.
-    inline constexpr int k_mLB{ 20 };    // Drive port, mLB.
-    inline constexpr int k_mRF{ 9 };    // Drive port, mRF.
-    inline constexpr int k_mRB{ 10 };    // Drive port, mRB.
+    inline constexpr int k_mLF { 19 };    // Drive port, mLF.
+    inline constexpr int k_mLB { 20 };    // Drive port, mLB.
+    inline constexpr int k_mRF { 9 };    // Drive port, mRF.
+    inline constexpr int k_mRB { 10 };    // Drive port, mRB.
 
     /* Conveyor and Intake Port Numbers */
-    inline constexpr int k_mIL{ 17 };    // Intake port, mIL.
-    inline constexpr int k_mIR{ 7 };    // Intake port, mIR.
-    inline constexpr int k_mCB{ 18 };    // Conveyor port, mCB.
-    inline constexpr int k_mCT{ 8 };    // Conveyor port, mCT.
+    inline constexpr int k_mIL { 17 };    // Intake port, mIL.
+    inline constexpr int k_mIR { 7 };    // Intake port, mIR.
+    inline constexpr int k_mCB { 18 };    // Conveyor port, mCB.
+    inline constexpr int k_mCT { 8 };    // Conveyor port, mCT.
 
     /* Smart Sensor Port Numbers*/
-    inline constexpr int k_sIMU{ 6 };         // Smart sensor, senIMU.
-    inline constexpr int k_sVision{ 0 };      // Smart sensor, senVision.
+    inline constexpr int k_sIMU { 6 };         // Smart sensor, senIMU.
+    inline constexpr int k_sVision { 0 };      // Smart sensor, senVision.
     
     /* Analog Sensor ADI Ports */
-    inline constexpr int k_aEncLT{ 0 };     // Analog sensor, aEncL, top.
-    inline constexpr int k_aEncLB{ 0 };     // Analog sensor, aEncL, bottom.
-    inline constexpr int k_aEncRT{ 0 };     // Analog sensor, aEncR, top.
-    inline constexpr int k_aEncRB{ 0 };     // Analog sensor, aEncR, bottom.
-    inline constexpr int k_aEncMT{ 0 };     // Analog sensor, aEncM, top.
-    inline constexpr int k_aEncMB{ 0 };     // Analog sensor, aEncM, bottom.
-    inline constexpr int k_aLim{ 0 };   // Analog sensor, aLim.
+    inline constexpr int k_aEncLT { 0 };     // Analog sensor, aEncL, top.
+    inline constexpr int k_aEncLB { 0 };     // Analog sensor, aEncL, bottom.
+    inline constexpr int k_aEncRT { 0 };     // Analog sensor, aEncR, top.
+    inline constexpr int k_aEncRB { 0 };     // Analog sensor, aEncR, bottom.
+    inline constexpr int k_aEncMT { 0 };     // Analog sensor, aEncM, top.
+    inline constexpr int k_aEncMB { 0 };     // Analog sensor, aEncM, bottom.
+    inline constexpr int k_aLim { 0 };   // Analog sensor, aLim.
 
     /* Motor Control Functions */
     /* These functions are for when we do not want to control 

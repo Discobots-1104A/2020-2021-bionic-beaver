@@ -14,7 +14,7 @@ auto Macro_Indexing() -> void;
 auto Macro_Cycling()  -> void;
 auto Macro_Shoot()    -> void;
 auto Macro_Intakes()  -> void;
-auto Macro_Outtake()   -> void;
+auto Macro_Outtake()  -> void;
 
 /* Global Variables */
 pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };
