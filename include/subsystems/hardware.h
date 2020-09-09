@@ -46,19 +46,19 @@ extern::pros::Controller cMaster;   // Conrtoller, master.
 namespace kHardware
 {
     /* Drive Port Numbers */
-    inline constexpr int k_mLF{ 0 };    // Drive port, mLF.
-    inline constexpr int k_mLB{ 0 };    // Drive port, mLB.
-    inline constexpr int k_mRF{ 0 };    // Drive port, mRF.
-    inline constexpr int k_mRB{ 0 };    // Drive port, mRB.
+    inline constexpr int k_mLF{ 19 };    // Drive port, mLF.
+    inline constexpr int k_mLB{ 20 };    // Drive port, mLB.
+    inline constexpr int k_mRF{ 9 };    // Drive port, mRF.
+    inline constexpr int k_mRB{ 10 };    // Drive port, mRB.
 
     /* Conveyor and Intake Port Numbers */
-    inline constexpr int k_mIL{ 0 };    // Intake port, mIL.
-    inline constexpr int k_mIR{ 0 };    // Intake port, mIR.
-    inline constexpr int k_mCB{ 0 };    // Conveyor port, mCB.
-    inline constexpr int k_mCT{ 0 };    // Conveyor port, mCT.
+    inline constexpr int k_mIL{ 17 };    // Intake port, mIL.
+    inline constexpr int k_mIR{ 7 };    // Intake port, mIR.
+    inline constexpr int k_mCB{ 18 };    // Conveyor port, mCB.
+    inline constexpr int k_mCT{ 8 };    // Conveyor port, mCT.
 
     /* Smart Sensor Port Numbers*/
-    inline constexpr int k_sIMU{ 0 };         // Smart sensor, senIMU.
+    inline constexpr int k_sIMU{ 6 };         // Smart sensor, senIMU.
     //inline constexpr int k_sVision{ 0 };      // Smart sensor, senVision.
     
     /* Analog Sensor ADI Ports */
@@ -77,7 +77,7 @@ namespace kHardware
 
     auto Drive_Voltage(int left, int right) -> void;
     auto Drive_Velocity(int left, int right) -> void;
-    auto Pow_Intake_Convy(int intake, int convy = 0) -> void;
+    auto Pow_Intake_Convy(int intake = 0, int convy1 = 0, int convy2 = 0) -> void;
 }
 
 #endif // HARDWARE_H
