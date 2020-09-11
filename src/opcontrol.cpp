@@ -22,7 +22,7 @@ pros::Task mcr_cycling { Macro_Cycling,  "Macro: Cycling" };
 pros::Task mcr_shoot { Macro_Shoot, "Macro: Shoot" };
 pros::Task mcr_intakes { Macro_Intakes, "Macro: Intakes" };
 pros::Task mcr_outtake {Macro_Outtake, "Macro: Outtake" };
-bool auto_pooping { false };       // Pooping toggle.
+bool auto_pooping { true };       // Pooping toggle. Default true.
 
 
 /* Main Functions */
@@ -59,6 +59,8 @@ auto Op_Control_Intk_Convy() -> void
             mcr_outtake.notify();
         else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_RIGHT))
             auto_pooping = !auto_pooping;
+        else
+            kHardware::Pow_Intake_Convy();
         
         pros::delay(10);
     }
@@ -79,7 +81,7 @@ auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
     {
-
+        //TODO: write indexing function when i can implement it
     }
 }
 
@@ -88,7 +90,7 @@ auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
-
+        //TODO: write cycling function when i can implement it
     }
 }
 
@@ -97,7 +99,7 @@ auto Macro_Shoot() -> void
 {
     while (mcr_shoot.notify_take(true, TIMEOUT_MAX))
     {
-
+        //TODO: write shooting function when i can implement it
     }
 }
 
@@ -106,7 +108,7 @@ auto Macro_Intakes() -> void
 {
     while (mcr_intakes.notify_take(true, TIMEOUT_MAX))
     {
-
+        kHardware::Pow_Intake_Convy(600);
     }
 }
 
@@ -115,6 +117,6 @@ auto Macro_Outtake() -> void
 {
     while (mcr_outtake.notify_take(true, TIMEOUT_MAX))
     {
-
+        kHardware::Pow_Intake_Convy(-600, -600, -600);
     }
 }

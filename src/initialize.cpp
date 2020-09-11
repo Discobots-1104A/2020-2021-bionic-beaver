@@ -23,4 +23,8 @@ void initialize()
 {
     // TODO: create auton selector
     // TODO: add necessary initialization
+    mIL.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);
+    mIR.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);
+    mCT.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);
+    mCB.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);
 }

@@ -58,16 +58,16 @@ namespace kHardware
     inline constexpr int k_mCT { 8 };    // Conveyor port, mCT.
 
     /* Smart Sensor Port Numbers*/
-    inline constexpr int k_sIMU { 6 };         // Smart sensor, senIMU.
-    inline constexpr int k_sVision { 0 };      // Smart sensor, senVision.
+    inline constexpr int k_sIMU { 16 };         // Smart sensor, senIMU.
+    inline constexpr int k_sVision { 6 };      // Smart sensor, senVision.
     
     /* Analog Sensor ADI Ports */
-    inline constexpr int k_aEncLT { 0 };     // Analog sensor, aEncL, top.
-    inline constexpr int k_aEncLB { 0 };     // Analog sensor, aEncL, bottom.
-    inline constexpr int k_aEncRT { 0 };     // Analog sensor, aEncR, top.
-    inline constexpr int k_aEncRB { 0 };     // Analog sensor, aEncR, bottom.
-    inline constexpr int k_aEncMT { 0 };     // Analog sensor, aEncM, top.
-    inline constexpr int k_aEncMB { 0 };     // Analog sensor, aEncM, bottom.
+    inline constexpr int k_aEncLT { 7 };     // Analog sensor, aEncL, top.
+    inline constexpr int k_aEncLB { 8 };     // Analog sensor, aEncL, bottom.
+    inline constexpr int k_aEncRT { 1 };     // Analog sensor, aEncR, top.
+    inline constexpr int k_aEncRB { 2 };     // Analog sensor, aEncR, bottom.
+    inline constexpr int k_aEncMT { 3 };     // Analog sensor, aEncM, top.
+    inline constexpr int k_aEncMB { 4 };     // Analog sensor, aEncM, bottom.
     inline constexpr int k_aLim { 0 };   // Analog sensor, aLim.
 
     /* Motor Control Functions */

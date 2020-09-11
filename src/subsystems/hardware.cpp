@@ -81,8 +81,10 @@ auto kHardware::Drive_Velocity(int left, int right) -> void
  * 
  * \param intake
  *      Integer velocity value for the intake motors.
- * \param convy
- *      Integer velocity value for the conveyor motors.
+ * \param convy1
+ *      Integer velocity value for the top conveyor motor.
+ * \param convy2
+ *      Integer velocity value for the bottom conveyor motor.
  */
 auto kHardware::Pow_Intake_Convy(int intake, int convy1, int convy2) -> void
 {
