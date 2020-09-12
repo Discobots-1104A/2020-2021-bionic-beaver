@@ -46,23 +46,23 @@ extern pros::vision_signature_s_t sigRed;       // Red colour signature.
 extern pros::vision_signature_s_t sigBlue;      // Blue colour signature.
 
 //> Hardware namespace <//
-namespace kHardware
+namespace kHardware     // Hardware namespace.
 {
     //> Drive Port Numbers <//
     inline constexpr int k_mLF { 19 };    // Drive port, mLF.
     inline constexpr int k_mLB { 20 };    // Drive port, mLB.
-    inline constexpr int k_mRF { 9 };    // Drive port, mRF.
+    inline constexpr int k_mRF { 9 };     // Drive port, mRF.
     inline constexpr int k_mRB { 10 };    // Drive port, mRB.
 
     //> Conveyor and Intake Port Numbers <//
     inline constexpr int k_mIL { 17 };    // Intake port, mIL.
-    inline constexpr int k_mIR { 7 };    // Intake port, mIR.
+    inline constexpr int k_mIR { 7 };     // Intake port, mIR.
     inline constexpr int k_mCB { 18 };    // Conveyor port, mCB.
-    inline constexpr int k_mCT { 8 };    // Conveyor port, mCT.
+    inline constexpr int k_mCT { 8 };     // Conveyor port, mCT.
 
     //> Smart Sensor Port Numbers <//
     inline constexpr int k_sIMU { 16 };         // Smart sensor, senIMU.
-    inline constexpr int k_sVision { 6 };      // Smart sensor, senVision.
+    inline constexpr int k_sVision { 6 };       // Smart sensor, senVision.
     
     //> Analog Sensor ADI Ports <//
     inline constexpr int k_aEncLT { 7 };     // Analog sensor, aEncL, top.

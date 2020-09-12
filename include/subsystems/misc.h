@@ -9,7 +9,7 @@
 #include "main.h"
 
 //> Misc namespace <//
-namespace kMisc
+namespace kMisc     // Miscellaneous namespace.
 {
     //> Miscellaneous Functions <//
 
@@ -26,7 +26,7 @@ namespace kMisc
 }
 
 //> Math namespace <//
-namespace kMath                                  
+namespace kMath     // Math namespace.                           
 {
     inline constexpr int k_OSR_Max_Ticks { 360 };       // Max optical shaft encoder ticks.
     inline constexpr int k_mMax_Vel { 200 };            // Max motor velocity.
