@@ -57,8 +57,8 @@ namespace kHardware     // Hardware namespace.
     //> Conveyor and Intake Port Numbers <//
     inline constexpr int k_mIL { 17 };    // Intake port, mIL.
     inline constexpr int k_mIR { 7 };     // Intake port, mIR.
-    inline constexpr int k_mCB { 18 };    // Conveyor port, mCB.
-    inline constexpr int k_mCT { 8 };     // Conveyor port, mCT.
+    inline constexpr int k_mCB { 8 };    // Conveyor port, mCB.
+    inline constexpr int k_mCT { 18 };     // Conveyor port, mCT.
 
     //> Smart Sensor Port Numbers <//
     inline constexpr int k_sIMU { 16 };         // Smart sensor, senIMU.
@@ -74,23 +74,23 @@ namespace kHardware     // Hardware namespace.
     inline constexpr int k_aLim { 0 };   // Analog sensor, aLim.
 
     //> Vision Sensor Signature Constants <//
-    inline constexpr int k_uMin_Red { 0 };          // Red sig, minimum value on U axis.
-    inline constexpr int k_uMax_Red { 0 };          // Red sig, maximum value on U axis.
-    inline constexpr int k_uAvg_Red { 0 };          // Red sig, mean value on U axis.
-    inline constexpr int k_vMin_Red { 0 };          // Red sig, minimum value on V axis.
-    inline constexpr int k_vMax_Red { 0 };          // Red sig, maximum value on V axis.
-    inline constexpr int k_vAvg_Red { 0 };          // Red sig, mean value on V axis.
-    inline constexpr int k_Type_Red { 0 };          // Red sig, type of sig.
-    inline constexpr double k_Range_Red { 0.0 };    // Red sig, scale factor.
+    inline constexpr int k_uMin_Red { 637 };            // Red sig, minimum value on U axis.
+    inline constexpr int k_uMax_Red { 11535 };          // Red sig, maximum value on U axis.
+    inline constexpr int k_uAvg_Red { 6086 };           // Red sig, mean value on U axis.
+    inline constexpr int k_vMin_Red { -401 };           // Red sig, minimum value on V axis.
+    inline constexpr int k_vMax_Red { 1153 };           // Red sig, maximum value on V axis.
+    inline constexpr int k_vAvg_Red { 376 };            // Red sig, mean value on V axis.
+    inline constexpr int k_Type_Red { 0 };              // Red sig, type of sig.
+    inline constexpr double k_Range_Red { 0.7 };        // Red sig, scale factor.
 
-    inline constexpr int k_uMin_Blu { 0 };          // Blue sig, minimum value on U axis.
-    inline constexpr int k_uMax_Blu { 0 };          // Blue sig, maximum value on U axis.
-    inline constexpr int k_uAvg_Blu { 0 };          // Blue sig, mean value on U axis.
-    inline constexpr int k_vMin_Blu { 0 };          // Blue sig, minimum value on V axis.
-    inline constexpr int k_vMax_Blu { 0 };          // Blue sig, maximum value on V axis.
-    inline constexpr int k_vAvg_Blu { 0 };          // Blue sig, mean value on V axis.
-    inline constexpr int k_Type_Blu { 0 };          // Blue sig, type of sig.
-    inline constexpr double k_Range_Blu { 0.0 };    // Blue sig, scale factor.
+    inline constexpr int k_uMin_Blu { -3433 };          // Blue sig, minimum value on U axis.
+    inline constexpr int k_uMax_Blu { -541 };           // Blue sig, maximum value on U axis.
+    inline constexpr int k_uAvg_Blu { -1987 };          // Blue sig, mean value on U axis.
+    inline constexpr int k_vMin_Blu { 1365 };           // Blue sig, minimum value on V axis.
+    inline constexpr int k_vMax_Blu { 11771 };          // Blue sig, maximum value on V axis.
+    inline constexpr int k_vAvg_Blu { 6568 };           // Blue sig, mean value on V axis.
+    inline constexpr int k_Type_Blu { 0 };              // Blue sig, type of sig.
+    inline constexpr double k_Range_Blu { 0.6 };        // Blue sig, scale factor.
 
     //> Colour signature enums <//
     enum k_Colour_Sig

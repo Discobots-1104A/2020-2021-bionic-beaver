@@ -49,21 +49,21 @@ auto Op_Control_Intk_Convy() -> void
     {
         // Big elif block for each button.
         // Each button will notify one of the macro tasks to perform said action.
-        if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R1))             // Button R1
+        if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R1))             // Indexing, Button R1
             mcr_indexing.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R2))        // Button R2
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_R2))        // Cycling, Button R2
             mcr_cycling.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_L1))        // Button L1
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_L1))        // Shooting, Button L1
             mcr_shoot.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_L2))        // Button L2
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_L2))        // Intakes, Button L2
             mcr_intakes.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_UP))        // Button up
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_UP))        // Emergency macro, Button up
             mcr_outtake.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_RIGHT))     // Button right
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_RIGHT))     // Toggle auto pooping, Button right
             auto_pooping = !auto_pooping;   // This doesn't notify, but toggles the pooping function.
         else
             kHardware::Pow_Intake_Convy();  // If no buttons pressed, turn off all the intake and conveyor motors.
-            
+
         // Delay to not hog resources.
         pros::delay(10);
     }
@@ -76,17 +76,49 @@ void opcontrol()
     pros::Task intake_conveyor_control { Op_Control_Intk_Convy, "Intake Conveyor Control"};
     // Chassis control task.
     pros::Task chassis_control { Op_Control_Drive, "Chassis Control" };
+
+    // Test Vision Sensor Code
+    while (true)
+    {
+        pros::vision_object_s_t obj1 { sVision.get_by_size(0) };
+
+        switch (obj1.signature)
+        {
+        case kHardware::k_Colour_Sig::RED:
+            pros::lcd::set_text(0, "FOUND RED.");
+            break;
+        
+        case kHardware::k_Colour_Sig::BLUE:
+            pros::lcd::set_text(0, "FOUND BLUE.");
+            break;
+        
+        default:
+            pros::lcd::set_text(0, "NO OBJECT FOUND.");
+            break;
+        }
+
+        pros::delay(10);
+    }
 }
 
 
 //> Helper Functions <//
+
+//> Automatic Ball Sorting <//
+auto Ball_Sorting() -> int
+{
+    
+    return 0;
+}
 
 //> Indexing <//
 auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
     {
-        //TODO: write indexing function when i can implement it
+        //TODO: rewrite indexing function to use vision sensor for automatic pooping
+
+        kHardware::Pow_Intake_Convy(600, 0, 600);
     }
 }
 
@@ -96,6 +128,7 @@ auto Macro_Cycling() -> void
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
         //TODO: rewrite cycling function to use vision sensor for automatic pooping
+
         kHardware::Pow_Intake_Convy(600, 600, 600);
     }
 }
@@ -105,7 +138,7 @@ auto Macro_Shoot() -> void
 {
     while (mcr_shoot.notify_take(true, TIMEOUT_MAX))
     {
-        //TODO: write shooting function when i can implement it
+        kHardware::Pow_Intake_Convy(0, 600, 0);
     }
 }
 
