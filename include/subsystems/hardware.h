@@ -1,15 +1,14 @@
-/* Discobots 1104A comp code.
- * Marco Tan, Neil Sachdeva
- * 
- * Hardware objects and functions declared here.
- */
+// Discobots 1104A comp code.
+// Marco Tan, Neil Sachdeva
+// 
+// Hardware objects and functions declared here.
 
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
 #include "main.h"
 
-/* Type Aliases */
+//> Type Aliases <//
 using mCart     = pros::motor_gearset_e;            // Type alias, motor cartridges.
 using mEnc      = pros::motor_encoder_units_e;      // Type alias, motor encoder units.
 using mBreak    = pros::motor_brake_mode_e;         // Type alias, motor break modes.
@@ -17,55 +16,55 @@ using cAnalog   = pros::controller_analog_e_t;      // Type alias, controller an
 using cDigital  = pros::controller_digital_e_t;     // Type alias, controller digital buttons.
 using cID       = pros::controller_id_e_t;          // Type alias, controller ID.
 
-/* Drive Motors */
+//> Drive Motors <//
 extern pros::Motor mLF;  // Drive, left front.
 extern pros::Motor mLB;  // Drive, left back.
 extern pros::Motor mRF;  // Drive, right front.
 extern pros::Motor mRB;  // Drive, right back.
 
-/* Conveyor and Intake Motors */
+//> Conveyor and Intake Motors <//
 extern pros::Motor mIL;  // Intake, left.
 extern pros::Motor mIR;  // Intake, right.
 extern pros::Motor mCB;  // Conveyor, bottom.
 extern pros::Motor mCT;  // Conveyor, top.
 
-/* Smart Sensors */
+//> Smart Sensors <//
 extern pros::Imu sIMU;            // Smart sensor, IMU.
 extern pros::Vision sVision;      // Smart sensor, Vision.
 
-/* Analog Sensors */
+//> Analog Sensors <//
 extern pros::ADIEncoder aEncL;      // Encoder, left.
 extern pros::ADIEncoder aEncR;      // Encoder, right.
 extern pros::ADIEncoder aEncM;      // Encoder, middle.
 extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
 
-/* Controllers */
+//> Controllers <//
 extern pros::Controller cMaster;   // Conrtoller, master.
 
-/* Vision Signatures */
+//> Vision Signatures <//
 extern pros::vision_signature_s_t sigRed;       // Red colour signature.
 extern pros::vision_signature_s_t sigBlue;      // Blue colour signature.
 
-/* Hardware namespace */
+//> Hardware namespace <//
 namespace kHardware
 {
-    /* Drive Port Numbers */
+    //> Drive Port Numbers <//
     inline constexpr int k_mLF { 19 };    // Drive port, mLF.
     inline constexpr int k_mLB { 20 };    // Drive port, mLB.
     inline constexpr int k_mRF { 9 };    // Drive port, mRF.
     inline constexpr int k_mRB { 10 };    // Drive port, mRB.
 
-    /* Conveyor and Intake Port Numbers */
+    //> Conveyor and Intake Port Numbers <//
     inline constexpr int k_mIL { 17 };    // Intake port, mIL.
     inline constexpr int k_mIR { 7 };    // Intake port, mIR.
     inline constexpr int k_mCB { 18 };    // Conveyor port, mCB.
     inline constexpr int k_mCT { 8 };    // Conveyor port, mCT.
 
-    /* Smart Sensor Port Numbers*/
+    //> Smart Sensor Port Numbers <//
     inline constexpr int k_sIMU { 16 };         // Smart sensor, senIMU.
     inline constexpr int k_sVision { 6 };      // Smart sensor, senVision.
     
-    /* Analog Sensor ADI Ports */
+    //> Analog Sensor ADI Ports <//
     inline constexpr int k_aEncLT { 7 };     // Analog sensor, aEncL, top.
     inline constexpr int k_aEncLB { 8 };     // Analog sensor, aEncL, bottom.
     inline constexpr int k_aEncRT { 1 };     // Analog sensor, aEncR, top.
@@ -74,7 +73,7 @@ namespace kHardware
     inline constexpr int k_aEncMB { 4 };     // Analog sensor, aEncM, bottom.
     inline constexpr int k_aLim { 0 };   // Analog sensor, aLim.
 
-    /* Vision Sensor Signature Constants */
+    //> Vision Sensor Signature Constants <//
     inline constexpr int k_uMin_Red { 0 };          // Red sig, minimum value on U axis.
     inline constexpr int k_uMax_Red { 0 };          // Red sig, maximum value on U axis.
     inline constexpr int k_uAvg_Red { 0 };          // Red sig, mean value on U axis.
@@ -93,17 +92,16 @@ namespace kHardware
     inline constexpr int k_Type_Blu { 0 };          // Blue sig, type of sig.
     inline constexpr double k_Range_Blu { 0.0 };    // Blue sig, scale factor.
 
-    /* Colour signature enums */
+    //> Colour signature enums <//
     enum k_Colour_Sig
     {
         RED,
         BLUE
     };
 
-    /* Motor Control Functions */
-    /* These functions are for when we do not want to control 
-    * individual motors for a big subsystem like the drive.
-    */
+    //> Motor Control Functions <//
+    // These functions are for when we do not want to control 
+    // individual motors for a big subsystem like the drive.
 
     auto Drive_Voltage(int left, int right) -> void;
     auto Drive_Velocity(int left, int right) -> void;

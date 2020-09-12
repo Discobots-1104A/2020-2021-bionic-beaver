@@ -1,22 +1,21 @@
-//> Discobots 1104A comp code.
-//* Marco Tan, Neil Sachdeva
-//* 
-//* Code for driver control goes here.
-//<
+// Discobots 1104A comp code.
+// Marco Tan, Neil Sachdeva
+// 
+// Code for driver control goes here.
 
 #include "main.h"
 
 // TODO: write tank drive code for the sake of options.
 // TODO: turn simple drive code into assistive drive code.
 
-/* Forward Declarations */
+//> Forward Declarations <//
 auto Macro_Indexing() -> void;          // Macro for indexing.
 auto Macro_Cycling()  -> void;          // Macro for cycling.
 auto Macro_Shoot()    -> void;          // Macro for shooting.
 auto Macro_Intakes()  -> void;          // Macro for intakes.
 auto Macro_Outtake()  -> void;          // Emergency macro for spitting out everything.
 
-/* Global Variables */
+//> Global Variables <//
 pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };      // Indexing macro task.
 pros::Task mcr_cycling { Macro_Cycling,  "Macro: Cycling" };        // Cycling macro task.
 pros::Task mcr_shoot { Macro_Shoot, "Macro: Shoot" };               // Shooting macro task.
@@ -25,9 +24,9 @@ pros::Task mcr_outtake {Macro_Outtake, "Macro: Outtake" };          // Emergency
 bool auto_pooping { true };       // Pooping toggle. Default true.
 
 
-/* Main Functions */
+//> Main Functions <//
 
-/* Driving function */
+//> Driving function <//
 auto Op_Control_Drive() -> void
 {
     while (true)
@@ -42,7 +41,7 @@ auto Op_Control_Drive() -> void
     }
 }
 
-/* Main intake and conveyor function */
+//> Main intake and conveyor function <//
 auto Op_Control_Intk_Convy() -> void
 {
     while (true)
@@ -66,7 +65,7 @@ auto Op_Control_Intk_Convy() -> void
     }
 }
 
-/* Driver Control Function */
+//> Driver Control Function <//
 void opcontrol()
 {
     pros::Task intake_conveyor_control { Op_Control_Intk_Convy, "Intake Conveyor Control"};
@@ -74,9 +73,9 @@ void opcontrol()
 }
 
 
-/* Helper Functions */
+//> Helper Functions <//
 
-/* Indexing */
+//> Indexing <//
 auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
@@ -85,7 +84,7 @@ auto Macro_Indexing() -> void
     }
 }
 
-/* Cycling */
+//> Cycling <//
 auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
@@ -95,7 +94,7 @@ auto Macro_Cycling() -> void
     }
 }
 
-/* Shooting */
+//> Shooting <//
 auto Macro_Shoot() -> void
 {
     while (mcr_shoot.notify_take(true, TIMEOUT_MAX))
@@ -104,7 +103,7 @@ auto Macro_Shoot() -> void
     }
 }
 
-/* Intakes */
+//> Intakes <//
 auto Macro_Intakes() -> void
 {
     while (mcr_intakes.notify_take(true, TIMEOUT_MAX))
@@ -113,7 +112,7 @@ auto Macro_Intakes() -> void
     }
 }
 
-/* Outtake */
+//> Outtake <//
 auto Macro_Outtake() -> void
 {
     while (mcr_outtake.notify_take(true, TIMEOUT_MAX))

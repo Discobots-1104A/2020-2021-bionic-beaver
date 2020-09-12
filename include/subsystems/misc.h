@@ -1,22 +1,21 @@
-/* Discobots 1104A comp code.
- * Marco Tan, Neil Sachdeva
- * 
- * Miscellaneous stuff declared here.
- */
+// Discobots 1104A comp code.
+// Marco Tan, Neil Sachdeva
+// 
+// Miscellaneous stuff declared here.
 
 #ifndef MISC_H
 #define MISC_H
 
 #include "main.h"
 
-/* Misc namespace */
+//> Misc namespace <//
 namespace kMisc
 {
-    /* Miscellaneous Functions */
+    //> Miscellaneous Functions <//
 
     auto Check_Deadzone(int x, int y) -> int;
 
-    /* Miscellaneous Constants */
+    //> Miscellaneous Constants <//
     inline constexpr int k_cDeadzone{ 10 };     // Controller deadzone constant.
     enum k_Auto_Select                          // Autonomous selection enum.
     {      
@@ -26,7 +25,7 @@ namespace kMisc
     };
 }
 
-/* Math namespace */
+//> Math namespace <//
 namespace kMath                                  
 {
     inline constexpr int k_OSR_Max_Ticks { 360 };       // Max optical shaft encoder ticks.
