@@ -1,8 +1,8 @@
-/* Discobots 1104A comp code.
- * Marco Tan, Neil Sachdeva
- * 
- * Code for driver control goes here.
- */
+//> Discobots 1104A comp code.
+//* Marco Tan, Neil Sachdeva
+//* 
+//* Code for driver control goes here.
+//<
 
 #include "main.h"
 
@@ -10,18 +10,18 @@
 // TODO: turn simple drive code into assistive drive code.
 
 /* Forward Declarations */
-auto Macro_Indexing() -> void;
-auto Macro_Cycling()  -> void;
-auto Macro_Shoot()    -> void;
-auto Macro_Intakes()  -> void;
-auto Macro_Outtake()  -> void;
+auto Macro_Indexing() -> void;          // Macro for indexing.
+auto Macro_Cycling()  -> void;          // Macro for cycling.
+auto Macro_Shoot()    -> void;          // Macro for shooting.
+auto Macro_Intakes()  -> void;          // Macro for intakes.
+auto Macro_Outtake()  -> void;          // Emergency macro for spitting out everything.
 
 /* Global Variables */
-pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };
-pros::Task mcr_cycling { Macro_Cycling,  "Macro: Cycling" };
-pros::Task mcr_shoot { Macro_Shoot, "Macro: Shoot" };
-pros::Task mcr_intakes { Macro_Intakes, "Macro: Intakes" };
-pros::Task mcr_outtake {Macro_Outtake, "Macro: Outtake" };
+pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };      // Indexing macro task.
+pros::Task mcr_cycling { Macro_Cycling,  "Macro: Cycling" };        // Cycling macro task.
+pros::Task mcr_shoot { Macro_Shoot, "Macro: Shoot" };               // Shooting macro task.
+pros::Task mcr_intakes { Macro_Intakes, "Macro: Intakes" };         // Intake macro task.
+pros::Task mcr_outtake {Macro_Outtake, "Macro: Outtake" };          // Emergency macro task.
 bool auto_pooping { true };       // Pooping toggle. Default true.
 
 
@@ -90,7 +90,8 @@ auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
-        //TODO: write cycling function when i can implement it
+        //TODO: rewrite cycling function to use vision sensor for automatic pooping
+        kHardware::Pow_Intake_Convy(600, 600, 600);
     }
 }
 

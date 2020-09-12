@@ -40,7 +40,11 @@ extern pros::ADIEncoder aEncM;      // Encoder, middle.
 extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
 
 /* Controllers */
-extern::pros::Controller cMaster;   // Conrtoller, master.
+extern pros::Controller cMaster;   // Conrtoller, master.
+
+/* Vision Signatures */
+extern pros::vision_signature_s_t sigRed;       // Red colour signature.
+extern pros::vision_signature_s_t sigBlue;      // Blue colour signature.
 
 /* Hardware namespace */
 namespace kHardware
@@ -69,6 +73,32 @@ namespace kHardware
     inline constexpr int k_aEncMT { 3 };     // Analog sensor, aEncM, top.
     inline constexpr int k_aEncMB { 4 };     // Analog sensor, aEncM, bottom.
     inline constexpr int k_aLim { 0 };   // Analog sensor, aLim.
+
+    /* Vision Sensor Signature Constants */
+    inline constexpr int k_uMin_Red { 0 };          // Red sig, minimum value on U axis.
+    inline constexpr int k_uMax_Red { 0 };          // Red sig, maximum value on U axis.
+    inline constexpr int k_uAvg_Red { 0 };          // Red sig, mean value on U axis.
+    inline constexpr int k_vMin_Red { 0 };          // Red sig, minimum value on V axis.
+    inline constexpr int k_vMax_Red { 0 };          // Red sig, maximum value on V axis.
+    inline constexpr int k_vAvg_Red { 0 };          // Red sig, mean value on V axis.
+    inline constexpr int k_Type_Red { 0 };          // Red sig, type of sig.
+    inline constexpr double k_Range_Red { 0.0 };    // Red sig, scale factor.
+
+    inline constexpr int k_uMin_Blu { 0 };          // Blue sig, minimum value on U axis.
+    inline constexpr int k_uMax_Blu { 0 };          // Blue sig, maximum value on U axis.
+    inline constexpr int k_uAvg_Blu { 0 };          // Blue sig, mean value on U axis.
+    inline constexpr int k_vMin_Blu { 0 };          // Blue sig, minimum value on V axis.
+    inline constexpr int k_vMax_Blu { 0 };          // Blue sig, maximum value on V axis.
+    inline constexpr int k_vAvg_Blu { 0 };          // Blue sig, mean value on V axis.
+    inline constexpr int k_Type_Blu { 0 };          // Blue sig, type of sig.
+    inline constexpr double k_Range_Blu { 0.0 };    // Blue sig, scale factor.
+
+    /* Colour signature enums */
+    enum k_Colour_Sig
+    {
+        RED,
+        BLUE
+    };
 
     /* Motor Control Functions */
     /* These functions are for when we do not want to control 

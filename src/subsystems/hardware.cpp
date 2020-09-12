@@ -45,6 +45,19 @@ pros::ADIDigitalIn aLim { kHardware::k_aLim };
 /* Controllers */
 pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
 
+/* Vision Signatures */
+pros::vision_signature_s_t sigRed = pros::Vision::signature_from_utility
+    (kHardware::k_Colour_Sig::RED, 
+    kHardware::k_uMin_Red, kHardware::k_uMax_Red, kHardware::k_uAvg_Red,
+    kHardware::k_vMin_Red, kHardware::k_vMax_Red, kHardware::k_vAvg_Red,
+    kHardware::k_Range_Red, kHardware::k_Type_Red);
+
+pros::vision_signature_s_t sigBlue = pros::Vision::signature_from_utility
+    (kHardware::k_Colour_Sig::BLUE, 
+    kHardware::k_uMin_Blu, kHardware::k_uMax_Blu, kHardware::k_uAvg_Blu,
+    kHardware::k_vMin_Blu, kHardware::k_vMax_Blu, kHardware::k_vAvg_Blu,
+    kHardware::k_Range_Blu, kHardware::k_Type_Blu);
+
 /* Motor Control Functions */
 /* These functions are for when we do not want to control 
  * individual motors for a big subsystem like the drive.
