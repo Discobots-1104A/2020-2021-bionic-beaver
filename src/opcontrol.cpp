@@ -12,6 +12,7 @@ auto Macro_Cycling()  -> void;          // Macro for cycling.
 auto Macro_Shoot()    -> void;          // Macro for shooting.
 auto Macro_Intakes()  -> void;          // Macro for intakes.
 auto Macro_Outtake()  -> void;          // Emergency macro for spitting out everything.
+auto Macro_Convy_Rev()-> void;          // Emergency macro, only for conveyor motors.
 
 //> Global Variables <//
 pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };      // Indexing macro task.
@@ -19,6 +20,7 @@ pros::Task mcr_cycling { Macro_Cycling,  "Macro: Cycling" };        // Cycling m
 pros::Task mcr_shoot { Macro_Shoot, "Macro: Shoot" };               // Shooting macro task.
 pros::Task mcr_intakes { Macro_Intakes, "Macro: Intakes" };         // Intake macro task.
 pros::Task mcr_outtake {Macro_Outtake, "Macro: Outtake" };          // Emergency macro task.
+pros::Task mcr_convy_rev { Macro_Convy_Rev, "Macro: Conv. Rev." };  // Emergency macro task 2.
 bool auto_pooping { true };       // Pooping toggle. Default true.
 
 
@@ -59,8 +61,13 @@ auto Op_Control_Intk_Convy() -> void
             mcr_intakes.notify();
         else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_UP))        // Emergency macro, Button up
             mcr_outtake.notify();
-        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_RIGHT))     // Toggle auto pooping, Button right
+        else if (cMaster.get_digital(cDigital::E_CONTROLLER_DIGITAL_DOWN))      // Emergency macro 2, button down
+            mcr_convy_rev.notify();
+        else if (cMaster.get_digital_new_press(cDigital::E_CONTROLLER_DIGITAL_RIGHT))     // Toggle auto pooping, Button right
+        {
             auto_pooping = !auto_pooping;   // This doesn't notify, but toggles the pooping function.
+            cMaster.rumble("...");
+        }
         else
             kHardware::Pow_Intake_Convy();  // If no buttons pressed, turn off all the intake and conveyor motors.
 
@@ -77,48 +84,45 @@ void opcontrol()
     // Chassis control task.
     pros::Task chassis_control { Op_Control_Drive, "Chassis Control" };
 
-    // Test Vision Sensor Code
     while (true)
     {
-        pros::vision_object_s_t obj1 { sVision.get_by_size(0) };
-
-        switch (obj1.signature)
+        switch (auto_pooping)
         {
-        case kHardware::k_Colour_Sig::RED:
-            pros::lcd::set_text(0, "FOUND RED.");
-            break;
-        
-        case kHardware::k_Colour_Sig::BLUE:
-            pros::lcd::set_text(0, "FOUND BLUE.");
-            break;
-        
-        default:
-            pros::lcd::set_text(0, "NO OBJECT FOUND.");
-            break;
+            case true:
+                cMaster.print(0, 0, "POOPER: ON ");
+                break;
+            case false:
+                cMaster.print(0, 0, "POOPER: OFF");
+                break;
         }
-
-        pros::delay(10);
+        pros::delay(500);
     }
 }
 
 
 //> Helper Functions <//
 
-//> Automatic Ball Sorting <//
-auto Ball_Sorting() -> int
-{
-    
-    return 0;
-}
-
 //> Indexing <//
 auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
     {
-        //TODO: rewrite indexing function to use vision sensor for automatic pooping
-
-        kHardware::Pow_Intake_Convy(600, 0, 600);
+        if (auto_pooping)
+        {
+            pros::vision_object_s_t ball { sVision.get_by_size(0) };
+            if (ball.signature == kHardware::k_Colour_Sig::BLUE)
+            {
+                kHardware::Pow_Intake_Convy(600, -600, 600);
+            }
+            else
+            {
+                kHardware::Pow_Intake_Convy(600, 0, 600); 
+            }     
+        }
+        else
+        {
+            kHardware::Pow_Intake_Convy(600, 0, 600);   
+        }
     }
 }
 
@@ -127,9 +131,22 @@ auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
-        //TODO: rewrite cycling function to use vision sensor for automatic pooping
-
-        kHardware::Pow_Intake_Convy(600, 600, 600);
+        if (auto_pooping)
+        {
+            pros::vision_object_s_t ball { sVision.get_by_size(0) };
+            if (ball.signature == kHardware::k_Colour_Sig::BLUE)
+            {
+                kHardware::Pow_Intake_Convy(600, -600, 600);
+            }
+            else
+            {
+                kHardware::Pow_Intake_Convy(600, 600, 600); 
+            }
+        }
+        else
+        {
+            kHardware::Pow_Intake_Convy(600, 600, 600);   
+        }
     }
 }
 
@@ -157,5 +174,14 @@ auto Macro_Outtake() -> void
     while (mcr_outtake.notify_take(true, TIMEOUT_MAX))
     {
         kHardware::Pow_Intake_Convy(-600, -600, -600);
+    }
+}
+
+//> Conveyor Reversal <//
+auto Macro_Convy_Rev() -> void
+{
+    while (mcr_convy_rev.notify_take(true, TIMEOUT_MAX))
+    {
+        kHardware::Pow_Intake_Convy(0, -600, -600);
     }
 }
