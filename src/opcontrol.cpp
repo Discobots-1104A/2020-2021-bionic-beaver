@@ -107,8 +107,7 @@ auto Macro_Indexing() -> void
     {
         pros::vision_object_s_t ball { sVision.get_by_size(0) };
 
-        if (auto_pooping)
-            Ball_Sort(ball);
+        if (auto_pooping) { Ball_Sort(ball); break; }
 
         kHardware::Pow_Intake_Convy(600, 0, 600);   
     }
@@ -121,8 +120,7 @@ auto Macro_Cycling() -> void
     {
         pros::vision_object_s_t ball { sVision.get_by_size(0) };
 
-        if (auto_pooping)
-            Ball_Sort(ball);
+        if (auto_pooping) { Ball_Sort(ball); break; }
         
         kHardware::Pow_Intake_Convy(600, 600, 600);   
     }
