@@ -1,0 +1,18 @@
+void foo()
+{
+    while (task.notify_take(true, TIMEOUT_MAX))
+    {
+        if (auto_sorting)
+        {
+            pros::vision_object_s_t bar { vision.get_by_size(0) };
+            if (bar.signature == (pretend signature here) )
+            {
+                // run some motors here
+            }
+        }
+        else
+        {
+            // run some other motors here
+        }
+    }
+}

@@ -23,6 +23,8 @@ namespace kMisc     // Miscellaneous namespace.
         BLUE,
         SKILLS
     };
+
+    k_Auto_Select au_Selected_Auto;             // Selected autonomous routine.
 }
 
 //> Math namespace <//

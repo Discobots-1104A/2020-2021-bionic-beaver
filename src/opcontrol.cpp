@@ -66,7 +66,10 @@ auto Op_Control_Intk_Convy() -> void
         else if (cMaster.get_digital_new_press(cDigital::E_CONTROLLER_DIGITAL_RIGHT))     // Toggle auto pooping, Button right
         {
             auto_pooping = !auto_pooping;   // This doesn't notify, but toggles the pooping function.
-            cMaster.rumble("...");
+            if (auto_pooping)
+                cMaster.rumble("...");
+            else
+                cMaster.rumble("--");
         }
         else
             kHardware::Pow_Intake_Convy();  // If no buttons pressed, turn off all the intake and conveyor motors.
@@ -83,46 +86,31 @@ void opcontrol()
     pros::Task intake_conveyor_control { Op_Control_Intk_Convy, "Intake Conveyor Control"};
     // Chassis control task.
     pros::Task chassis_control { Op_Control_Drive, "Chassis Control" };
-
-    while (true)
-    {
-        switch (auto_pooping)
-        {
-            case true:
-                cMaster.print(0, 0, "POOPER: ON ");
-                break;
-            case false:
-                cMaster.print(0, 0, "POOPER: OFF");
-                break;
-        }
-        pros::delay(500);
-    }
 }
 
 
 //> Helper Functions <//
+
+//> Ball sorting <//
+auto Ball_Sort(const pros::vision_object_s_t &ball) -> int
+{
+    if (ball.signature == kHardware::op_Sorting_Colour)
+        kHardware::Pow_Intake_Convy(600, -600, 600);
+    
+    return 0;
+}
 
 //> Indexing <//
 auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
     {
+        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+
         if (auto_pooping)
-        {
-            pros::vision_object_s_t ball { sVision.get_by_size(0) };
-            if (ball.signature == kHardware::k_Colour_Sig::BLUE)
-            {
-                kHardware::Pow_Intake_Convy(600, -600, 600);
-            }
-            else
-            {
-                kHardware::Pow_Intake_Convy(600, 0, 600); 
-            }     
-        }
-        else
-        {
-            kHardware::Pow_Intake_Convy(600, 0, 600);   
-        }
+            Ball_Sort(ball);
+
+        kHardware::Pow_Intake_Convy(600, 0, 600);   
     }
 }
 
@@ -131,22 +119,12 @@ auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
+        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+
         if (auto_pooping)
-        {
-            pros::vision_object_s_t ball { sVision.get_by_size(0) };
-            if (ball.signature == kHardware::k_Colour_Sig::BLUE)
-            {
-                kHardware::Pow_Intake_Convy(600, -600, 600);
-            }
-            else
-            {
-                kHardware::Pow_Intake_Convy(600, 600, 600); 
-            }
-        }
-        else
-        {
-            kHardware::Pow_Intake_Convy(600, 600, 600);   
-        }
+            Ball_Sort(ball);
+        
+        kHardware::Pow_Intake_Convy(600, 600, 600);   
     }
 }
 
