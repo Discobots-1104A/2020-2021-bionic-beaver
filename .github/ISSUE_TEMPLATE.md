@@ -1,4 +1,4 @@
-# Issue \#(NUMBER) - (BUG)
+# Issue (NUMBER) - (BUG)
 
 ## Expected Behaviour
 <!-- Describe what you expected to happen -->
