@@ -7,13 +7,13 @@
 
 //> Drive Motors <//
 // Drive, left front.
-pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, left back.
-pros::Motor mLB { kHardware::k_mLB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mLB { kHardware::k_mLB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right front.
-pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRF { kHardware::k_mRF, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 // Drive, right back.
-pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
+pros::Motor mRB { kHardware::k_mRB, mCart::E_MOTOR_GEARSET_18, true, mEnc::E_MOTOR_ENCODER_COUNTS };
 
 //> Conveyor and Intake Motors <//
 // Intake, left.
