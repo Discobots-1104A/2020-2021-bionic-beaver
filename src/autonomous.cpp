@@ -13,7 +13,7 @@ auto skl_auto() -> void;
 //> Autonomous Function <//
 void autonomous()
 {
-    switch (kAuton::au_Selected_Auto)
+    switch (au_Selected_Auto)
     {
     case kAuton::k_Auto_Select::RED :
         red_auto();

@@ -16,3 +16,6 @@ auto kMisc::Check_Deadzone(int x, int y) -> int
 {
     return ((std::abs(x) > y) ? x : 0);
 }
+
+//> Misc <//
+kAuton::k_Auto_Select au_Selected_Auto{}; 

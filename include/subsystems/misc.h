@@ -42,14 +42,15 @@ namespace kAuton    // Autonomous constants namespace.
         BLUE,
         SKILLS
     };
-
-    k_Auto_Select au_Selected_Auto;             // Selected autonomous routine.
 }
 
 //> Math namespace <//
 namespace kMath     // Math namespace.
 {
-    constexpr double k_Pi() { return std::acos(-1); }   // Returns pi.
+    inline double k_Pi() { return std::acos(-1); }   // Returns pi.
 }
+
+//> Misc <//
+extern kAuton::k_Auto_Select au_Selected_Auto;       // Selected autonomous routine.
 
 #endif

@@ -94,7 +94,7 @@ void opcontrol()
 //> Ball sorting <//
 auto Ball_Sort(const pros::vision_object_s_t &ball) -> int
 {
-    if (ball.signature == kHardware::op_Sorting_Colour)
+    if (ball.signature == op_Sorting_Colour)
         kHardware::Pow_Intake_Convy(600, -600, 600);
     
     return 0;
