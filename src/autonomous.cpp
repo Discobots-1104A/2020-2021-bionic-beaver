@@ -13,15 +13,15 @@ auto skl_auto() -> void;
 //> Autonomous Function <//
 void autonomous()
 {
-    switch (kMisc::au_Selected_Auto)
+    switch (au_Selected_Auto)
     {
-    case kMisc::k_Auto_Select::RED:
+    case kAuton::k_Auto_Select::RED :
         red_auto();
         break;
-    case kMisc::k_Auto_Select::BLUE:
+    case kAuton::k_Auto_Select::BLUE :
         blu_auto();
         break;
-    case kMisc::k_Auto_Select::SKILLS:
+    case kAuton::k_Auto_Select::SKILLS :
         skl_auto();
         break;
     }

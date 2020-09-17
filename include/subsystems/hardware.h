@@ -99,8 +99,6 @@ namespace kHardware     // Hardware namespace.
         BLUE
     };
 
-    k_Colour_Sig op_Sorting_Colour;                     // What signature to sort for.
-
     //> Motor Control Functions <//
     // These functions are for when we do not want to control 
     // individual motors for a big subsystem like the drive.
@@ -109,5 +107,8 @@ namespace kHardware     // Hardware namespace.
     auto Drive_Velocity(int left, int right) -> void;
     auto Pow_Intake_Convy(int intake = 0, int convy1 = 0, int convy2 = 0) -> void;
 }
+
+//> Misc <//
+extern kHardware::k_Colour_Sig op_Sorting_Colour;       // Ball sorting colour
 
 #endif // HARDWARE_H

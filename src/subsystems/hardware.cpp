@@ -57,6 +57,9 @@ pros::vision_signature_s_t sigBlue = pros::Vision::signature_from_utility
     kHardware::k_vMin_Blu, kHardware::k_vMax_Blu, kHardware::k_vAvg_Blu,
     kHardware::k_Range_Blu, kHardware::k_Type_Blu);
 
+//> Misc <//
+kHardware::k_Colour_Sig op_Sorting_Colour{};
+
 //> Motor Control Functions <//
 // These functions are for when we do not want to control 
 // individual motors for a big subsystem like the drive.
