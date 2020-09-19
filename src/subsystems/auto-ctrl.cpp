@@ -9,7 +9,8 @@ using kMath::Deg;
 using kMath::Inch;
 using kAuto::k_Dist_Mode;
 
-//> Functions <//
+
+//> Public Functions <//
 
 // Construct an Auto_PID object for PID control.
 // \param P
@@ -20,18 +21,20 @@ using kAuto::k_Dist_Mode;
 //      The derivative gain.
 // \param i_winThrsh
 //      The integral windup threshold.
+// \param sample_rate
+//      How often to sample measurements in milliseconds.
 // \param mode
 //      Whether to treat lengths as straight lines or arc lengths.
 // \return An Auto_PID object.
 Auto_PID::Auto_PID
-    (double P, double I, double D, double i_winThrsh, kAuto::k_Dist_Mode mode)
-    : kP{P}, kI{I}, kD{D}, dist_mode{mode}, kI_winThrsh{i_winThrsh}
+    (double P, double I, double D, double i_winThrsh, int sample_rate, k_Dist_Mode mode)
+    : kP{P}, kI{I}, kD{D}, dist_mode{mode}, k_sample_rate{sample_rate}, kI_winThrsh{i_winThrsh}
     {}
 
 // Set the heading target of the PID controller.
 // \param head
 //      The heading target.
-auto Auto_PID::Set_Target(const kMath::Deg &head) -> Auto_PID&
+auto Auto_PID::Set_Target(const Deg &head) -> Auto_PID&
 {
     targ_Head = head;
     return *this;
@@ -40,7 +43,7 @@ auto Auto_PID::Set_Target(const kMath::Deg &head) -> Auto_PID&
 // Set the distance target of the PID controller.
 // \param dist
 //      The distance target.
-auto Auto_PID::Set_Target(const kMath::Inch &dist) -> Auto_PID&
+auto Auto_PID::Set_Target(const Inch &dist) -> Auto_PID&
 {
     targ_Dist = dist;
     return *this;
@@ -49,7 +52,7 @@ auto Auto_PID::Set_Target(const kMath::Inch &dist) -> Auto_PID&
 // Set the distance mode of the PID controller.
 // \param mode
 //      The distance mode.
-auto Auto_PID::Set_Dist_Mode(const kAuto::k_Dist_Mode &mode) -> Auto_PID&
+auto Auto_PID::Set_Dist_Mode(const k_Dist_Mode &mode) -> Auto_PID&
 {
     dist_mode = mode;
     return *this;
@@ -61,5 +64,16 @@ auto Auto_PID::Set_Dist_Mode(const kAuto::k_Dist_Mode &mode) -> Auto_PID&
 // If supplied with both a distance and heading, the robot will swerve to the target.
 auto Auto_PID::Drive() -> void
 {
+    if (targ_Head.var && targ_Dist.var) // Swerve turn.
+    {
+        
+    }
+    else if (targ_Dist.var)             // Straight.
+    {
 
+    }
+    else if (targ_Head.var)             // Point turn.
+    {
+
+    }
 }

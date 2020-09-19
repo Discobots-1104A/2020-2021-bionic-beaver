@@ -63,13 +63,15 @@ void initialize()
     pros::lcd::clear();
 }
 
+auto Select_Auto(int selected) -> void;
+
 //> Selection Screen <//
 auto Selection_Screen() -> void
 {
     //TODO: Fix Selection_Screen() code cuz its doodoo.
     // Initialize and give 1 second to do so.
     pros::lcd::initialize();
-    pros::delay(1000);
+    while (pros::lcd::is_initialized() == false) {}
 
     // Create temp int for selection.
     int cur_select {0};
@@ -78,20 +80,20 @@ auto Selection_Screen() -> void
     while (true)
     {
         // Change what's displayed based on value of cur_select
-        switch (cur_select)
+        if (cur_select == 0)
         {
-        case 0 :
             pros::lcd::print(1, "AUTO: RED  ");
             pros::lcd::print(2, "SORT: BLUE");
-            break;
-        case 1 :
+        }
+        else if (cur_select == 1)
+        {
             pros::lcd::print(1, "AUTO: BLUE ");
             pros::lcd::print(2, "SORT: RED ");
-            break;
-        case 2 :
+        }
+        else if (cur_select == 2)
+        {
             pros::lcd::print(1, "AUTO: SKILLS");
             pros::lcd::print(2, "SORT: BLUE");
-            break;
         }
 
         // Scrolling selection.
@@ -102,27 +104,33 @@ auto Selection_Screen() -> void
         else if (pros::lcd::read_buttons() == LCD_BTN_CENTER)   // Confirm selection.
         {
             // Assign selected autons and sorting colour based on value of cur_select
-            switch (cur_select)
-            {
-            // Red autonomous, sort blue balls.
-            case 0 :
-                au_Selected_Auto = kAuto::k_Auto_Select::RED;
-                op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-                pros::lcd::clear();
-                return;
-            // Blue autonomous, sort red balls.
-            case 1 :
-                au_Selected_Auto = kAuto::k_Auto_Select::BLUE;
-                op_Sorting_Colour = kHardware::k_Colour_Sig::RED;
-                pros::lcd::clear();
-                return;
-            // Skills autonomous, sort blue balls.
-            case 2 :
-                au_Selected_Auto = kAuto::k_Auto_Select::SKILLS;
-                op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-                pros::lcd::clear();
-                return;
-            }
+            Select_Auto(cur_select);
+            break;
         }
+    }
+}
+
+auto Select_Auto(int selected) -> void
+{
+    switch (selected)
+    {
+    // Red autonomous, sort blue balls.
+    case 0 :
+        au_Selected_Auto = kAuto::k_Auto_Select::RED;
+        op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
+        pros::lcd::clear();
+        break;
+    // Blue autonomous, sort red balls.
+    case 1 :
+        au_Selected_Auto = kAuto::k_Auto_Select::BLUE;
+        op_Sorting_Colour = kHardware::k_Colour_Sig::RED;
+        pros::lcd::clear();
+        break;
+    // Skills autonomous, sort blue balls.
+    case 2 :
+        au_Selected_Auto = kAuto::k_Auto_Select::SKILLS;
+        op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
+        pros::lcd::clear();
+        break;
     }
 }

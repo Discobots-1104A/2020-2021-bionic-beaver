@@ -53,8 +53,6 @@ namespace kAuto         // Autonomous constants namespace.
 //> Math namespace <//
 namespace kMath     // Math namespace.
 {
-    inline double k_Pi() { return std::acos(-1); }      // Returns pi.
-
     //> Units <//
     struct Deg { double var; };     // Degrees.
     struct Inch { double var; };    // Inches.
