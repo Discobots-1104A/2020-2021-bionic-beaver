@@ -36,30 +36,36 @@ void initialize()
     mCB.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Conveyor bottom.
     pros::lcd::set_text(1, "BREAK MODES SET.");
 
+    // Tracking wheel reset.
+    aEncL.reset();      // Left encoder.
+    aEncR.reset();      // Right encoder.
+    aEncM.reset();      // Middle encoder.
+    pros::lcd::set_text(2, "ENCODERS RESET.");
+
     // Vision sensor initialization.
     sVision.clear_led();                                                // Clear the Vision sensor LED.
     sVision.set_wifi_mode(false);                                       // Disable WiFi capabilities.
     sVision.set_zero_point(pros::E_VISION_ZERO_TOPLEFT);                // Set the zero point to be the top-left corner.
     sVision.set_signature(kHardware::k_Colour_Sig::RED, &sigRed);       // Set the signature ID for red signature.
     sVision.set_signature(kHardware::k_Colour_Sig::BLUE, &sigBlue);     // Likewise but for blue signature.
-    pros::lcd::set_text(2, "VISION CALIBRATED.");
+    pros::lcd::set_text(3, "VISION CALIBRATED.");
 
     // IMU intialization.
     sIMU.reset();           // Start IMU calibration.
     int calbr_Start = pros::millis();       // Note calibration start time.
     int calbr_Elaps{ 0 };                   // Keep track of elapsed time.
-    pros::lcd::set_text(3, "CALIBRATING IMU...");
+    pros::lcd::set_text(4, "CALIBRATING IMU...");
     while (sIMU.is_calibrating())           // Block execution until IMU is calibrated.
     {
-        pros::lcd::print(4, "ELAPSED: %dms", calbr_Elaps);
+        pros::lcd::print(5, "ELAPSED: %dms", calbr_Elaps);
         calbr_Elaps += 10;
         pros::delay(10);
     }
-    pros::lcd::clear_line(3);   pros::lcd::clear_line(4);
+    pros::lcd::clear_line(4);   pros::lcd::clear_line(5);
 
-    pros::lcd::set_text(3, "IMU CALIBRATED.");
-    pros::lcd::set_text(4, "READY.");
-    pros::delay(1000);
+    pros::lcd::set_text(4, "IMU CALIBRATED.");
+    pros::lcd::set_text(5, "READY.");
+    pros::delay(2000);
     pros::lcd::clear();
 }
 
@@ -75,7 +81,7 @@ auto Selection_Screen() -> void
 
     // Create temp int for selection.
     int cur_select {0};
-    pros::lcd::set_text(0, "Select auto:");
+    pros::lcd::set_text(0, "SELECT AUTO:");
 
     while (true)
     {

@@ -36,8 +36,6 @@ extern pros::Vision sVision;// Smart sensor, Vision.
 extern pros::ADIEncoder aEncL;      // Encoder, left.
 extern pros::ADIEncoder aEncR;      // Encoder, right.
 extern pros::ADIEncoder aEncM;      // Encoder, middle.
-extern pros::ADIDigitalIn aLim;     // Limit switch, ball detection.
-
 //> Controllers <//
 extern pros::Controller cMaster;    // Conrtoller, master.
 
@@ -71,7 +69,6 @@ namespace kHardware     // Hardware namespace.
     inline constexpr int k_aEncRB { 2 };    // Analog sensor, aEncR, bottom.
     inline constexpr int k_aEncMT { 3 };    // Analog sensor, aEncM, top.
     inline constexpr int k_aEncMB { 4 };    // Analog sensor, aEncM, bottom.
-    inline constexpr int k_aLim { 0 };      // Analog sensor, aLim.
 
     //> Vision Sensor Signature Constants <//
     inline constexpr int k_uMin_Red { 637 };        // Red sig, minimum value on U axis.
