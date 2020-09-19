@@ -7,12 +7,12 @@
 
 
 //> Forward Declarations <//
-auto Macro_Indexing() -> void;          // Macro for indexing.
-auto Macro_Cycling()  -> void;          // Macro for cycling.
-auto Macro_Shoot()    -> void;          // Macro for shooting.
-auto Macro_Intakes()  -> void;          // Macro for intakes.
-auto Macro_Outtake()  -> void;          // Emergency macro for spitting out everything.
-auto Macro_Convy_Rev()-> void;          // Emergency macro, only for conveyor motors.
+auto Macro_Indexing() -> void;      // Macro for indexing.
+auto Macro_Cycling()  -> void;      // Macro for cycling.
+auto Macro_Shoot()    -> void;      // Macro for shooting.
+auto Macro_Intakes()  -> void;      // Macro for intakes.
+auto Macro_Outtake()  -> void;      // Emergency macro for spitting out everything.
+auto Macro_Convy_Rev()-> void;      // Emergency macro, only for conveyor motors.
 
 //> Global Variables <//
 pros::Task mcr_indexing { Macro_Indexing, "Macro: Indexing" };      // Indexing macro task.

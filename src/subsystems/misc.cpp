@@ -18,4 +18,4 @@ auto kMisc::Check_Deadzone(int x, int y) -> int
 }
 
 //> Misc <//
-kAuton::k_Auto_Select au_Selected_Auto{}; 
+kAuton::k_Auto_Select au_Selected_Auto{};       // Selected autonomous routine.

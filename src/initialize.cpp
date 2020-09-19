@@ -56,6 +56,7 @@ void initialize()
 //> Selection Screen <//
 auto Selection_Screen() -> void
 {
+    //TODO: Fix Selection_Screen() code cuz its doodoo.
     // Initialize and give 1 second to do so.
     pros::lcd::initialize();
     pros::delay(1000);

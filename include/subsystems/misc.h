@@ -20,7 +20,7 @@ namespace kMisc     // Miscellaneous namespace.
 }
 
 //> Robot Measurements and Constants <//
-namespace kRobot     // Robot measurement namespace.                           
+namespace kRobot        // Robot measurement namespace.                           
 {
     inline constexpr int k_OSR_Max_Ticks { 360 };       // Max optical shaft encoder ticks.
     inline constexpr int k_mMax_Vel { 200 };            // Max motor velocity.
@@ -34,9 +34,9 @@ namespace kRobot     // Robot measurement namespace.
 }
 
 //> Autonomous Constants <//
-namespace kAuton    // Autonomous constants namespace.
+namespace kAuton        // Autonomous constants namespace.
 {
-    enum k_Auto_Select                          // Autonomous selection enum.
+    enum k_Auto_Select      // Autonomous selection enum.
     {      
         RED,               
         BLUE,
@@ -47,10 +47,10 @@ namespace kAuton    // Autonomous constants namespace.
 //> Math namespace <//
 namespace kMath     // Math namespace.
 {
-    inline double k_Pi() { return std::acos(-1); }   // Returns pi.
+    inline double k_Pi() { return std::acos(-1); }      // Returns pi.
 }
 
 //> Misc <//
-extern kAuton::k_Auto_Select au_Selected_Auto;       // Selected autonomous routine.
+extern kAuton::k_Auto_Select au_Selected_Auto;      // Selected autonomous routine.
 
 #endif

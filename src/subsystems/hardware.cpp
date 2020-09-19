@@ -58,7 +58,7 @@ pros::vision_signature_s_t sigBlue = pros::Vision::signature_from_utility
     kHardware::k_Range_Blu, kHardware::k_Type_Blu);
 
 //> Misc <//
-kHardware::k_Colour_Sig op_Sorting_Colour{};
+kHardware::k_Colour_Sig op_Sorting_Colour{};        // Ball sorting colour.
 
 //> Motor Control Functions <//
 // These functions are for when we do not want to control 

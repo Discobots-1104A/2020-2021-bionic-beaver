@@ -13,6 +13,7 @@ auto skl_auto() -> void;
 //> Autonomous Function <//
 void autonomous()
 {
+    // Use a switch statement to determine which auto routine to run.
     switch (au_Selected_Auto)
     {
     case kAuton::k_Auto_Select::RED :
