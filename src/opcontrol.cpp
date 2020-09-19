@@ -91,42 +91,30 @@ void opcontrol()
 
 //> Helper Functions <//
 
-//> Ball sorting <//
-auto Ball_Sort(const pros::vision_object_s_t &ball) -> int
+auto Ball_Sort(const pros::vision_object_s_t &ball, int mid_pow) -> int
 {
-    int mid = 0;
-    if (ball.signature == op_Sorting_Colour)
-        kHardware::Pow_Intake_Convy(600, mid, 600);
-    
-    return 0;
+  return ( (ball.signature == op_Sorting_Colour) ? -600 : mid_pow );
 }
 
-//> Indexing <//
 auto Macro_Indexing() -> void
 {
-    while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
-    {
-        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+  pros::vision_object_s_t ball { sVision.get_by_size(0) };
 
-        if (auto_pooping) { Ball_Sort(ball); mid = -600; break; }
-        
-        kHardware::Pow_Intake_Convy(600, mid, 600);   
-    }
+  if (auto_pooping)
+    kHardware::Pow_Intake_Convy(600, Ball_Sort(ball, 0), 600);
+  else
+    kHardware::Pow_Intake_Convy(600, 0, 600);
 }
 
-//> Cycling <//
 auto Macro_Cycling() -> void
 {
-    while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
-    {
-        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+  pros::vision_object_s_t ball { sVision.get_by_size(0) };
 
-        if (auto_pooping) { Ball_Sort(ball); break; }
-        
-        kHardware::Pow_Intake_Convy(600, 600, 600);   
-    }
+  if (auto_pooping)
+    kHardware::Pow_Intake_Convy(600, Ball_Sort(ball, 600), 600);
+  else
+    kHardware::Pow_Intake_Convy(600, 0, 600);
 }
-
 //> Shooting <//
 auto Macro_Shoot() -> void
 {
