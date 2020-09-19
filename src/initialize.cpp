@@ -46,7 +46,17 @@ void initialize()
 
     // IMU intialization.
     sIMU.reset();           // Start IMU calibration.
-    pros::delay(2250);      // Give it 2.25 seconds to calibrate.
+    int calbr_Start = pros::millis();       // Note calibration start time.
+    int calbr_Elaps{ 0 };                   // Keep track of elapsed time.
+    pros::lcd::set_text(3, "CALIBRATING IMU...");
+    while (sIMU.is_calibrating())           // Block execution until IMU is calibrated.
+    {
+        pros::lcd::print(4, "ELAPSED: %dms", calbr_Elaps);
+        calbr_Elaps += 10;
+        pros::delay(10);
+    }
+    pros::lcd::clear_line(3);   pros::lcd::clear_line(4);
+
     pros::lcd::set_text(3, "IMU CALIBRATED.");
     pros::lcd::set_text(4, "READY.");
     pros::delay(1000);
