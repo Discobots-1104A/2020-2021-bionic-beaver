@@ -94,8 +94,9 @@ void opcontrol()
 //> Ball sorting <//
 auto Ball_Sort(const pros::vision_object_s_t &ball) -> int
 {
+    int mid = 0;
     if (ball.signature == op_Sorting_Colour)
-        kHardware::Pow_Intake_Convy(600, -600, 600);
+        kHardware::Pow_Intake_Convy(600, mid, 600);
     
     return 0;
 }
@@ -107,9 +108,9 @@ auto Macro_Indexing() -> void
     {
         pros::vision_object_s_t ball { sVision.get_by_size(0) };
 
-        if (auto_pooping) { Ball_Sort(ball); break; }
-
-        kHardware::Pow_Intake_Convy(600, 0, 600);   
+        if (auto_pooping) { Ball_Sort(ball); mid = -600; break; }
+        
+        kHardware::Pow_Intake_Convy(600, mid, 600);   
     }
 }
 
