@@ -3,10 +3,10 @@
 // 
 // Hardware objects and functions declared here.
 
+#include "main.h"
+
 #ifndef HARDWARE_H
 #define HARDWARE_H
-
-#include "main.h"
 
 //> Type Aliases <//
 using mCart     = pros::motor_gearset_e;            // Type alias, motor cartridges.

@@ -3,10 +3,10 @@
 // 
 // Miscellaneous stuff declared here.
 
+#include "main.h"
+
 #ifndef MISC_H
 #define MISC_H
-
-#include "main.h"
 
 //> Misc namespace <//
 namespace kMisc     // Miscellaneous namespace.
