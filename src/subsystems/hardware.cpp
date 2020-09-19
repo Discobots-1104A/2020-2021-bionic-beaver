@@ -103,4 +103,3 @@ auto kHardware::Pow_Intake_Convy(int intake, int convy1, int convy2) -> void
     mIL.move_velocity(intake);      mIR.move_velocity(intake);
     mCT.move_velocity(convy1);      mCB.move_velocity(convy2);
 }
-
