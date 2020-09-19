@@ -27,6 +27,7 @@ void initialize()
     // TODO: add necessary initialization
     // Start LLEMU Selector screen
     Selection_Screen();
+    int calbr_Start{ pros::millis() };      // Note calibration start time.
     pros::lcd::set_text(0, "AUTO SELECTED.");
 
     // Set the break modes to hold on the conveyor and intake motors.
@@ -52,19 +53,18 @@ void initialize()
 
     // IMU intialization.
     sIMU.reset();           // Start IMU calibration.
-    int calbr_Start = pros::millis();       // Note calibration start time.
-    int calbr_Elaps{ 0 };                   // Keep track of elapsed time.
+    int imu_calbr_Elaps{ 0 };               // Keep track of elapsed time.
     pros::lcd::set_text(4, "CALIBRATING IMU...");
     while (sIMU.is_calibrating())           // Block execution until IMU is calibrated.
     {
-        pros::lcd::print(5, "ELAPSED: %dms", calbr_Elaps);
-        calbr_Elaps += 10;
+        pros::lcd::print(5, "ELAPSED: %d ms", imu_calbr_Elaps);
+        imu_calbr_Elaps += 10;
         pros::delay(10);
     }
     pros::lcd::clear_line(4);   pros::lcd::clear_line(5);
 
-    pros::lcd::set_text(4, "IMU CALIBRATED.");
-    pros::lcd::set_text(5, "READY.");
+    pros::lcd::print(4, "IMU CALIBRATED. TOOK %d ms.", imu_calbr_Elaps);
+    pros::lcd::print(5, "READY. TOOK %d ms.", pros::millis() - calbr_Start);
     pros::delay(2000);
     pros::lcd::clear();
 }

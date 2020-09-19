@@ -36,6 +36,7 @@ extern pros::Vision sVision;// Smart sensor, Vision.
 extern pros::ADIEncoder aEncL;      // Encoder, left.
 extern pros::ADIEncoder aEncR;      // Encoder, right.
 extern pros::ADIEncoder aEncM;      // Encoder, middle.
+
 //> Controllers <//
 extern pros::Controller cMaster;    // Conrtoller, master.
 

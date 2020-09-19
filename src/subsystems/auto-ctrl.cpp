@@ -27,8 +27,8 @@ using kAuto::k_Dist_Mode;
 //      Whether to treat lengths as straight lines or arc lengths.
 // \return An Auto_PID object.
 Auto_PID::Auto_PID
-    (double P, double I, double D, double i_winThrsh, int sample_rate, k_Dist_Mode mode)
-    : kP{P}, kI{I}, kD{D}, dist_mode{mode}, k_sample_rate{sample_rate}, kI_winThrsh{i_winThrsh}
+    (double P, double I, double D, double i_winThrsh, int sample_rate, int uncertainty, k_Dist_Mode mode)
+    : kP{P}, kI{I}, kD{D}, dist_mode{mode}, k_sample_rate{sample_rate}, k_uncertainty{uncertainty}, kI_winThrsh{i_winThrsh}
     {}
 
 // Set the heading target of the PID controller.
@@ -70,7 +70,35 @@ auto Auto_PID::Drive() -> void
     }
     else if (targ_Dist.var)             // Straight.
     {
+        while ( (kMath::Inch_To_Ticks(targ_Dist) - 
+            ((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
+        {
+            err_currL = kMath::Inch_To_Ticks(targ_Dist) - aEncL.get_value();
+            err_currR = kMath::Inch_To_Ticks(targ_Dist) - aEncR.get_value();
+            
+            if (err_currL <= 0 || err_currL > kI_winThrsh) { int_L = 0; }
+            else { int_L += err_currL; }
+            if (err_currR <= 0 || err_currR > kI_winThrsh) { int_R = 0; }
+            else { int_R += err_currR; }
 
+            derv_L = err_currL - err_prevL;
+            derv_R = err_currR - err_prevR;
+
+            err_prevL = err_currL;
+            err_prevR = err_currL;
+            
+            int pow_L = (err_currL * kP) + (int_L * kI) + (derv_L * kD),
+                pow_R = (err_currR * kP) + (int_R * kI) + (derv_R * kD);
+
+            if (pow_L > kRobot::k_mMax_Vel)
+                pow_L = kRobot::k_mMax_Vel;
+            if (pow_R > kRobot::k_mMax_Vel)
+                pow_R > kRobot::k_mMax_Vel;
+
+            kHardware::Drive_Velocity(pow_L, pow_R);
+
+            pros::delay(k_sample_rate);
+        }
     }
     else if (targ_Head.var)             // Point turn.
     {

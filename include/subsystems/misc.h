@@ -56,6 +56,10 @@ namespace kMath     // Math namespace.
     //> Units <//
     struct Deg { double var; };     // Degrees.
     struct Inch { double var; };    // Inches.
+
+    //> Auto math <//
+
+    auto Inch_To_Ticks(Inch &inch) -> int;
 }
 
 //> Misc <//

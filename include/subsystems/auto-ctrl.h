@@ -16,9 +16,12 @@ private:
     const double kP, kI, kD;            // PID Constants.
     const double kI_winThrsh;           // Integral windup threshold.
     const int k_sample_rate;            // Sample rate in milliseconds.
+    const int k_uncertainty;            // By how many ticks the controller is allowed to be off.
     kAuto::k_Dist_Mode dist_mode;       // Whether to treat distance as a straight line or an arc length.
-    double err_currL{}, err_currR{};    // Current errors.
-    double err_prevL{}, err_prevR{};    // Previous errors.
+    int err_currL{}, err_currR{};       // Current errors.
+    int err_prevL{}, err_prevR{};       // Previous errors.
+    int int_L{}, int_R{};               // Integrals.
+    int derv_L{}, derv_R{};             // Derivatives
     kMath::Deg targ_Head{};             // Heading target.
     kMath::Inch targ_Dist{};            // Distance target.
 
@@ -34,7 +37,7 @@ public:
     // Constructor
 
     Auto_PID(double P = 0.0, double I = 0.0, double D = 0.0, 
-            double i_winThrsh = 0.0, int sample_rate = 15,
+            double i_winThrsh = 0.0, int sample_rate = 15, int uncertainty = 5,
             kAuto::k_Dist_Mode mode = kAuto::k_Dist_Mode::ARC_LENGTH);
 
 
