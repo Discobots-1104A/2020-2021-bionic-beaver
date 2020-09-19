@@ -16,13 +16,13 @@ void autonomous()
     // Use a switch statement to determine which auto routine to run.
     switch (au_Selected_Auto)
     {
-    case kAuton::k_Auto_Select::RED :
+    case kAuto::k_Auto_Select::RED :
         red_auto();
         break;
-    case kAuton::k_Auto_Select::BLUE :
+    case kAuto::k_Auto_Select::BLUE :
         blu_auto();
         break;
-    case kAuton::k_Auto_Select::SKILLS :
+    case kAuto::k_Auto_Select::SKILLS :
         skl_auto();
         break;
     }

@@ -34,7 +34,7 @@ namespace kRobot        // Robot measurement namespace.
 }
 
 //> Autonomous Constants <//
-namespace kAuton        // Autonomous constants namespace.
+namespace kAuto         // Autonomous constants namespace.
 {
     enum k_Auto_Select      // Autonomous selection enum.
     {      
@@ -42,15 +42,25 @@ namespace kAuton        // Autonomous constants namespace.
         BLUE,
         SKILLS
     };
+
+    enum k_Dist_Mode   // Whether to treat distance as a straight line or an arc length.
+    {
+        STRAIGHT,
+        ARC_LENGTH
+    };
 }
 
 //> Math namespace <//
 namespace kMath     // Math namespace.
 {
     inline double k_Pi() { return std::acos(-1); }      // Returns pi.
+
+    //> Units <//
+    struct Deg { double var; };     // Degrees.
+    struct Inch { double var; };    // Inches.
 }
 
 //> Misc <//
-extern kAuton::k_Auto_Select au_Selected_Auto;      // Selected autonomous routine.
+extern kAuto::k_Auto_Select au_Selected_Auto;       // Selected autonomous routine.
 
 #endif

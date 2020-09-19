@@ -96,19 +96,19 @@ auto Selection_Screen() -> void
             {
             // Red autonomous, sort blue balls.
             case 0 :
-                au_Selected_Auto = kAuton::k_Auto_Select::RED;
+                au_Selected_Auto = kAuto::k_Auto_Select::RED;
                 op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
                 pros::lcd::clear();
                 return;
             // Blue autonomous, sort red balls.
             case 1 :
-                au_Selected_Auto = kAuton::k_Auto_Select::BLUE;
+                au_Selected_Auto = kAuto::k_Auto_Select::BLUE;
                 op_Sorting_Colour = kHardware::k_Colour_Sig::RED;
                 pros::lcd::clear();
                 return;
             // Skills autonomous, sort blue balls.
             case 2 :
-                au_Selected_Auto = kAuton::k_Auto_Select::SKILLS;
+                au_Selected_Auto = kAuto::k_Auto_Select::SKILLS;
                 op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
                 pros::lcd::clear();
                 return;

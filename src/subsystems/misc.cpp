@@ -7,9 +7,9 @@
 
 // Used to create a deadzone on the joysticks to prevent phantom movements.
 // \param x
-//      An integer value to be compared.
+//      The value to be compared.
 // \param y
-//      An integer value to compare against.
+//      The value to compare against.
 // \return An integer value equal to "x" or 0.
 //
 auto kMisc::Check_Deadzone(int x, int y) -> int
@@ -18,4 +18,4 @@ auto kMisc::Check_Deadzone(int x, int y) -> int
 }
 
 //> Misc <//
-kAuton::k_Auto_Select au_Selected_Auto{};       // Selected autonomous routine.
+kAuto::k_Auto_Select au_Selected_Auto{};        // Selected autonomous routine.
