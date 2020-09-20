@@ -13,8 +13,8 @@ class Auto_PID      // PID class.
 {
 private:
     //> Private Variables and Constants <//
-    const double kP, kI, kD;            // PID Constants.
-    const double kI_winThrsh;           // Integral windup threshold.
+    double kP, kI, kD;                  // PID Constants.
+    double kI_winThrsh;                 // Integral windup threshold.
     const int k_sample_rate;            // Sample rate in milliseconds.
     const int k_uncertainty;            // By how many ticks the controller is allowed to be off.
     kAuto::k_Dist_Mode dist_mode;       // Whether to treat distance as a straight line or an arc length.
@@ -39,7 +39,7 @@ public:
     // Constructor
 
     Auto_PID(double P = 0.0, double I = 0.0, double D = 0.0, 
-            double i_winThrsh = 0.0, int sample_rate = 15, int uncertainty = 5,
+            double i_winThrsh = 300.0, int sample_rate = 15, int uncertainty = 5,
             kAuto::k_Dist_Mode mode = kAuto::k_Dist_Mode::ARC_LENGTH);
 
 
@@ -48,6 +48,7 @@ public:
     auto Set_Target(const kMath::Deg &head) -> Auto_PID&;
     auto Set_Target(const kMath::Inch &dist) -> Auto_PID&;
     auto Set_Dist_Mode(const kAuto::k_Dist_Mode &mode) -> Auto_PID&;
+    auto Set_PID(double P, double I, double D, double i_winThrsh = 300.0) -> Auto_PID&;
     auto Drive() -> void;
 
 };

@@ -58,6 +58,21 @@ auto Auto_PID::Set_Dist_Mode(const k_Dist_Mode &mode) -> Auto_PID&
     return *this;
 }
 
+// Set gains kP, kI, and kD, and optionally, set the integral windup threshold.
+// \param P
+//      The proportional gain.
+// \param I
+//      The integral gain.
+// \param D
+//      The derivative gain.
+// \param i_winThrsh
+//      The integral windup threshold.
+auto Auto_PID::Set_PID(double P, double I, double D, double i_winThrsh) -> Auto_PID&
+{
+    kP = P; kI = I; kD = D; kI_winThrsh = i_winThrsh;
+    return *this;
+}
+
 // Begin execution of the PID controller towards a target. 
 // If supplied with only a distance, the robot will drive in a straight line. 
 // If supplied with only a heading, the robot will turn on a point. 
@@ -66,7 +81,79 @@ auto Auto_PID::Drive() -> void
 {
     if (targ_Head.var && targ_Dist.var) // Swerve turn.
     {
-        
+        int targ_Dist_L, targ_Dist_R;
+        if (std::signbit(targ_Head.var))
+        {
+            double main_radius {targ_Dist.var / std::abs(kMath::Deg_To_Rad(targ_Head)) },
+                   left_radius {main_radius - (kRobot::k_Wheelbase_Len / 2) },
+                   right_radius {main_radius + (kRobot::k_Wheelbase_Len / 2)};
+
+            targ_Dist_L = kMath::Inch_To_Ticks(Inch{left_radius * std::abs(kMath::Deg_To_Rad(targ_Head))});
+            targ_Dist_L = kMath::Inch_To_Ticks(Inch{right_radius * std::abs(kMath::Deg_To_Rad(targ_Head))});
+
+            while ( std::abs(kMath::Inch_To_Ticks(targ_Dist)) - 
+                (std::abs((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
+            {
+                err_currL = targ_Dist_L - aEncL.get_value();
+                err_currR = targ_Dist_R - aEncR.get_value();
+
+                int_L = (std::abs(err_currL) <= 0 || std::abs(err_currL) > kI_winThrsh) ? 0 : int_L + err_currL;
+                int_R = (std::abs(err_currR) <= 0 || std::abs(err_currR) > kI_winThrsh) ? 0 : int_R + err_currR;
+
+                derv_L = err_currL - err_prevL;
+                derv_R = err_currR - err_prevR;
+
+                err_prevL = err_currL;
+                err_prevR = err_currL;
+
+                int pow_L = 100 - ((err_currL * kP) + (int_L * kI) + (derv_L * kD)),
+                    pow_R = 100 + ((err_currR * kP) + (int_R * kI) + (derv_R * kD));
+
+                pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
+                pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;
+
+                kHardware::Drive_Velocity(pow_L, pow_R);
+
+                pros::delay(k_sample_rate);
+            }
+        }
+        else
+        {
+            double main_radius {targ_Dist.var / kMath::Deg_To_Rad(targ_Head) },
+                   left_radius {main_radius + (kRobot::k_Wheelbase_Len / 2) },
+                   right_radius {main_radius - (kRobot::k_Wheelbase_Len / 2)};
+
+            targ_Dist_L = kMath::Inch_To_Ticks(Inch{left_radius * kMath::Deg_To_Rad(targ_Head)});
+            targ_Dist_L = kMath::Inch_To_Ticks(Inch{right_radius * kMath::Deg_To_Rad(targ_Head)});
+
+            while ( std::abs(kMath::Inch_To_Ticks(targ_Dist)) - 
+                (std::abs((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
+            {
+                err_currL = targ_Dist_L - aEncL.get_value();
+                err_currR = targ_Dist_R - aEncR.get_value();
+
+                int_L = (std::abs(err_currL) <= 0 || std::abs(err_currL) > kI_winThrsh) ? 0 : int_L + err_currL;
+                int_R = (std::abs(err_currR) <= 0 || std::abs(err_currR) > kI_winThrsh) ? 0 : int_R + err_currR;
+
+                derv_L = err_currL - err_prevL;
+                derv_R = err_currR - err_prevR;
+
+                err_prevL = err_currL;
+                err_prevR = err_currL;
+
+                int pow_L = 100 + ((err_currL * kP) + (int_L * kI) + (derv_L * kD)),
+                    pow_R = 100 - ((err_currR * kP) + (int_R * kI) + (derv_R * kD));
+
+                pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
+                pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;
+
+                kHardware::Drive_Velocity(pow_L, pow_R);
+
+                pros::delay(k_sample_rate);
+            }
+        }
+
+        Clear_All();
     }
     else if (targ_Dist.var)             // Straight.
     {
@@ -114,7 +201,7 @@ auto Auto_PID::Drive() -> void
             err_prevR = err_currR;
 
             int pow_L = (err_currL * kP) + (derv_L * kD),
-                pow_R = (err_currR * kP) + (derv_R * kD);
+                pow_R = -((err_currR * kP) + (derv_R * kD));
 
             pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
             pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;

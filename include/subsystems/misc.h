@@ -59,7 +59,8 @@ namespace kMath     // Math namespace.
 
     //> Auto math <//
 
-    auto Inch_To_Ticks(Inch &inch) -> int;
+    auto Inch_To_Ticks(const Inch &inch) -> int;
+    auto Deg_To_Rad(const Deg &deg) -> double;
 }
 
 //> Misc <//

@@ -21,10 +21,15 @@ auto kMisc::Check_Deadzone(int x, int y) -> int
 // \param inch
 //      Inches to pass to the function.
 // \return OSR ticks converted from inches.
-auto kMath::Inch_To_Ticks(Inch &inch) -> int
+auto kMath::Inch_To_Ticks(const Inch &inch) -> int
 {
     double circ { kRobot::k_twDiameter * M_PI };
     return ( std::round(inch.var / (circ / kRobot::k_OSR_Max_Ticks) ) );
+}
+
+auto kMath::Deg_To_Rad(const Deg &deg) -> double
+{
+    return (deg.var / (180.0 / M_PI) );
 }
 
 //> Misc <//
