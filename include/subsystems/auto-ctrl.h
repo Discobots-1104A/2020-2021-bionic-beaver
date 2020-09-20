@@ -30,6 +30,8 @@ private:
     {
         err_currL = 0;  err_currR = 0;
         err_prevL = 0;  err_prevR = 0;
+        int_L = 0;      int_R = 0;
+        derv_L = 0;     derv_R = 0;
         targ_Head = {}; targ_Dist = {};
     }
 
