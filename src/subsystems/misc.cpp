@@ -7,9 +7,9 @@
 
 // Used to create a deadzone on the joysticks to prevent phantom movements.
 // \param x
-//      An integer value to be compared.
+//      The value to be compared.
 // \param y
-//      An integer value to compare against.
+//      The value to compare against.
 // \return An integer value equal to "x" or 0.
 //
 auto kMisc::Check_Deadzone(int x, int y) -> int
@@ -17,5 +17,20 @@ auto kMisc::Check_Deadzone(int x, int y) -> int
     return ((std::abs(x) > y) ? x : 0);
 }
 
+// Convert inches to OSR ticks.
+// \param inch
+//      Inches to pass to the function.
+// \return OSR ticks converted from inches.
+auto kMath::Inch_To_Ticks(const Inch &inch) -> int
+{
+    double circ { kRobot::k_twDiameter * M_PI };
+    return ( std::round(inch.var / (circ / kRobot::k_OSR_Max_Ticks) ) );
+}
+
+auto kMath::Deg_To_Rad(const Deg &deg) -> double
+{
+    return (deg.var / (180.0 / M_PI) );
+}
+
 //> Misc <//
-kAuton::k_Auto_Select au_Selected_Auto{}; 
+kAuto::k_Auto_Select au_Selected_Auto{};        // Selected autonomous routine.
