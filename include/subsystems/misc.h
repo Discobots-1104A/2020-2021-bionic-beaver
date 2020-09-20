@@ -11,12 +11,13 @@
 //> Misc namespace <//
 namespace kMisc     // Miscellaneous namespace.
 {
-    //> Miscellaneous Functions <//
-
-    auto Check_Deadzone(int x, int y) -> int;
 
     //> Miscellaneous Constants <//
     inline constexpr int k_cDeadzone{ 10 };     // Controller deadzone constant.
+
+    //> Miscellaneous Functions <//
+
+    auto Check_Deadzone(int x, int y) -> int;
 }
 
 //> Robot Measurements and Constants <//
@@ -36,6 +37,13 @@ namespace kRobot        // Robot measurement namespace.
 //> Autonomous Constants <//
 namespace kAuto         // Autonomous constants namespace.
 {
+    //> Autonomous Constants <//
+    inline constexpr double k_au_kP { 0.5 };                    // kP gain.
+    inline constexpr double k_au_kI { 0.05 };                   // kI gain.
+    inline constexpr double k_au_kD { 0.005 };                  // kD gain.
+    inline constexpr double k_au_I_Windup_Threshold { 300 };    // Integral windup threshold.
+
+    //> Autonomous Enums <//
     enum k_Auto_Select      // Autonomous selection enum.
     {      
         RED,               

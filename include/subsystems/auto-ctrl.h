@@ -25,7 +25,7 @@ private:
     kMath::Deg targ_Head{};             // Heading target.
     kMath::Inch targ_Dist{};            // Distance target.
 
-    // Clear errors and targets.
+    // Clear errors, integrals, derivatives, and targets.
     auto Clear_All() -> void
     {
         err_currL = 0;  err_currR = 0;

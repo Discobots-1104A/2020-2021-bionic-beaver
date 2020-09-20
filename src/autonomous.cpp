@@ -12,6 +12,10 @@ auto skl_auto() -> void;
 
 using kMath::Inch;
 using kMath::Deg;
+using kAuto::k_au_kP; 
+using kAuto::k_au_kI; 
+using kAuto::k_au_kD; 
+using kAuto::k_au_I_Windup_Threshold;
 
 //> Autonomous Function <//
 void autonomous()
@@ -35,7 +39,8 @@ void autonomous()
 auto red_auto() -> void
 {
     // Create Auto_PID object "test"
-    Auto_PID test {0.5, 0.05, 0.005, 300.0};
+    // Supplying constructor with the constants in kAuto namespace
+    Auto_PID test {k_au_kP, k_au_kI, k_au_kD, k_au_I_Windup_Threshold};
 
     // Try moving back and forth.
     test.Set_Target(Inch{20}).Drive();
