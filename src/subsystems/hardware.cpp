@@ -5,6 +5,9 @@
 
 #include "subsystems/hardware.h"
 
+// TODO: Wrap motors, sensors, everything in a robot class.
+//       Probably have a main robot class, a motor subclass, sensor subclass.
+
 //> Drive Motors <//
 // Drive, left front.
 pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };

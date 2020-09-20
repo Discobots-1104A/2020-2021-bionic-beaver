@@ -81,47 +81,69 @@ auto Auto_PID::Drive() -> void
 {
     if (targ_Head.var && targ_Dist.var) // Swerve turn.
     {
-        int targ_Dist_L, targ_Dist_R;
+        // Subtract half the robot's length from the distance target depending on the distance mode.
+        targ_Dist.var = (dist_mode == kAuto::k_Dist_Mode::STRAIGHT) ? targ_Dist.var : targ_Dist.var - (kRobot::k_Robot_Len / 2);
+
+        // Create two new uninstantiated integer variables for later.
+        int targ_Dist_L, targ_Dist_R;\
+        
+        // If the heading is negative (counterclockwise)
         if (std::signbit(targ_Head.var))
         {
+            // Find the main radius.
+            // Create two more radii, one longer and one shorter by half the tracking wheel wheelbase length.
             double main_radius {targ_Dist.var / std::abs(kMath::Deg_To_Rad(targ_Head)) },
-                   left_radius {main_radius - (kRobot::k_Wheelbase_Len / 2) },
-                   right_radius {main_radius + (kRobot::k_Wheelbase_Len / 2)};
+                   left_radius {main_radius - (kRobot::k_twBase_Len / 2) },
+                   right_radius {main_radius + (kRobot::k_twBase_Len / 2)};
 
+            // Create two new distance targets with the arc length formula, using the new radii and the heading.
+            // Degrees are in radii. Inches are converted to ticks.
             targ_Dist_L = kMath::Inch_To_Ticks(Inch{left_radius * std::abs(kMath::Deg_To_Rad(targ_Head))});
             targ_Dist_L = kMath::Inch_To_Ticks(Inch{right_radius * std::abs(kMath::Deg_To_Rad(targ_Head))});
 
+            // Keep looping as long as the robot has not reached the uncertainty threshold.
             while ( std::abs(kMath::Inch_To_Ticks(targ_Dist)) - 
                 (std::abs((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
             {
+                // Find the current error.
                 err_currL = targ_Dist_L - aEncL.get_value();
                 err_currR = targ_Dist_R - aEncR.get_value();
 
+                // Find the integral, uses a ternary operator for integral windup prevention.
                 int_L = (std::abs(err_currL) <= 0 || std::abs(err_currL) > kI_winThrsh) ? 0 : int_L + err_currL;
                 int_R = (std::abs(err_currR) <= 0 || std::abs(err_currR) > kI_winThrsh) ? 0 : int_R + err_currR;
 
+                // Find the derivative.
                 derv_L = err_currL - err_prevL;
                 derv_R = err_currR - err_prevR;
 
+                // Assign previous error from current error.
                 err_prevL = err_currL;
                 err_prevR = err_currL;
 
+                // Calculate power. Left side should decrease in power, right side should increase in power.
                 int pow_L = 100 - ((err_currL * kP) + (int_L * kI) + (derv_L * kD)),
                     pow_R = 100 + ((err_currR * kP) + (int_R * kI) + (derv_R * kD));
 
+                // Assign powers to max velocity value if the power value exceeds it.
                 pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
                 pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;
 
+                // Set the powers to the drive.
                 kHardware::Drive_Velocity(pow_L, pow_R);
 
+                // Delay using the supplied rate.
                 pros::delay(k_sample_rate);
             }
         }
+        // If the heading is positive (clockwise)
         else
         {
+            
+            // Code is pretty much the same as above.
             double main_radius {targ_Dist.var / kMath::Deg_To_Rad(targ_Head) },
-                   left_radius {main_radius + (kRobot::k_Wheelbase_Len / 2) },
-                   right_radius {main_radius - (kRobot::k_Wheelbase_Len / 2)};
+                   left_radius {main_radius + (kRobot::k_twBase_Len / 2) },
+                   right_radius {main_radius - (kRobot::k_twBase_Len / 2)};
 
             targ_Dist_L = kMath::Inch_To_Ticks(Inch{left_radius * kMath::Deg_To_Rad(targ_Head)});
             targ_Dist_L = kMath::Inch_To_Ticks(Inch{right_radius * kMath::Deg_To_Rad(targ_Head)});
@@ -141,6 +163,7 @@ auto Auto_PID::Drive() -> void
                 err_prevL = err_currL;
                 err_prevR = err_currL;
 
+                // Calculate power. Left side should increase in power, right side should decrease in power.
                 int pow_L = 100 + ((err_currL * kP) + (int_L * kI) + (derv_L * kD)),
                     pow_R = 100 - ((err_currR * kP) + (int_R * kI) + (derv_R * kD));
 
@@ -152,65 +175,79 @@ auto Auto_PID::Drive() -> void
                 pros::delay(k_sample_rate);
             }
         }
-
-        Clear_All();
     }
     else if (targ_Dist.var)             // Straight.
     {
+        // Subtract half the robot's length from the distance target depending on the distance mode.
         targ_Dist.var = (dist_mode == kAuto::k_Dist_Mode::STRAIGHT) ? targ_Dist.var : targ_Dist.var - (kRobot::k_Robot_Len / 2);
 
+        // Keep looping as long as the robot has not reached the uncertainty threshold.
         while ( std::abs(kMath::Inch_To_Ticks(targ_Dist)) - 
             (std::abs((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
         {
+            // Find the current error.
             err_currL = kMath::Inch_To_Ticks(targ_Dist) - aEncL.get_value();
             err_currR = kMath::Inch_To_Ticks(targ_Dist) - aEncR.get_value();
             
+            // Find the integral, uses a ternary operator for integral windup prevention.
             int_L = (std::abs(err_currL) <= 0 || std::abs(err_currL) > kI_winThrsh) ? 0 : int_L + err_currL;
             int_R = (std::abs(err_currR) <= 0 || std::abs(err_currR) > kI_winThrsh) ? 0 : int_R + err_currR;
 
+            // Find the derivative.
             derv_L = err_currL - err_prevL;
             derv_R = err_currR - err_prevR;
 
+            // Assign previous error from current error.
             err_prevL = err_currL;
             err_prevR = err_currL;
             
+            // Calculate power.
             int pow_L = (err_currL * kP) + (int_L * kI) + (derv_L * kD),
                 pow_R = (err_currR * kP) + (int_R * kI) + (derv_R * kD);
 
+            // Assign powers to max velocity value if the power value exceeds it.
             pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
             pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;
 
+            // Set the powers to the drive.
             kHardware::Drive_Velocity(pow_L, pow_R);
 
+            // Delay using the supplied rate.
             pros::delay(k_sample_rate);
         }
-
-        Clear_All();
     }
     else if (targ_Head.var)             // Point turn.
     {
+        // Keep looping as long as the absolute difference between the target heading and current heading is greater than zero.
         while ( std::abs(targ_Head.var) - std::abs(sIMU.get_heading()) > 0 )
         {
+            // Find the current error.
             err_currL = targ_Head.var - sIMU.get_heading();
             err_currR = targ_Head.var - sIMU.get_heading();
 
+            // Find the derivative.
             derv_L = err_currL - err_prevL;
             derv_R = err_currR - err_prevR;
 
+            // Assign previous error from current error.
             err_prevL = err_currL;
             err_prevR = err_currR;
 
+            // Calculate power. On clockwise rotations, left side positive, right side negative.
             int pow_L = (err_currL * kP) + (derv_L * kD),
                 pow_R = -((err_currR * kP) + (derv_R * kD));
 
+            // Assign powers to max velocity value if the power value exceeds it.
             pow_L = (std::abs(pow_L) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_L) : pow_L;
             pow_R = (std::abs(pow_R) > kRobot::k_mMax_Vel) ? std::copysign(kRobot::k_mMax_Vel, pow_R) : pow_R;
 
+            // Set the powers to the drive.
             kHardware::Drive_Velocity(pow_L, pow_R);
 
+            // Delay using the supplied rate.
             pros::delay(k_sample_rate);
         }
-
-        Clear_All();
     }
+    // Clear all errors, integrals, derivatives, and targets.
+    Clear_All();
 }

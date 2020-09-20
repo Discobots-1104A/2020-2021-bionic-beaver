@@ -90,7 +90,7 @@ namespace kHardware     // Hardware namespace.
     inline constexpr int k_Type_Blu { 0 };          // Blue sig, type of sig.
     inline constexpr double k_Range_Blu { 0.6 };    // Blue sig, scale factor.
 
-    //> Colour signature enums <//
+    //> Hardware enums <//
     enum k_Colour_Sig       // Colour signature.
     {
         RED,
