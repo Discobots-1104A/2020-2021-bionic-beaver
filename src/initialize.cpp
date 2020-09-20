@@ -27,7 +27,7 @@ void initialize()
     // TODO: add necessary initialization
     // Start LLEMU Selector screen
     Selection_Screen();
-    int calbr_Start{ pros::millis() };      // Note calibration start time.
+    int calbr_Start{ static_cast<int>(pros::millis()) };      // Note calibration start time.
     pros::lcd::set_text(0, "AUTO SELECTED.");
 
     // Set the break modes to hold on the conveyor and intake motors.
@@ -64,7 +64,7 @@ void initialize()
     pros::lcd::clear_line(4);   pros::lcd::clear_line(5);
 
     pros::lcd::print(4, "IMU CALIBRATED. TOOK %d ms.", imu_calbr_Elaps);
-    pros::lcd::print(5, "READY. TOOK %d ms.", pros::millis() - calbr_Start);
+    pros::lcd::print(5, "READY. TOOK %d ms.", static_cast<int>(pros::millis()) - calbr_Start);
     pros::delay(2000);
     pros::lcd::clear();
 }
@@ -104,9 +104,9 @@ auto Selection_Screen() -> void
 
         // Scrolling selection.
         if (pros::lcd::read_buttons() == LCD_BTN_LEFT)          // Scroll left.
-            if (cur_select > 0) { --cur_select; }
+            { if (cur_select > 0) { --cur_select; } }
         else if (pros::lcd::read_buttons() == LCD_BTN_RIGHT)    // Scroll right.
-            if (cur_select < 2) { ++cur_select; }
+            { if (cur_select < 2) { ++cur_select; } }
         else if (pros::lcd::read_buttons() == LCD_BTN_CENTER)   // Confirm selection.
         {
             // Assign selected autons and sorting colour based on value of cur_select
