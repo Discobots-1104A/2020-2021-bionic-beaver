@@ -26,7 +26,7 @@ namespace kRobot        // Robot measurement namespace.
     inline constexpr int k_OSR_Max_Ticks { 360 };       // Max optical shaft encoder ticks.
     inline constexpr int k_mMax_Vel { 200 };            // Max motor velocity.
     inline constexpr double k_mGear_Ratio { 1.75 };     // Gear ratio of the drive.
-    inline constexpr double k_twDiameter { 2.75 };      // Tracking wheel diameter in inches,
+    inline constexpr double k_twDiameter { 3.25 };      // Tracking wheel diameter in inches,
     inline constexpr double k_Wheelbase_Len { 12.5 };   // Wheelbase length in inches.
     inline constexpr double k_twBase_Len { 12.0 };      // Length between both side tracking wheels in inches.
     inline constexpr double k_mtwLen { 6.5 };           // Length from center of robot to middle tracking wheel in inches.
@@ -38,9 +38,9 @@ namespace kRobot        // Robot measurement namespace.
 namespace kAuto         // Autonomous constants namespace.
 {
     //> Autonomous Constants <//
-    inline constexpr double k_au_kP { 0.5 };                    // kP gain.
-    inline constexpr double k_au_kI { 0.05 };                   // kI gain.
-    inline constexpr double k_au_kD { 0.005 };                  // kD gain.
+    inline constexpr double k_au_kP { 100.0 };                    // kP gain.
+    inline constexpr double k_au_kI { 0.0 };                   // kI gain.
+    inline constexpr double k_au_kD { 0.0 };                  // kD gain.
     inline constexpr double k_au_I_Windup_Threshold { 300 };    // Integral windup threshold.
 
     //> Autonomous Enums <//

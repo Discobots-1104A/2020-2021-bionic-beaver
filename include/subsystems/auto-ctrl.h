@@ -35,6 +35,16 @@ private:
         targ_Head = {}; targ_Dist = {};
     }
 
+    // Clear errors, integrals, derivatives, reset tracking wheels.
+    auto Clear_No_Targets() -> void
+    {
+        err_currL = 0;  err_currR = 0;
+        err_prevL = 0;  err_prevR = 0;
+        int_L = 0;      int_R = 0;
+        derv_L = 0;     derv_R = 0;
+        aEncL.reset();  aEncR.reset();  aEncM.reset();
+    }
+
 public:
     // Constructor
 

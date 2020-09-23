@@ -36,11 +36,11 @@ pros::Vision sVision { kHardware::k_sVision };
 
 //> Analog Sensors <//
 // Encoder, left.
-pros::ADIEncoder aEncL { kHardware::k_aEncLT, kHardware::k_aEncLB, false };
+pros::ADIEncoder aEncL { kHardware::k_aEncLT, kHardware::k_aEncLB, true };
 // Encoder, right.
 pros::ADIEncoder aEncR { kHardware::k_aEncRT, kHardware::k_aEncRB, false };
 // Encoder. middle.
-pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, false };
+pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, true };
 
 //> Controllers <//
 pros::Controller cMaster { cID::E_CONTROLLER_MASTER };

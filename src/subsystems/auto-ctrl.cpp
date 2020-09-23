@@ -79,6 +79,8 @@ auto Auto_PID::Set_PID(double P, double I, double D, double i_winThrsh) -> Auto_
 // If supplied with both a distance and heading, the robot will swerve to the target.
 auto Auto_PID::Drive() -> void
 {
+    Clear_No_Targets();
+
     if (targ_Head.var && targ_Dist.var) // Swerve turn.
     {
         // Subtract half the robot's length from the distance target depending on the distance mode.
@@ -182,12 +184,12 @@ auto Auto_PID::Drive() -> void
         targ_Dist.var = (dist_mode == kAuto::k_Dist_Mode::STRAIGHT) ? targ_Dist.var : targ_Dist.var - (kRobot::k_Robot_Len / 2);
 
         // Keep looping as long as the robot has not reached the uncertainty threshold.
-        while ( std::abs(kMath::Inch_To_Ticks(targ_Dist)) - 
-            (std::abs((aEncL.get_value() + aEncR.get_value()) / 2) ) > k_uncertainty)
+        while ( std::abs(kMath::Inch_To_Ticks(targ_Dist) - 
+                (aEncL.get_value() + aEncR.get_value()) / 2) > k_uncertainty)
         {
             // Find the current error.
-            err_currL = kMath::Inch_To_Ticks(targ_Dist) - aEncL.get_value();
-            err_currR = kMath::Inch_To_Ticks(targ_Dist) - aEncR.get_value();
+            err_currL = kMath::Inch_To_Ticks(targ_Dist) - ((aEncL.get_value() + aEncR.get_value()) / 2);
+            err_currR = kMath::Inch_To_Ticks(targ_Dist) - ((aEncL.get_value() + aEncR.get_value()) / 2);
             
             // Find the integral, uses a ternary operator for integral windup prevention.
             int_L = (std::abs(err_currL) <= 0 || std::abs(err_currL) > kI_winThrsh) ? 0 : int_L + err_currL;

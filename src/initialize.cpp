@@ -26,9 +26,13 @@ void initialize()
     // TODO: create auton selector
     // TODO: add necessary initialization
     // Start LLEMU Selector screen
+    pros::lcd::initialize();
+    pros::delay(1250);
+    
     Selection_Screen();
-    int calbr_Start{ static_cast<int>(pros::millis()) };      // Note calibration start time.
     pros::lcd::set_text(0, "AUTO SELECTED.");
+
+    int calbr_Start{ static_cast<int>(pros::millis()) };      // Note calibration start time
 
     // Set the break modes to hold on the conveyor and intake motors.
     mIL.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Intake left.
@@ -55,17 +59,13 @@ void initialize()
     sIMU.reset();           // Start IMU calibration.
     int imu_calbr_Elaps{ 0 };               // Keep track of elapsed time.
     pros::lcd::set_text(4, "CALIBRATING IMU...");
-    while (sIMU.is_calibrating())           // Block execution until IMU is calibrated.
-    {
-        pros::lcd::print(5, "ELAPSED: %d ms", imu_calbr_Elaps);
-        imu_calbr_Elaps += 10;
-        pros::delay(10);
-    }
-    pros::lcd::clear_line(4);   pros::lcd::clear_line(5);
+    pros::delay(2250);
+    pros::lcd::clear_line(4);
 
-    pros::lcd::print(4, "IMU CALIBRATED. TOOK %d ms.", imu_calbr_Elaps);
+    pros::lcd::set_text(4, "IMU CALIBRATED.");
     pros::lcd::print(5, "READY. TOOK %d ms.", static_cast<int>(pros::millis()) - calbr_Start);
-    pros::delay(2000);
+    pros::lcd::set_text(6, "PRESS CENTER TO CONTINUE.");
+    while (pros::lcd::read_buttons() != LCD_BTN_CENTER) { pros::delay(5); };
     pros::lcd::clear();
 }
 
@@ -76,43 +76,42 @@ auto Selection_Screen() -> void
 {
     //TODO: Fix Selection_Screen() code cuz its doodoo.
     // Initialize and give 1 second to do so.
-    pros::lcd::initialize();
-    while (pros::lcd::is_initialized() == false) {}
 
     // Create temp int for selection.
     int cur_select {0};
-    pros::lcd::set_text(0, "SELECT AUTO:");
+    pros::lcd::set_text(0, "SELECT SORT:");
 
     while (true)
     {
         // Change what's displayed based on value of cur_select
         if (cur_select == 0)
         {
-            pros::lcd::print(1, "AUTO: RED  ");
-            pros::lcd::print(2, "SORT: BLUE");
+            pros::lcd::print(1, "SORT: BLUE");
         }
         else if (cur_select == 1)
         {
-            pros::lcd::print(1, "AUTO: BLUE ");
-            pros::lcd::print(2, "SORT: RED ");
+            pros::lcd::print(1, "SORT: RED ");
         }
         else if (cur_select == 2)
         {
-            pros::lcd::print(1, "AUTO: SKILLS");
-            pros::lcd::print(2, "SORT: BLUE");
+            pros::lcd::print(1, "SORT: BLUE");
         }
 
         // Scrolling selection.
         if (pros::lcd::read_buttons() == LCD_BTN_LEFT)          // Scroll left.
             { if (cur_select > 0) { --cur_select; } }
-        else if (pros::lcd::read_buttons() == LCD_BTN_RIGHT)    // Scroll right.
+        else if (pros::lcd::read_buttons() == LCD_BTN_RIGHT)    // Scrll right.
             { if (cur_select < 2) { ++cur_select; } }
         else if (pros::lcd::read_buttons() == LCD_BTN_CENTER)   // Confirm selection.
         {
             // Assign selected autons and sorting colour based on value of cur_select
+            pros::lcd::clear_line(0); pros::lcd::clear_line(1); pros::lcd::clear_line(2);
+            pros::delay(1000);
             Select_Auto(cur_select);
             break;
         }
+
+        pros::delay(300);
     }
 }
 
@@ -122,21 +121,15 @@ auto Select_Auto(int selected) -> void
     {
     // Red autonomous, sort blue balls.
     case 0 :
-        au_Selected_Auto = kAuto::k_Auto_Select::RED;
         op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-        pros::lcd::clear();
         break;
     // Blue autonomous, sort red balls.
     case 1 :
-        au_Selected_Auto = kAuto::k_Auto_Select::BLUE;
         op_Sorting_Colour = kHardware::k_Colour_Sig::RED;
-        pros::lcd::clear();
         break;
     // Skills autonomous, sort blue balls.
     case 2 :
-        au_Selected_Auto = kAuto::k_Auto_Select::SKILLS;
         op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-        pros::lcd::clear();
         break;
     }
 }

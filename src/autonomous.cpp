@@ -21,62 +21,7 @@ using kAuto::k_au_I_Windup_Threshold;
 void autonomous()
 {
     // Use a switch statement to determine which auto routine to run.
-    switch (au_Selected_Auto)
-    {
-    case kAuto::k_Auto_Select::RED:
-        red_auto();
-        break;
-    case kAuto::k_Auto_Select::BLUE:
-        blu_auto();
-        break;
-    case kAuto::k_Auto_Select::SKILLS:
-        skl_auto();
-        break;
-    }
-}
-
-//> Red Auto <//
-auto red_auto() -> void
-{
-    // Create Auto_PID object "test"
-    // Supplying constructor with the constants in kAuto namespace
-    Auto_PID test {k_au_kP, k_au_kI, k_au_kD, k_au_I_Windup_Threshold};
-
-    // Try moving back and forth.
-    test.Set_Target(Inch{20}).Drive();
-    pros::delay(500);
-    test.Set_Target(Inch{-20}).Drive();
-    pros::delay(1000);
-
-    // Try in place turn
-    test.Set_Target(Deg{90}).Drive();
-    pros::delay(500);
-    test.Set_Target(Deg{0}).Drive();
-    pros::delay(1000);
-    test.Set_Target(Deg{-90}).Drive();
-    pros::delay(500);
-    test.Set_Target(Deg{0}).Drive();
-    pros::delay(1000);
-
-    // Try swerve turn.
-    test.Set_Target(Inch{20}).Set_Target(Deg{45}).Drive();
-    pros::delay(500);
-    test.Set_Target(Inch{-20}).Set_Target(Deg{45}).Drive();
-    pros::delay(500);
-    test.Set_Target(Inch{20}).Set_Target(Deg{-45}).Drive();
-    pros::delay(500);
-    test.Set_Target(Inch{-20}).Set_Target(Deg{-45}).Drive();
-    pros::delay(1000);
-}
-
-//> Blue Auto <//
-auto blu_auto() -> void
-{
-
-}
-
-//> Skills Auto<//
-auto skl_auto() -> void
-{
-
+    kHardware::Pow_Intake_Convy(0, 300, 300);
+    pros::delay(2000);
+    kHardware::Pow_Intake_Convy();
 }
