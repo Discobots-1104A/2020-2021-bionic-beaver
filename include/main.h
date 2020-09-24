@@ -43,6 +43,7 @@
 //#include "pros/api_legacy.h"
 #include "subsystems/hardware.h"
 #include "subsystems/misc.h"
+#include "subsystems/auto-ctrl.h"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do

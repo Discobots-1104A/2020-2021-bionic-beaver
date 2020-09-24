@@ -1,4 +1,4 @@
-# Pull Request \#(NUMBER)
+# Pull Request (NUMBER)
 
 ## Proposed Changes
 <!-- Provide a concise description of the proposed changes -->
@@ -10,3 +10,4 @@
 
 ### References (optional)
 <!-- If this PR is related to an issue or task, reference it here (e.g. closes #1) -->
+<!-- Remove this header if you're not using it -->
