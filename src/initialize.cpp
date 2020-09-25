@@ -38,7 +38,7 @@ void initialize()
     mIL.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Intake left.
     mIR.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Intake right.
     mCT.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Conveyor top.
-    mCB.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Conveyor bottom.
+    mCB.set_brake_mode(mBreak::E_MOTOR_BRAKE_BRAKE);     // Conveyor bottom.
     pros::lcd::set_text(1, "BREAK MODES SET.");
 
     // Tracking wheel reset.
