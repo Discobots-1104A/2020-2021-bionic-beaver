@@ -57,7 +57,7 @@ namespace kHardware     // Hardware namespace.
     inline constexpr int k_mIL { 17 };      // Intake port, mIL.
     inline constexpr int k_mIR { 7 };       // Intake port, mIR.
     inline constexpr int k_mCB { 8 };       // Conveyor port, mCB.
-    inline constexpr int k_mCT { 18 };      // Conveyor port, mCT.
+    inline constexpr int k_mCT { 15 };      // Conveyor port, mCT.
 
     //> Smart Sensor Port Numbers <//
     inline constexpr int k_sIMU { 16 };     // Smart sensor, senIMU.
