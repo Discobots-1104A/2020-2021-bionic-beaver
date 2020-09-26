@@ -39,7 +39,7 @@ auto Op_Control_Drive() -> void
         // Assign arcade drive voltages to the wheels.
         kHardware::Drive_Voltage(pow + trn, pow - trn);
         // Delay to not hog resources.
-        pros::delay(10);
+        pros::delay(5);
     }
 }
 
@@ -75,7 +75,18 @@ auto Op_Control_Intk_Convy() -> void
             kHardware::Pow_Intake_Convy();  // If no buttons pressed, turn off all the intake and conveyor motors.
 
         // Delay to not hog resources.
-        pros::delay(10);
+        pros::delay(5);
+    }
+}
+
+auto Debug() -> void
+{
+    while (true)
+    {
+        pros::vision_object_s_t ball1 { sVision.get_by_size(0) };
+        pros::lcd::print(0, "ball width:%d", ball1.width);
+        pros::lcd::print(1, "ball height:%d", ball1.height);
+        pros::delay(5);
     }
 }
 
@@ -86,6 +97,8 @@ void opcontrol()
     pros::Task intake_conveyor_control { Op_Control_Intk_Convy, "Intake Conveyor Control"};
     // Chassis control task.
     pros::Task chassis_control { Op_Control_Drive, "Chassis Control" };
+    // Debug
+    //pros::Task debug { Debug, "Debug" };
 }
 
 
@@ -93,14 +106,14 @@ void opcontrol()
 
 auto Ball_Sort(const pros::vision_object_s_t &ball, int mid_pow) -> int
 {
-  return ( (ball.signature == op_Sorting_Colour) ? -600 : mid_pow );
+  return ( (ball.width > 50) ? -600 : mid_pow );
 }
 
 auto Macro_Indexing() -> void
 {
     while (mcr_indexing.notify_take(true, TIMEOUT_MAX))
     {
-        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+        pros::vision_object_s_t ball { sVision.get_by_sig(0, kHardware::k_Colour_Sig::BLUE) };
 
         if (auto_pooping)
             kHardware::Pow_Intake_Convy(600, Ball_Sort(ball, 0), 600);
@@ -113,7 +126,7 @@ auto Macro_Cycling() -> void
 {
     while (mcr_cycling.notify_take(true, TIMEOUT_MAX))
     {
-        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+        pros::vision_object_s_t ball { sVision.get_by_sig(0, kHardware::k_Colour_Sig::BLUE) };
 
         if (auto_pooping)
             kHardware::Pow_Intake_Convy(600, Ball_Sort(ball, 600), 600);

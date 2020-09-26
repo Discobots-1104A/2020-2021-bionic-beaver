@@ -66,7 +66,11 @@ void initialize()
     pros::lcd::print(5, "READY. TOOK %d ms.", static_cast<int>(pros::millis()) - calbr_Start);
     pros::lcd::set_text(6, "PRESS CENTER TO CONTINUE.");
     while (pros::lcd::read_buttons() != LCD_BTN_CENTER) { pros::delay(5); };
-    pros::lcd::clear();
+    
+    for (auto i {0}; i < 7; ++i)
+    {
+        pros::lcd::clear_line(i);
+    }
 }
 
 auto Select_Auto(int selected) -> void;
