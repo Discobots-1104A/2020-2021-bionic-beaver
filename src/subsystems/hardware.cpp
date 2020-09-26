@@ -7,8 +7,7 @@
 
 //* Headers
 
-// Main header.
-#include "main.h"
+#include "main.h"   // Main header.
 
 
 //* Definitions

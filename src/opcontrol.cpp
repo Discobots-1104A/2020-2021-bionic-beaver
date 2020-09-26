@@ -7,11 +7,10 @@
 
 //* Headers
 
-// Main header.
-#include "main.h"
+#include "main.h"   // Main header.
 
 
-//* Functions
+//* Definitions
 
 // Main operator control callback.
 void opcontrol()
