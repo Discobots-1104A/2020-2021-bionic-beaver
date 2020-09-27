@@ -25,34 +25,34 @@ namespace k_Hardware
 //? In order of: LF, LB, RF, RB.
 struct h_Drive_Ports
 {
-    int pt_LF;  // Drive port, left front.
-    int pt_LB;  // Drive port, left back.
-    int pt_RF;  // Drive port, right font.
-    int pt_RB;  // Drive port, right back.
+    std::uint8_t pt_LF;     // Drive port, left front.
+    std::uint8_t pt_LB;     // Drive port, left back.
+    std::uint8_t pt_RF;     // Drive port, right font.
+    std::uint8_t pt_RB;     // Drive port, right back.
 };
 
 /// struct - Conveyor ports.
 //? In order of: bottom, top.
 struct h_Conveyor_Ports
 {
-    int pt_CB;  // Conveyor port, bottom.
-    int pt_CT;  // Conveyor port, top.
+    std::uint8_t pt_CB;     // Conveyor port, bottom.
+    std::uint8_t pt_CT;     // Conveyor port, top.
 };
 
 /// struct - Intake ports.
 //? In order of: left, right.
 struct h_Intake_Ports
 {
-    int pt_IL;  // Intake port, left.
-    int pt_IR;  // Intake port, right.
+    std::uint8_t pt_IL;     // Intake port, left.
+    std::uint8_t pt_IR;     // Intake port, right.
 };
 
 /// struct - Smart sensor ports.
 //? In order of: IMU, Vision
 struct h_Smart_Sen_Ports
 {
-    int pt_IMU;
-    int pt_Vision;
+    std::uint8_t pt_IMU;    // Smart sensor port, IMU.
+    std::uint8_t pt_Vision; // Smart sensor port, Vision.
 };
 
 /// struct - Analog sensor ports. 
@@ -60,14 +60,14 @@ struct h_Smart_Sen_Ports
 //? In order of: Left tracking wheel, right tracking wheel, middle tracking wheel. 
 struct h_Analog_Sen_Ports
 {
-    int pt_Enc_LT;
-    int pt_Enc_LB;
-    int pt_Enc_RT;
-    int pt_Enc_RB;
-    int pt_Enc_MT;
-    int pt_Enc_MB;
+    std::uint8_t pt_Enc_LT; // Analog port, encoder left top.
+    std::uint8_t pt_Enc_LB; // Analog port, encoder left bottom.
+    std::uint8_t pt_Enc_RT; // Analog port, encoder right top.
+    std::uint8_t pt_Enc_RB; // Analog port, encoder right bottom.
+    std::uint8_t pt_Enc_MT; // Analog port, encoder middle top.
+    std::uint8_t pt_Enc_MB; // Analog port, encoder middle bottom.
 
-    h_Analog_Sen_Ports(int LT, int RT, int MT);
+    h_Analog_Sen_Ports(std::uint8_t LT, std::uint8_t RT, std::uint8_t MT);
 };
 
 /// class - Chassis.

@@ -26,7 +26,7 @@ double h_Chassis::avg_motor_pos()
 /// \param LT Top port of the left OSR.
 /// \param RT Top port of the right OSR.
 /// \param MT Top port of the middle OSR.
-h_Analog_Sen_Ports::h_Analog_Sen_Ports(int LT, int RT, int MT)
+h_Analog_Sen_Ports::h_Analog_Sen_Ports(std::uint8_t LT, std::uint8_t RT, std::uint8_t MT)
     : pt_Enc_LT {LT}, pt_Enc_LB {++LT}, pt_Enc_RT {RT}, pt_Enc_RB {++RT} , pt_Enc_MT {MT} , pt_Enc_MB {++MT}
     {}
 
