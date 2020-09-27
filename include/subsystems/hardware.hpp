@@ -4,7 +4,7 @@
 //* File Created: 2020-09-26
 //* Desc: Hardware class declarations.
 
-//! Prefix all objects here with "h_" except for child members.
+//! Prefix all objects here with "h_" except for child members and namespaces.
 
 #ifndef HARDWARE_HPP
 #define HARDWARE_HPP
@@ -14,12 +14,15 @@
 
 
 //* Constants
-
+namespace k_Hardware
+{
+    inline constexpr int mot_pos_range {5};     // Motor positional movement range.
+}
 
 //* User-defined types
 
 /// struct - drive Ports.
-//! In order of: LF, LB, RF, RB.
+//? In order of: LF, LB, RF, RB.
 struct h_Drive_Ports
 {
     int pt_LF;  // Drive port, left front.
@@ -29,7 +32,7 @@ struct h_Drive_Ports
 };
 
 /// struct - Conveyor ports.
-//! In order of: bottom, top.
+//? In order of: bottom, top.
 struct h_Conveyor_Ports
 {
     int pt_CB;  // Conveyor port, bottom.
@@ -37,7 +40,7 @@ struct h_Conveyor_Ports
 };
 
 /// struct - Intake ports.
-//! In order of: left, right.
+//? In order of: left, right.
 struct h_Intake_Ports
 {
     int pt_IL;  // Intake port, left.
@@ -45,16 +48,16 @@ struct h_Intake_Ports
 };
 
 /// struct - Smart sensor ports.
-//! In order of: IMU, Vision
+//? In order of: IMU, Vision
 struct h_Smart_Sen_Ports
 {
     int pt_IMU;
     int pt_Vision;
 };
 
-/// struct - Analog sensor ports.
-//! Use only the top port number.
-//! In order of: Left tracking wheel, right tracking wheel, middle tracking wheel.
+/// struct - Analog sensor ports. 
+//! Use only the top port number. 
+//? In order of: Left tracking wheel, right tracking wheel, middle tracking wheel. 
 struct h_Analog_Sen_Ports
 {
     int pt_Enc_LT;
@@ -65,6 +68,36 @@ struct h_Analog_Sen_Ports
     int pt_Enc_MB;
 
     h_Analog_Sen_Ports(int LT, int RT, int MT);
+};
+
+/// class - Chassis.
+/// Has all necessary objects and functions.
+class h_Chassis
+{
+public:
+    h_Chassis(   
+            h_Drive_Ports ports, 
+            pros::motor_gearset_e cartridge = pros::E_MOTOR_GEARSET_18,
+            pros::motor_encoder_units_e enc_unit = pros::E_MOTOR_ENCODER_COUNTS,
+            pros::motor_brake_mode_e brake_mode = pros::E_MOTOR_BRAKE_COAST
+        );
+    h_Chassis& set_brake_mode(pros::motor_brake_mode_e brake_mode);
+    h_Chassis& reset_enc();
+    h_Chassis& drive_rel(double position, int velocity);
+    h_Chassis& drive_abs(double position, int velocity);
+    void drive_vel(int l_velocity = 0, int r_velocity = 0);
+    void drive_vol(int l_voltage = 0, int r_voltage = 0);
+    void wait_until_settled();
+
+private:
+    bool is_settled = true;
+    pros::Motor m_LF;
+    pros::Motor m_LB;
+    pros::Motor m_RF;
+    pros::Motor m_RB;
+
+    double avg_motor_pos();
+
 };
 
 #endif  // HARDWARE_HPP
