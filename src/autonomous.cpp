@@ -7,10 +7,11 @@
 
 //* Headers
 
-#include "main.h"   // Main header.
+// Main header.
+#include "main.h"
 
 
-//* Definitions
+//* Functions
 
 // Main autonomous control callback.
 void autonomous()
