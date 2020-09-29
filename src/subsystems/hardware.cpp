@@ -38,7 +38,7 @@ h_Analog_Sen_Ports::h_Analog_Sen_Ports(std::uint8_t LT, std::uint8_t RT, std::ui
 /// \param enc_unit     Encoder units of all motors.
 /// \param brake_mode   Brake mode of all motors.
 h_Chassis::h_Chassis(
-        h_Drive_Ports ports, pros::motor_gearset_e cartridge, 
+        const h_Drive_Ports &ports, pros::motor_gearset_e cartridge, 
         pros::motor_encoder_units_e enc_unit, pros::motor_brake_mode_e brake_mode
     )
     : m_LF {ports.pt_LF, cartridge, false, enc_unit}, m_LB {ports.pt_LB, cartridge, false, enc_unit},
@@ -100,7 +100,7 @@ h_Chassis& h_Chassis::drive_abs(double position, int velocity)
 }
 
 /// Drives the chassis based on velocity. Max velocity based on chassis cartridge 
-/// supplied. Supplying no parameters stops the motors.
+/// supplied. Supplying no or zeroed parameters stops the motors.
 /// \param l_velocity Left side velocity.
 /// \param r_velocity Right side velocity.
 void h_Chassis::drive_vel(int l_velocity, int r_velocity)
@@ -133,4 +133,42 @@ void h_Chassis::wait_until_settled()
     }
 
     is_settled = true;
+}
+
+/// class - Chassis
+//? This constructor has default values for all values besides the port numbers. 
+//? You do not have to specify it all.
+/// \param ports        Ports numbers to assign.
+/// \param cartridge    Cartridge of all motors.
+/// \param enc_unit     Encoder units of all motors.
+/// \param brake_mode   Brake mode of all motors.
+h_Conveyor::h_Conveyor(
+        const h_Conveyor_Ports &ports, pros::motor_gearset_e cartridge,
+        pros::motor_encoder_units_e enc_unit, pros::motor_brake_mode_e brake_mode_cb,
+        pros::motor_brake_mode_e brake_mode_ct
+    )
+    : m_CB { ports.pt_CB, cartridge, false, enc_unit}, m_CT { ports.pt_CT, cartridge, false, enc_unit}
+    {
+        m_CB.set_brake_mode(brake_mode_cb);
+        m_CT.set_brake_mode(brake_mode_ct);
+    }
+
+/// Sets the velocity to both conveyor motors with a supplied velocity value.
+/// Supplying no or zeroed parameters stops the motors.
+/// \param velocity Velocity supplied.
+void h_Conveyor::set_vel(int velocity)
+{
+    m_CB.move_velocity(velocity);
+    m_CT.move_velocity(velocity);
+}
+
+/// Sets individual velocites to the top and bottom motors with supplied 
+/// velocity values. 
+//! Has no default parameters. You must supply velocities.
+/// \param t_velocity Top conveyor velocity.
+/// \param b_velocity Bottom conveyor velocity.
+void h_Conveyor::set_vel(int t_velocity, int b_velocity)
+{
+    m_CB.move_velocity(b_velocity);
+    m_CT.move_velocity(t_velocity);
 }
