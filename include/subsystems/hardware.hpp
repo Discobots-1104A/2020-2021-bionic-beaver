@@ -107,7 +107,7 @@ class h_Conveyor
 public:
     h_Conveyor(
         const h_Conveyor_Ports &ports,
-        pros::motor_gearset_e cartridge = pros::E_MOTOR_GEARSET_18,
+        pros::motor_gearset_e cartridge = pros::E_MOTOR_GEARSET_06,
         pros::motor_encoder_units_e enc_unit = pros::E_MOTOR_ENCODER_COUNTS,
         pros::motor_brake_mode_e brake_mode_cb = pros::E_MOTOR_BRAKE_BRAKE,
         pros::motor_brake_mode_e brake_mode_ct = pros::E_MOTOR_BRAKE_HOLD
@@ -120,6 +120,28 @@ public:
 private:
     pros::Motor m_CB;
     pros::Motor m_CT;
+
+};
+
+/// class - Intake
+/// Has all the necessary objects and functions.
+class h_Intake
+{
+public:
+    h_Intake(
+        const h_Intake_Ports &ports,
+        pros::motor_gearset_e cartridge = pros::E_MOTOR_GEARSET_06,
+        pros::motor_encoder_units_e enc_unit = pros::E_MOTOR_ENCODER_COUNTS,
+        pros::motor_brake_mode_e brake_mode = pros::E_MOTOR_BRAKE_HOLD
+    );
+    h_Intake& set_brake_mode(pros::motor_brake_mode_e brake_mode);
+    h_Intake& set_brake_mode(pros::motor_brake_mode_e brake_mode_l, pros::motor_brake_mode_e brake_mode_r);
+    void set_vel(int velocity = 0);
+    void set_vel(int l_velocity, int r_velocity);
+
+private:
+    pros::Motor m_IL;
+    pros::Motor m_IR;
 
 };
 
