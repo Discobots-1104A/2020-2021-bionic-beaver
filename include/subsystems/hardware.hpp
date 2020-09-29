@@ -112,6 +112,8 @@ public:
         pros::motor_brake_mode_e brake_mode_cb = pros::E_MOTOR_BRAKE_BRAKE,
         pros::motor_brake_mode_e brake_mode_ct = pros::E_MOTOR_BRAKE_HOLD
     );
+    h_Conveyor& set_brake_mode(pros::motor_brake_mode_e brake_mode);
+    h_Conveyor& set_brake_mode(pros::motor_brake_mode_e brake_mode_cb, pros::motor_brake_mode_e brake_mode_ct);
     void set_vel(int velocity = 0);
     void set_vel(int t_velocity, int b_velocity);
 

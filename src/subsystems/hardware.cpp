@@ -51,7 +51,7 @@ h_Chassis::h_Chassis(
     }
 
 /// Sets the brake mode of the chassis.
-/// \param brake_mode The brake mode to set the chassis.
+/// \param brake_mode The brake mode to set the chassis as.
 h_Chassis& h_Chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
 {
     m_LF.set_brake_mode(brake_mode);
@@ -135,13 +135,14 @@ void h_Chassis::wait_until_settled()
     is_settled = true;
 }
 
-/// class - Chassis
+/// class - Chassis 
 //? This constructor has default values for all values besides the port numbers. 
 //? You do not have to specify it all.
-/// \param ports        Ports numbers to assign.
-/// \param cartridge    Cartridge of all motors.
-/// \param enc_unit     Encoder units of all motors.
-/// \param brake_mode   Brake mode of all motors.
+/// \param ports            Ports numbers to assign.
+/// \param cartridge        Cartridge of all motors.
+/// \param enc_unit         Encoder units of all motors.
+/// \param brake_mode_cb    Brake mode of the bottom motor.
+/// \param brake_mode_ct    Brake mode of the top motor.
 h_Conveyor::h_Conveyor(
         const h_Conveyor_Ports &ports, pros::motor_gearset_e cartridge,
         pros::motor_encoder_units_e enc_unit, pros::motor_brake_mode_e brake_mode_cb,
@@ -152,6 +153,25 @@ h_Conveyor::h_Conveyor(
         m_CB.set_brake_mode(brake_mode_cb);
         m_CT.set_brake_mode(brake_mode_ct);
     }
+
+/// Sets the brake mode of the conveyor subsystem.
+/// \param brake_mode The brake mode to set the conveyors as.
+h_Conveyor& h_Conveyor::set_brake_mode(pros::motor_brake_mode_e brake_mode)
+{
+    m_CB.set_brake_mode(brake_mode);
+    m_CT.set_brake_mode(brake_mode);
+    return *this;
+}
+
+/// Sets the individual brake modes of the conveyor subsystem.
+/// \param brake_mode_cb The brake mode to set the bottom conveyor as.
+/// \param brake_mode_ct The brake mode to set the top conveyor as.
+h_Conveyor& h_Conveyor::set_brake_mode(pros::motor_brake_mode_e brake_mode_cb, pros::motor_brake_mode_e brake_mode_ct)
+{
+    m_CB.set_brake_mode(brake_mode_cb);
+    m_CT.set_brake_mode(brake_mode_ct);
+    return *this;
+}
 
 /// Sets the velocity to both conveyor motors with a supplied velocity value.
 /// Supplying no or zeroed parameters stops the motors.
