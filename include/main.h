@@ -41,7 +41,11 @@
  */
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
-#include "subsystems/hardware.hpp"
+#include "subsystems/hardware/chassis.hpp"
+#include "subsystems/hardware/conveyor.hpp"
+#include "subsystems/hardware/intake.hpp"
+#include "subsystems/hardware/sensors.hpp"
+#include "subsystems/misc/constants.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
