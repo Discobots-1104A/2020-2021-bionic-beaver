@@ -45,7 +45,7 @@
 #include "subsystems/hardware/conveyor.hpp"
 #include "subsystems/hardware/intake.hpp"
 #include "subsystems/hardware/sensors.hpp"
-#include "subsystems/misc/constants.hpp"
+#include "subsystems/misc/globals.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do

@@ -14,6 +14,22 @@
 
 //* User-defined types
 
+/// enum - Vision Sensor IDs
+enum h_sVision_IDs
+{
+    RED_ID = 1,
+    BLUE_ID
+};
+
+/// enum - Encoder IDs
+enum h_Encoder_IDs
+{
+    LEFT,
+    RIGHT,
+    MIDDLE,
+    AVG_SIDES
+};
+
 /// struct - Smart sensor ports.
 //? In order of: IMU, Vision
 struct h_Smart_Sen_Ports
@@ -35,6 +51,39 @@ struct h_Analog_Sen_Ports
     std::uint8_t pt_Enc_MB; // Analog port, encoder middle bottom.
 
     h_Analog_Sen_Ports(std::uint8_t LT, std::uint8_t RT, std::uint8_t MT);
+};
+
+/// class - Sensors
+/// Has all the necessary objects and functions.
+class h_Sensors
+{
+public:
+    h_Sensors(
+        const h_Smart_Sen_Ports &s_ports,
+        const h_Analog_Sen_Ports &a_ports,
+        bool tr_w_left_rev = false,
+        bool tr_w_right_rev = true,
+        bool tr_w_middle_rev = false
+    );
+
+    void initialize();
+
+    h_Sensors& add_sig(pros::vision_signature_s_t sig, h_sVision_IDs ID);
+    pros::vision_object_s_t get_obj_sig(int size, h_sVision_IDs ID);
+
+    double get_heading();
+
+    h_Sensors& reset();
+    int32_t get_enc(h_Encoder_IDs ID);
+
+
+private:
+    pros::Vision m_sVision;
+    pros::Imu m_sIMU;
+    pros::ADIEncoder m_aL;
+    pros::ADIEncoder m_aR;
+    pros::ADIEncoder m_aM;
+
 };
 
 #endif  // H_SENSORS_HPP

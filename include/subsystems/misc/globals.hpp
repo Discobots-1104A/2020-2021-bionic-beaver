@@ -9,6 +9,9 @@
 #ifndef HARDWARE_HPP
 #define HARDWARE_HPP
 
+//* Headers
+#include "api.h"
+
 //* Constants
 namespace k_Hardware
 {
