@@ -15,14 +15,14 @@
 //* User-defined types
 
 /// enum - Vision Sensor IDs
-enum h_sVision_IDs
+enum class h_sVision_IDs
 {
     RED_ID = 1,
     BLUE_ID
 };
 
 /// enum - Encoder IDs
-enum h_Encoder_IDs
+enum class h_Encoder_IDs
 {
     LEFT,
     RIGHT,

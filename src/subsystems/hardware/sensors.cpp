@@ -61,7 +61,7 @@ void h_Sensors::initialize()
 /// \param ID The ID to assign to the signature.
 h_Sensors& h_Sensors::add_sig(pros::vision_signature_s_t sig, h_sVision_IDs ID)
 {
-    m_sVision.set_signature(ID, &sig);
+    m_sVision.set_signature(static_cast<std::uint32_t>(ID), &sig);
     return *this;
 }
 
@@ -71,7 +71,7 @@ h_Sensors& h_Sensors::add_sig(pros::vision_signature_s_t sig, h_sVision_IDs ID)
 /// \return A Vision sensor object.
 pros::vision_object_s_t h_Sensors::get_obj_sig(int size, h_sVision_IDs ID)
 {
-    return m_sVision.get_by_sig(size, ID);
+    return m_sVision.get_by_sig(size, static_cast<std::uint32_t>(ID));
 }
 
 /// Get the heading from the IMU

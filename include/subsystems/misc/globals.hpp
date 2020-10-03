@@ -2,7 +2,7 @@
 //* Marco Tan, Neil Sachdeva, Dev Patel
 //*
 //* File Created: 2020-09-26
-//* Desc: Hardware constant declarations.
+//* Desc: Hardware declarations.
 
 //! Prefix all objects here with "h_" except for child members and namespaces.
 
@@ -13,9 +13,20 @@
 #include "api.h"
 
 //* Constants
+
 namespace k_Hardware
 {
     inline constexpr int h_mot_pos_range {5};     // Motor positional movement range.
 }
+
+//* External objects
+
+extern h_Intake     h_obj_intake;       // Object for intakes.
+extern h_Conveyor   h_obj_conveyor;     // Object for conveyor.
+extern h_Chassis    h_obj_chassis;      // Object for chassis.
+extern h_Sensors    h_obj_sensors;      // Object for sensors
+
+extern pros::vision_signature_s_t h_obj_red_sig;    // Red Vision signature.
+extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
 
 #endif  // HARDWARE_HPP
