@@ -5,6 +5,9 @@
 
 #include "subsystems/hardware.h"
 
+// TODO: Wrap motors, sensors, everything in a robot class.
+//       Probably have a main robot class, a motor subclass, sensor subclass.
+
 //> Drive Motors <//
 // Drive, left front.
 pros::Motor mLF { kHardware::k_mLF, mCart::E_MOTOR_GEARSET_18, false, mEnc::E_MOTOR_ENCODER_COUNTS };
@@ -33,13 +36,11 @@ pros::Vision sVision { kHardware::k_sVision };
 
 //> Analog Sensors <//
 // Encoder, left.
-pros::ADIEncoder aEncL { kHardware::k_aEncLT, kHardware::k_aEncLB, false };
+pros::ADIEncoder aEncL { kHardware::k_aEncLT, kHardware::k_aEncLB, true };
 // Encoder, right.
 pros::ADIEncoder aEncR { kHardware::k_aEncRT, kHardware::k_aEncRB, false };
 // Encoder. middle.
-pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, false };
-// Limit switch, ball detection.
-pros::ADIDigitalIn aLim { kHardware::k_aLim };
+pros::ADIEncoder aEncM { kHardware::k_aEncMT, kHardware::k_aEncMB, true };
 
 //> Controllers <//
 pros::Controller cMaster { cID::E_CONTROLLER_MASTER };
@@ -58,7 +59,7 @@ pros::vision_signature_s_t sigBlue = pros::Vision::signature_from_utility
     kHardware::k_Range_Blu, kHardware::k_Type_Blu);
 
 //> Misc <//
-kHardware::k_Colour_Sig op_Sorting_Colour{};
+kHardware::k_Colour_Sig op_Sorting_Colour{};        // Ball sorting colour.
 
 //> Motor Control Functions <//
 // These functions are for when we do not want to control 
@@ -68,9 +69,9 @@ kHardware::k_Colour_Sig op_Sorting_Colour{};
 // Move the drive motors with an integer voltage value from -127 to 127. 
 //
 // \param left
-//      Integer voltage value for the left side motors.
+//      The voltage value for the left side motors.
 // \param right
-//      Integer voltage value for the right side motors.
+//      The voltage value for the right side motors.
 auto kHardware::Drive_Voltage(int left, int right) -> void
 {
     mLF = left;     mLB = left;
@@ -80,9 +81,9 @@ auto kHardware::Drive_Voltage(int left, int right) -> void
 // Move the drive motors with an integer velocity value from -200 to 200. 
 //
 // \param left
-//      Integer velocity value for the left side motors.
+//      The velocity value for the left side motors.
 // \param right
-//      Integer velocity value for the right side motors.
+//      The velocity value for the right side motors.
 auto kHardware::Drive_Velocity(int left, int right) -> void
 {
     mLF.move(left);     mLB.move(left);
@@ -93,14 +94,13 @@ auto kHardware::Drive_Velocity(int left, int right) -> void
 // These two subsystems usually work in tandem, so it's easier to control them together.
 // 
 // \param intake
-//      Integer velocity value for the intake motors.
+//      The velocity value for the intake motors.
 // \param convy1
-//      Integer velocity value for the top conveyor motor.
+//      The velocity value for the top conveyor motor.
 // \param convy2
-//      Integer velocity value for the bottom conveyor motor.
+//      The velocity value for the bottom conveyor motor.
 auto kHardware::Pow_Intake_Convy(int intake, int convy1, int convy2) -> void
 {
     mIL.move_velocity(intake);      mIR.move_velocity(intake);
     mCT.move_velocity(convy1);      mCB.move_velocity(convy2);
 }
-

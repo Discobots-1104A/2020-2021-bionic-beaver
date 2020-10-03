@@ -1,0 +1,8 @@
+vision::signature SIG_1 (1, -2993, -1993, -2494, 9025, 13265, 11146, 1.500, 0);
+vision::signature SIG_2 (2, 4229, 8837, 6533, -353, 1073, 360, 1.500, 0);
+vision::signature SIG_3 (3, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature SIG_4 (4, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature SIG_5 (5, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature SIG_6 (6, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature SIG_7 (7, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vex::vision vision1 ( vex::PORT1, 50, SIG_1, SIG_2, SIG_3, SIG_4, SIG_5, SIG_6, SIG_7 );

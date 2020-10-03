@@ -10,37 +10,70 @@ auto red_auto() -> void;
 auto blu_auto() -> void;
 auto skl_auto() -> void;
 
-//> Autonomous Function <//
-void autonomous()
+using kMath::Inch;
+using kMath::Deg;
+using kAuto::k_au_kP; 
+using kAuto::k_au_kI; 
+using kAuto::k_au_kD; 
+using kAuto::k_au_I_Windup_Threshold;
+
+#define NORMAL
+
+auto Ball_Sort_Aut(const pros::vision_object_s_t &ball, int mid_pow) -> int
 {
-    switch (au_Selected_Auto)
+  return ( (ball.signature == op_Sorting_Colour) ? -600 : mid_pow );
+}
+
+auto Sorting_Routine() -> void
+{
+    while (true)
     {
-    case kAuton::k_Auto_Select::RED :
-        red_auto();
-        break;
-    case kAuton::k_Auto_Select::BLUE :
-        blu_auto();
-        break;
-    case kAuton::k_Auto_Select::SKILLS :
-        skl_auto();
-        break;
+        pros::vision_object_s_t ball { sVision.get_by_size(0) };
+        kHardware::Pow_Intake_Convy(500, Ball_Sort_Aut(ball, 600), 600);
+        pros::delay(10);
     }
 }
 
-//> Red Auto <//
-auto red_auto() -> void
+auto Move_Back() -> void
 {
-
+    while (true)
+    {
+        kHardware::Drive_Velocity(-50, -50);
+        pros::delay(500);
+        kHardware::Drive_Velocity(50, 50);
+        pros::delay(500);
+    }
 }
 
-//> Blue Auto <//
-auto blu_auto() -> void
+#if defined NORMAL
+//> Autonomous Function <//
+void autonomous()
 {
-
+    // Use a switch statement to determine which auto routine to run.
+    kHardware::Pow_Intake_Convy(500, 600);
+    pros::delay(500);
+    kHardware::Drive_Velocity(50, 50);
+    pros::delay(500);
+    kHardware::Pow_Intake_Convy(500, 600, 600);
+    pros::delay(1250);
+    pros::Task move_back { Move_Back, "Move back" };
+    pros::Task sort_rout { Sorting_Routine, "Sorting Routine" };
+    pros::delay(750);
+    sort_rout.suspend();        move_back.suspend();
+    sort_rout.remove();         move_back.remove();
+    kHardware::Pow_Intake_Convy();
+    kHardware::Drive_Velocity();
 }
 
-//> Skills Auto<//
-auto skl_auto() -> void
-{
+#elif defined LAST_RESORT
 
+void autonomous()
+{
+    kHardware::Pow_Intake_Convy(0, 600);
+    pros::delay(500);
+    kHardware::Pow_Intake_Convy(0, 600, 600);
+    pros::delay(2000);
+    kHardware::Pow_Intake_Convy();
 }
+
+#endif
