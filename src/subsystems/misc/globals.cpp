@@ -36,4 +36,4 @@ pros::vision_signature_s_t h_obj_blu_sig
 
 pros::Controller h_obj_ctrl {pros::controller_id_e_t::E_CONTROLLER_MASTER};
 
-h_sVision_IDs h_sorted_ball_id {h_sVision_IDs::BLUE_ID};
+h_sVision_IDs h_sorted_ball_id;

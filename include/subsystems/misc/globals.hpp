@@ -4,8 +4,6 @@
 //* File Created: 2020-09-26
 //* Desc: Hardware declarations.
 
-//! Prefix all objects here with "h_" except for child members and namespaces.
-
 #ifndef HARDWARE_HPP
 #define HARDWARE_HPP
 
