@@ -48,7 +48,7 @@ h_Intake& h_Intake::set_brake_mode(pros::motor_brake_mode_e brake_mode_l, pros::
     return *this;
 }
 
-/// Sets the velocity to both intake motors with a supplied velocity value.
+/// Sets the velocity to both intake motors with a supplied velocity value. 
 /// Supplying no or zeroed parameters stops the motors.
 /// \param velocity Velocity supplied.
 void h_Intake::set_vel(int velocity)

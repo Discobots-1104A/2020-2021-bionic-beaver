@@ -102,7 +102,7 @@ void h_Chassis::drive_vel(int l_velocity, int r_velocity)
     m_RB.move_velocity(r_velocity);
 }
 
-/// Drives the chassis based on voltage values returned from the joysticks.
+/// Drives the chassis based on voltage values returned from the joysticks. 
 /// Supplying no or zeroed paramters stops the motors.
 /// \param l_voltage Left side voltage.
 /// \param r_voltage Right side voltage.

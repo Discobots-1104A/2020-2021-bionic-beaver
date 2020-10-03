@@ -12,6 +12,10 @@
 //* Headers
 #include "api.h"
 
+//* Type aliases
+using h_ctrl_analog = pros::controller_analog_e_t;
+using h_ctrl_digital = pros::controller_digital_e_t;
+
 //* Constants
 
 namespace k_Hardware
@@ -28,5 +32,9 @@ extern h_Sensors    h_obj_sensors;      // Object for sensors
 
 extern pros::vision_signature_s_t h_obj_red_sig;    // Red Vision signature.
 extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
+
+extern pros::Controller h_obj_ctrl;
+
+extern h_sVision_IDs h_sorted_ball_id;
 
 #endif  // HARDWARE_HPP
