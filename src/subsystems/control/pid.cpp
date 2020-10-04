@@ -11,6 +11,10 @@
 
 //* Private definitions
 
+/// Main function that performs all calculations necessary with the targets and gains 
+/// supplied beforehand. Automatically deduces whether to calculate for a straight line 
+/// or for a point turn.
+/// \return A 2-integer tuple that carries the left and right side velocties.
 std::tuple<int, int> a_PID::calculate()
 {
     int m_output_l, m_output_r;
@@ -53,10 +57,14 @@ std::tuple<int, int> a_PID::calculate()
 
 //* Public definitions
 
+/// class - PID controller. 
+/// \param gains An a_PID_Gains struct with all gain values.
 a_PID::a_PID(const a_PID_Gains &gains)
     : m_kP{gains.gn_kP}, m_kI{gains.gn_kI}, m_kD{gains.gn_kD}, m_k_Dt{gains.gn_k_Dt}, m_k_min_intg{gains.gn_k_min_intg}
     {}
 
+/// Sets the gains of the PID controller.
+/// \param gains An a_PID_Gains struct with all gain values.
 a_PID& a_PID::set_gains(const a_PID_Gains &gains)
 {
     m_kP = gains.gn_kP;
@@ -66,12 +74,16 @@ a_PID& a_PID::set_gains(const a_PID_Gains &gains)
     m_k_min_intg = gains.gn_k_min_intg;
 }
 
+/// Sets the targets of the PID controller.
+/// \param dist_target Target distance in ticks.
+/// \param head_target Target distance in degrees.
 a_PID& a_PID::set_target(const a_Ticks &dist_target, const a_Degrees &head_target)
 {
     m_targets = std::make_tuple(dist_target.var, head_target.var);
     return *this;
 }
 
+/// Resets all targets, errors, and calculated gains.
 a_PID& a_PID::reset()
 {
     m_targets = std::make_tuple(0, 0);
@@ -81,6 +93,9 @@ a_PID& a_PID::reset()
     return *this;
 }
 
+/// Starts the PID controller with the supplied targets. 
+/// Automatically deduces whether it should drive in a straight line, or 
+/// do a point turn based on targets supplied.
 void a_PID::drive()
 {
     if (std::get<a_Targets::DISTANCE>(m_targets))
