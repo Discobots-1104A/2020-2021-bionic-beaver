@@ -14,8 +14,22 @@
 
 //* User-defined types
 
+/// enum - Sides for auto.
+enum a_Sides
+{
+    LEFT,
+    RIGHT
+};
+
+/// enum - Targets for auto
+enum a_Targets
+{
+    DISTANCE,
+    HEADING
+};
+
 /// struct - Encoder ticks 
-struct a_Enc_Ticks
+struct a_Ticks
 {
     double var;
 };
@@ -43,8 +57,8 @@ class a_PID
 {
 public:
     a_PID(const a_PID_Gains &gains);
-    a_PID& set_target(const a_Enc_Ticks &target);
-    void reset();
+    a_PID& set_target(const a_Ticks &dist_target, const a_Degrees &head_target);
+    a_PID& reset();
     void drive();
 
 private:
@@ -54,15 +68,10 @@ private:
     double m_k_Dt;
     double m_k_min_intg;
 
-    double m_target;
-    double m_error_l;
-    double m_error_r;
-    double m_last_error_l;
-    double m_last_error_r;
-    double m_derivative_l;
-    double m_derivative_r;
-    double m_output_l;
-    double m_output_r;
+    std::tuple<double, double> m_targets;
+    std::tuple<double, double> m_errors;
+    std::tuple<double, double> m_last_errors;
+    std::tuple<double, double> m_derivatives;
 
     std::tuple<int, int> calculate();
 

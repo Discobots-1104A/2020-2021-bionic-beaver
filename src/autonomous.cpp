@@ -19,5 +19,5 @@ void autonomous()
 {
     h_obj_sensors.reset();
     pid.reset();
-    pid.set_target(a_Enc_Ticks{720}).drive();
+    pid.set_target(a_Ticks{720}, a_Degrees{0}).drive();
 }
