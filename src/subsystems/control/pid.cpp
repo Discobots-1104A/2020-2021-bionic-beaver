@@ -57,6 +57,15 @@ a_PID::a_PID(const a_PID_Gains &gains)
     : m_kP{gains.gn_kP}, m_kI{gains.gn_kI}, m_kD{gains.gn_kD}, m_k_Dt{gains.gn_k_Dt}, m_k_min_intg{gains.gn_k_min_intg}
     {}
 
+a_PID& a_PID::set_gains(const a_PID_Gains &gains)
+{
+    m_kP = gains.gn_kP;
+    m_kI = gains.gn_kI;
+    m_kD = gains.gn_kD;
+    m_k_Dt = gains.gn_k_Dt;
+    m_k_min_intg = gains.gn_k_min_intg;
+}
+
 a_PID& a_PID::set_target(const a_Ticks &dist_target, const a_Degrees &head_target)
 {
     m_targets = std::make_tuple(dist_target.var, head_target.var);

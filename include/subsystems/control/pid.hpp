@@ -57,6 +57,7 @@ class a_PID
 {
 public:
     a_PID(const a_PID_Gains &gains);
+    a_PID& set_gains(const a_PID_Gains &gains);
     a_PID& set_target(const a_Ticks &dist_target, const a_Degrees &head_target);
     a_PID& reset();
     void drive();
