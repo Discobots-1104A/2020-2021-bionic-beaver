@@ -36,8 +36,10 @@ public:
     );
     h_Intake& set_brake_mode(pros::motor_brake_mode_e brake_mode);
     h_Intake& set_brake_mode(pros::motor_brake_mode_e brake_mode_l, pros::motor_brake_mode_e brake_mode_r);
+    h_Intake& reset_enc();
     void set_vel(int velocity = 0);
     void set_vel(int l_velocity, int r_velocity);
+    void set_abs(double position, int velocity);
 
 private:
     pros::Motor m_IL;

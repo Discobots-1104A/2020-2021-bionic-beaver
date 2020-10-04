@@ -61,8 +61,8 @@ public:
     h_Sensors(
         const h_Smart_Sen_Ports &s_ports,
         const h_Analog_Sen_Ports &a_ports,
-        bool tr_w_left_rev = false,
-        bool tr_w_right_rev = true,
+        bool tr_w_left_rev = true,
+        bool tr_w_right_rev = false,
         bool tr_w_middle_rev = false
     );
 

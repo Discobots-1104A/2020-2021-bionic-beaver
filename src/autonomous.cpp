@@ -9,10 +9,15 @@
 #include "main.h"   // Main header.
 
 
+//* Local "global" variables
+a_PID pid{a_PID_Gains{0.1, 0, 0.5, 5, 0}};
+
 //* Functions
 
 // Main autonomous control callback.
 void autonomous()
 {
-
+    h_obj_sensors.reset();
+    pid.reset();
+    pid.set_target(a_Enc_Ticks{720}).drive();
 }

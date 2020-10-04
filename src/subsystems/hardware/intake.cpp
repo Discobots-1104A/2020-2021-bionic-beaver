@@ -48,6 +48,16 @@ h_Intake& h_Intake::set_brake_mode(pros::motor_brake_mode_e brake_mode_l, pros::
     return *this;
 }
 
+/// "Resets" the positions of the motors' internal encoders of the intakes. 
+//! Does not actually reset the encoders. Instead, it sets its zero 
+//! to the current position.
+h_Intake& h_Intake::reset_enc()
+{
+    m_IL.tare_position();
+    m_IR.tare_position();
+    return *this;
+}
+
 /// Sets the velocity to both intake motors with a supplied velocity value. 
 /// Supplying no or zeroed parameters stops the motors.
 /// \param velocity Velocity supplied.
@@ -67,4 +77,16 @@ void h_Intake::set_vel(int l_velocity, int r_velocity)
 {
     m_IL.move_velocity(l_velocity);
     m_IR.move_velocity(r_velocity);
+}
+
+/// Move the intakes based on an absolute position with supplied position and 
+/// velocity values.
+//? This is a very niche function for like a single drive control function. 
+//! Has no default parameters. You must supply position and velocity. 
+/// \param position The position to move to in the units supplied.
+/// \param velocity The velocity to move towards the position.
+void h_Intake::set_abs(double position, int velocity)
+{
+    m_IL.move_absolute(position, velocity);
+    m_IR.move_absolute(position, velocity);
 }

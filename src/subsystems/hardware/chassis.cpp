@@ -52,46 +52,20 @@ h_Chassis& h_Chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
     return *this;
 }
 
-/// "Resets" the positions of the motors' internal encoders on the chassis. 
-//! Does not actually reset the encoders. Instead, it sets its zero 
-//! to the current position.
-h_Chassis& h_Chassis::reset_enc()
+/// Drives the chassis based on velocity. Max velocity based on chassis cartridge 
+/// supplied. Supplying no or zeroed parameters stops the motors. 
+/// \param velocity Velocity to both sides.
+void h_Chassis::drive_vel(int velocity)
 {
-    m_LF.tare_position();
-    m_LB.tare_position();
-    m_RF.tare_position();
-    m_RB.tare_position();
-    return *this;
-}
-
-/// Drives the chassis in a line to a position relative to the current position.
-/// \param position The position to move to in the units supplied.
-/// \param velocity The velocity to move towards the position.
-h_Chassis& h_Chassis::drive_rel(double position, int velocity)
-{
-    m_LF.move_relative(position, velocity);
-    m_LB.move_relative(position, velocity);
-    m_RF.move_relative(position, velocity);
-    m_RB.move_relative(position, velocity);
-    is_settled = false;
-    return *this;
-}
-
-/// Drives the chassis in a line to a position relative to the zero set on the motors.
-/// \param position The position to move to in the units supplied.
-/// \param velocity The velocity to move towards the position.
-h_Chassis& h_Chassis::drive_abs(double position, int velocity)
-{
-    m_LF.move_absolute(position, velocity);
-    m_LB.move_absolute(position, velocity);
-    m_RF.move_absolute(position, velocity);
-    m_RB.move_absolute(position, velocity);
-    is_settled = false;
-    return *this;
+    m_LF.move_velocity(velocity);
+    m_LB.move_velocity(velocity);
+    m_RF.move_velocity(velocity);
+    m_RB.move_velocity(velocity);    
 }
 
 /// Drives the chassis based on velocity. Max velocity based on chassis cartridge 
-/// supplied. Supplying no or zeroed parameters stops the motors.
+/// supplied. 
+//! Has no default parameters. You must supply velocities. 
 /// \param l_velocity Left side velocity.
 /// \param r_velocity Right side velocity.
 void h_Chassis::drive_vel(int l_velocity, int r_velocity)

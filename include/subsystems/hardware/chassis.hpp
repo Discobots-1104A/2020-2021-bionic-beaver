@@ -14,7 +14,7 @@
 
 //* User-defined types
 
-/// struct - drive Ports.
+/// struct - Drive ports.
 //? In order of: LF, LB, RF, RB.
 struct h_Drive_Ports
 {
@@ -36,10 +36,8 @@ public:
             pros::motor_brake_mode_e brake_mode = pros::E_MOTOR_BRAKE_COAST
         );
     h_Chassis& set_brake_mode(pros::motor_brake_mode_e brake_mode);
-    h_Chassis& reset_enc();
-    h_Chassis& drive_rel(double position, int velocity);
-    h_Chassis& drive_abs(double position, int velocity);
-    void drive_vel(int l_velocity = 0, int r_velocity = 0);
+    void drive_vel(int velocity = 0);
+    void drive_vel(int l_velocity, int r_velocity);
     void drive_vol(int l_voltage = 0, int r_voltage = 0);
     void wait_until_settled();
 

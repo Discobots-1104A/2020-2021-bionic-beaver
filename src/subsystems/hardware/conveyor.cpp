@@ -24,7 +24,7 @@ h_Conveyor::h_Conveyor(
         pros::motor_encoder_units_e enc_unit, pros::motor_brake_mode_e brake_mode_cb,
         pros::motor_brake_mode_e brake_mode_ct
     )
-    : m_CB {ports.pt_CB, cartridge, false, enc_unit}, m_CT {ports.pt_CT, cartridge, false, enc_unit}
+    : m_CB {ports.pt_CB, cartridge, true, enc_unit}, m_CT {ports.pt_CT, cartridge, true, enc_unit}
     {
         m_CB.set_brake_mode(brake_mode_cb);
         m_CT.set_brake_mode(brake_mode_ct);

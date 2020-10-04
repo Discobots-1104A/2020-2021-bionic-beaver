@@ -44,9 +44,13 @@ void selector_screen()
         if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))
             { if (current_sel > 0) {--current_sel;} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))
-            { if (current_sel > 0) {++current_sel;} }
+            { if (current_sel < 2) {++current_sel;} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))
-            { clear_screen(); break; }
+        { 
+            h_obj_ctrl.rumble("...");
+            clear_screen(); 
+            break; 
+        }
 
         pros::delay(10);
     }
@@ -68,14 +72,12 @@ void competition_initialize()
 void initialize()
 {
     pros::lcd::initialize();
+    pros::delay(1000);
 
     h_obj_sensors.initialize();     // Initialize the sensor object.
     h_obj_sensors.add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.
                  .add_sig(h_obj_blu_sig, h_sVision_IDs::BLUE_ID);   // Add blue Vision sig.
 
-    h_obj_chassis.reset_enc();      // Reset chassis encoder values.
-
-    do {pros::delay(5);} while (!pros::lcd::is_initialized());  // Block execution until screen is init.
     pros::lcd::print(0, "everything initialized.");
     pros::delay(500);
     clear_screen();

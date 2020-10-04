@@ -41,6 +41,7 @@
  */
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
+#include "subsystems/control/pid.hpp"
 #include "subsystems/hardware/chassis.hpp"
 #include "subsystems/hardware/conveyor.hpp"
 #include "subsystems/hardware/intake.hpp"
@@ -81,6 +82,7 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+#include <tuple>
 #endif
 
 #endif  // _PROS_MAIN_H_

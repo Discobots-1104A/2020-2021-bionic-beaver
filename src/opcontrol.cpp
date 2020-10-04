@@ -73,12 +73,13 @@ void conveyor_intake_control()
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Toggle sorting, Right
         {
             is_auto_sort = !is_auto_sort;
-            h_obj_ctrl.rumble(is_auto_sort ? ". . ." : "- - -");
+            h_obj_ctrl.rumble(is_auto_sort ? "..." : "---");
         }
         // We just stop the motors otherwise.
         else
         {
             h_obj_intake.set_vel();
+            h_obj_intake.reset_enc();
             h_obj_conveyor.set_vel();
         }
         
@@ -87,11 +88,24 @@ void conveyor_intake_control()
     }
 }
 
+// Debugging functions
+void debug()
+{
+    while (true)
+    {
+        pros::lcd::print(0, "heading: %f", h_obj_sensors.get_heading());
+        pros::lcd::print(1, "tr left: %d", h_obj_sensors.get_enc(h_Encoder_IDs::LEFT));
+        pros::lcd::print(2, "tr right: %d", h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT));
+        pros::delay(10);
+    }
+}
+
 // Main operator control callback.
 void opcontrol()
 {
     pros::Task chassis_task {drive_control, "tChassis"};
     pros::Task conveyor_intake_task {conveyor_intake_control, "tConveyorIntake"};
+    pros::Task debug_task {debug, "tDebug"};
 }
 
 //* Macros
@@ -115,12 +129,14 @@ void macro_cycling()
     h_obj_conveyor.set_vel(
         (is_auto_sort ? ball_sort(ball, 600) : 600),
         600);
+    h_obj_intake.set_vel(600);
 }
 
 // Shooting.
 void macro_shooting()
 {
     h_obj_conveyor.set_vel(600);
+    h_obj_intake.set_abs(750, 600);
 }
 
 // Run intakes.
