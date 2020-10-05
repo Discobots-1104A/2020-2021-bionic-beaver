@@ -74,6 +74,7 @@ a_PID& a_PID::set_gains(const a_PID_Gains &gains)
     m_kD = gains.gn_kD;
     m_k_Dt = gains.gn_k_Dt;
     m_k_min_intg = gains.gn_k_min_intg;
+    return *this;
 }
 
 /// Sets the targets of the PID controller.
