@@ -20,4 +20,7 @@ void autonomous()
     h_obj_sensors.reset();
     pid.reset();
     pid.set_target(a_Ticks{720}, a_Degrees{0}).drive();
+    pid.set_target(a_Ticks{0}, a_Degrees{90}).drive();
+    pros::delay(1000);
+    pid.set_target(a_Ticks{0}, a_Degrees{90}).drive();
 }

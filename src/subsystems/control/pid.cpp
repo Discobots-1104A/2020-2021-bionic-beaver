@@ -4,6 +4,8 @@
 //* File Created: 2020-10-03
 //* Desc: PID class definitons.
 
+// TODO: Add async ability to the PID controller.
+// TODO: Add smart turning deduction (currently takes long way to targets)
 
 //* Headers
 #include "main.h"   // Main header.
