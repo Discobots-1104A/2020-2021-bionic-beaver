@@ -1,142 +1,86 @@
-// Discobots 1104A comp code.
-// Marco Tan, Neil Sachdeva
-// 
-// Code for initialization goes here.
+//* Discobots 1104A comp code.
+//* Marco Tan, Neil Sachdeva, Dev Patel
+//*
+//* File Created: 2020-09-26
+//* Desc: Main initialization code.
 
-#include "main.h"
 
-//> Disabled Function <//
+//* Headers
+#include "main.h"   // Main header.
+
+
+//* Functions
+
+// Screen clear function b/c the native one segfaults stuff for some reason.
+void clear_screen()
+{
+    for (auto i{0}; i < 7; ++i)
+        pros::lcd::clear_line(i);
+}
+
+// Selects autos and ball sorting colour
+void selector_screen()
+{
+    int current_sel {0};
+    while (true)
+    {
+        // Printing text on screen
+        switch (current_sel)
+        {
+        case 0:
+            pros::lcd::print(0, "sort col: red  ");
+            h_sorted_ball_id = h_sVision_IDs::RED_ID;
+            break;
+        case 1:
+            pros::lcd::print(0, "sort col: blue ");
+            h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
+            break;
+        case 2:
+            pros::lcd::print(0, "sort col: skills");
+            h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
+            break;
+        }
+
+        if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))
+            { if (current_sel > 0) {--current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))
+            { if (current_sel < 2) {++current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))
+        { 
+            h_obj_ctrl.rumble("...");
+            clear_screen(); 
+            break; 
+        }
+
+        pros::delay(10);
+    }
+}
+
+// Disabled state callback.
 void disabled()
 {
 
 }
 
-//> Comp Initialization Function <//
+// Competition initialization callback.
 void competition_initialize()
 {
 
 }
 
-// Forward declaration of Selection_Screen()
-auto Selection_Screen() -> void;
-
-//> Initialize Function <//
+// Main initialization callback.
 void initialize()
 {
-    // TODO: create auton selector
-    // TODO: add necessary initialization
-    // Start LLEMU Selector screen
-    Selection_Screen();
-    int calbr_Start{ static_cast<int>(pros::millis()) };      // Note calibration start time.
-    pros::lcd::set_text(0, "AUTO SELECTED.");
-
-    // Set the break modes to hold on the conveyor and intake motors.
-    mIL.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Intake left.
-    mIR.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Intake right.
-    mCT.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Conveyor top.
-    mCB.set_brake_mode(mBreak::E_MOTOR_BRAKE_HOLD);     // Conveyor bottom.
-    pros::lcd::set_text(1, "BREAK MODES SET.");
-
-    // Tracking wheel reset.
-    aEncL.reset();      // Left encoder.
-    aEncR.reset();      // Right encoder.
-    aEncM.reset();      // Middle encoder.
-    pros::lcd::set_text(2, "ENCODERS RESET.");
-
-    // Vision sensor initialization.
-    sVision.clear_led();                                                // Clear the Vision sensor LED.
-    sVision.set_wifi_mode(false);                                       // Disable WiFi capabilities.
-    sVision.set_zero_point(pros::E_VISION_ZERO_TOPLEFT);                // Set the zero point to be the top-left corner.
-    sVision.set_signature(kHardware::k_Colour_Sig::RED, &sigRed);       // Set the signature ID for red signature.
-    sVision.set_signature(kHardware::k_Colour_Sig::BLUE, &sigBlue);     // Likewise but for blue signature.
-    pros::lcd::set_text(3, "VISION CALIBRATED.");
-
-    // IMU intialization.
-    sIMU.reset();           // Start IMU calibration.
-    int imu_calbr_Elaps{ 0 };               // Keep track of elapsed time.
-    pros::lcd::set_text(4, "CALIBRATING IMU...");
-    while (sIMU.is_calibrating())           // Block execution until IMU is calibrated.
-    {
-        pros::lcd::print(5, "ELAPSED: %d ms", imu_calbr_Elaps);
-        imu_calbr_Elaps += 10;
-        pros::delay(10);
-    }
-    pros::lcd::clear_line(4);   pros::lcd::clear_line(5);
-
-    pros::lcd::print(4, "IMU CALIBRATED. TOOK %d ms.", imu_calbr_Elaps);
-    pros::lcd::print(5, "READY. TOOK %d ms.", static_cast<int>(pros::millis()) - calbr_Start);
-    pros::delay(2000);
-    pros::lcd::clear();
-}
-
-auto Select_Auto(int selected) -> void;
-
-//> Selection Screen <//
-auto Selection_Screen() -> void
-{
-    //TODO: Fix Selection_Screen() code cuz its doodoo.
-    // Initialize and give 1 second to do so.
     pros::lcd::initialize();
-    while (pros::lcd::is_initialized() == false) {}
+    pros::delay(1000);
 
-    // Create temp int for selection.
-    int cur_select {0};
-    pros::lcd::set_text(0, "SELECT AUTO:");
+    h_obj_sensors.initialize();     // Initialize the sensor object.
+    h_obj_sensors.add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.
+                 .add_sig(h_obj_blu_sig, h_sVision_IDs::BLUE_ID);   // Add blue Vision sig.
 
-    while (true)
-    {
-        // Change what's displayed based on value of cur_select
-        if (cur_select == 0)
-        {
-            pros::lcd::print(1, "AUTO: RED  ");
-            pros::lcd::print(2, "SORT: BLUE");
-        }
-        else if (cur_select == 1)
-        {
-            pros::lcd::print(1, "AUTO: BLUE ");
-            pros::lcd::print(2, "SORT: RED ");
-        }
-        else if (cur_select == 2)
-        {
-            pros::lcd::print(1, "AUTO: SKILLS");
-            pros::lcd::print(2, "SORT: BLUE");
-        }
+    pros::lcd::print(0, "everything initialized.");
+    pros::delay(500);
+    clear_screen();
 
-        // Scrolling selection.
-        if (pros::lcd::read_buttons() == LCD_BTN_LEFT)          // Scroll left.
-            { if (cur_select > 0) { --cur_select; } }
-        else if (pros::lcd::read_buttons() == LCD_BTN_RIGHT)    // Scroll right.
-            { if (cur_select < 2) { ++cur_select; } }
-        else if (pros::lcd::read_buttons() == LCD_BTN_CENTER)   // Confirm selection.
-        {
-            // Assign selected autons and sorting colour based on value of cur_select
-            Select_Auto(cur_select);
-            break;
-        }
-    }
-}
-
-auto Select_Auto(int selected) -> void
-{
-    switch (selected)
-    {
-    // Red autonomous, sort blue balls.
-    case 0 :
-        au_Selected_Auto = kAuto::k_Auto_Select::RED;
-        op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-        pros::lcd::clear();
-        break;
-    // Blue autonomous, sort red balls.
-    case 1 :
-        au_Selected_Auto = kAuto::k_Auto_Select::BLUE;
-        op_Sorting_Colour = kHardware::k_Colour_Sig::RED;
-        pros::lcd::clear();
-        break;
-    // Skills autonomous, sort blue balls.
-    case 2 :
-        au_Selected_Auto = kAuto::k_Auto_Select::SKILLS;
-        op_Sorting_Colour = kHardware::k_Colour_Sig::BLUE;
-        pros::lcd::clear();
-        break;
-    }
+    selector_screen();  // Run selection screen.
 }
