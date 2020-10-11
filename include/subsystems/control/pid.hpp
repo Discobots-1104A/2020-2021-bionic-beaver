@@ -42,7 +42,8 @@ struct a_PID_Gains
     double gn_kD;
     double gn_k_Dt;
     double gn_k_min_intg;
-    double gn_k_uncert;
+    double gn_k_t_uncert;
+    double gn_k_h_uncert;
 };
 
 /// class - PID.
@@ -63,7 +64,8 @@ private:
     double m_kD;
     double m_k_Dt;
     double m_k_min_intg;
-    double m_k_uncert;
+    double m_k_t_uncert;
+    double m_k_h_uncert;
 
     double m_targ_dist, m_targ_head;
     double m_targ_l, m_targ_r;

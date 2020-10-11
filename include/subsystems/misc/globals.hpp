@@ -17,7 +17,9 @@ using h_ctrl_digital = pros::controller_digital_e_t;
 //* Constants
 namespace k_Hardware
 {
-    inline constexpr int h_mot_pos_range {5};     // Motor positional movement range.
+    inline constexpr int h_mot_pos_range {5};       // Motor positional movement range.
+    inline constexpr double h_tw_len {12.0};        // Tracking wheel wheelbase length.
+    inline constexpr double h_tw_dia {3.25};        // Tracking wheel diameter.       
 }
 
 //* External objects

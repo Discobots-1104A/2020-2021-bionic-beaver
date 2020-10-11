@@ -10,7 +10,7 @@
 
 
 //* Local "global" variables
-a_PID pid{a_PID_Gains{0.1, 0, 0.5, 5, 0, 2}};
+a_PID pid{a_PID_Gains{0.1, 0, 0.5, 5, 0, 2, 0.25}};
 
 //* Functions
 

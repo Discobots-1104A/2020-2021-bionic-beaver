@@ -27,14 +27,53 @@ void a_PID::calculate_str()
 {
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
 
-    while ((m_targ_dist - h_obj_sensors.get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_uncert)
+    while ((m_targ_dist - h_obj_sensors.get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_t_uncert)
     {
         int output_l, output_r;
 
         if (m_targ_dist)
         {
-            m_err_l = m_targ_dist - h_obj_sensors.get_enc(h_Encoder_IDs::LEFT);
-            m_err_r = m_targ_dist - h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT);
+            m_err_l = m_targ_l - h_obj_sensors.get_enc(h_Encoder_IDs::LEFT);
+            m_err_r = m_targ_r - h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT);
+
+            m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
+            m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
+
+
+            output_l = (m_err_l * m_kP) + (m_derv_l * m_kD);
+            output_r = (m_err_r * m_kP) + (m_derv_r * m_kD);
+            if (std::abs(output_l) > 200)
+                output_l = sgn(output_l) * 200;
+            else if (std::abs(output_l) < 5)
+                output_l = sgn(output_l) * 5;
+
+            if (std::abs(output_r) > 200)
+                output_r = sgn(output_r) * 200;
+            else if (std::abs(output_r) < 5)
+                output_r = sgn(output_r) * 5;
+
+            m_lst_err_l = m_err_l;
+            m_lst_err_r = m_err_r;
+        }
+
+        h_obj_chassis.drive_vel(output_l, output_r);
+        pros::delay(uint_m_k_Dt);
+    }
+}
+
+/// Calculation function for point turn movements.
+void a_PID::calculate_p_trn()
+{
+    std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
+
+    while ((m_targ_head - h_obj_sensors.get_heading()) > m_k_h_uncert)
+    {
+        int output_l, output_r;
+
+        if (m_targ_dist)
+        {
+            m_err_l = m_targ_l - h_obj_sensors.get_enc(h_Encoder_IDs::LEFT);
+            m_err_r = m_targ_r - h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT);
 
             m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
             m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
@@ -78,7 +117,8 @@ a_PID& a_PID::set_gains(const a_PID_Gains &gains)
     m_kD = gains.gn_kD;
     m_k_Dt = gains.gn_k_Dt;
     m_k_min_intg = gains.gn_k_min_intg;
-    m_k_uncert = gains.gn_k_uncert;
+    m_k_t_uncert = gains.gn_k_t_uncert;
+    m_k_h_uncert = gains.gn_k_h_uncert;
     return *this;
 }
 
@@ -122,7 +162,22 @@ void a_PID::drive()
 {
     if (m_targ_dist)
     {
+        m_targ_l = m_targ_dist;
+        m_targ_r = m_targ_dist;
         calculate_str(); 
+    }
+    else if (m_targ_head)
+    {
+        double diff {fmod((m_targ_head - h_obj_sensors.get_heading() + 180.0), 360.0) - 180};
+        double theta {((diff < -180) ? diff + 360 : diff)};
+
+        double targ_inch {(k_Hardware::h_tw_len / 2) * theta};
+        double targ_inch_to_tick {std::round(targ_inch / (k_Hardware::h_tw_dia * M_PI / 360))};
+
+        m_targ_l = targ_inch_to_tick;
+        m_targ_r = -targ_inch_to_tick;
+
+        calculate_p_trn();
     }
 
     h_obj_chassis.drive_vel();
