@@ -5,11 +5,20 @@
 //* Desc: PID class definitons.
 
 // TODO: Add async ability to the PID controller.
-// TODO: Add smart turning deduction (currently takes long way to targets)
+// TODO: Reimplement point turn ability.
 
 //* Headers
 #include "main.h"   // Main header.
 
+
+//* Misc Functions
+
+/// Get the sign of the number supplied.
+/// \param val Any numerical value.
+/// \return An integer representing the sign of the number.
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 //* Private definitions
 
@@ -33,8 +42,15 @@ void a_PID::calculate_str()
 
             output_l = (m_err_l * m_kP) + (m_derv_l * m_kD);
             output_r = (m_err_r * m_kP) + (m_derv_r * m_kD);
-            output_l = (std::abs(output_l) > 200) ? std::copysign(output_l, 200) : output_l;
-            output_r = (std::abs(output_r) > 200) ? std::copysign(output_r, 200) : output_r;
+            if (std::abs(output_l) > 200)
+                output_l = sgn(output_l) * 200;
+            else if (std::abs(output_l) < 5)
+                output_l = sgn(output_l) * 5;
+
+            if (std::abs(output_r) > 200)
+                output_r = sgn(output_r) * 200;
+            else if (std::abs(output_r) < 5)
+                output_r = sgn(output_r) * 5;
 
             m_lst_err_l = m_err_l;
             m_lst_err_r = m_err_r;
@@ -109,5 +125,6 @@ void a_PID::drive()
         calculate_str(); 
     }
 
+    h_obj_chassis.drive_vel();
     a_PID::reset();
 }

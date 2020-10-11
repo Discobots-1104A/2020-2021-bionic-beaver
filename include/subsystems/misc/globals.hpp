@@ -15,7 +15,6 @@ using h_ctrl_analog = pros::controller_analog_e_t;
 using h_ctrl_digital = pros::controller_digital_e_t;
 
 //* Constants
-
 namespace k_Hardware
 {
     inline constexpr int h_mot_pos_range {5};     // Motor positional movement range.
