@@ -21,13 +21,6 @@ enum a_Sides
     RIGHT
 };
 
-/// enum - Targets for auto
-enum a_Targets
-{
-    DISTANCE,
-    HEADING
-};
-
 /// struct - Encoder ticks 
 struct a_Ticks
 {
@@ -41,7 +34,7 @@ struct a_Degrees
 };
 
 /// struct - PID constants. 
-//? In order of: kP, kI, kD, k_Dt, k_min_intg. 
+//? In order of: kP, kI, kD, k_Dt, k_min_intg, k_uncert. 
 struct a_PID_Gains
 {
     double gn_kP;
@@ -49,6 +42,7 @@ struct a_PID_Gains
     double gn_kD;
     double gn_k_Dt;
     double gn_k_min_intg;
+    double gn_k_uncert;
 };
 
 /// class - PID.
@@ -58,7 +52,8 @@ class a_PID
 public:
     a_PID(const a_PID_Gains &gains);
     a_PID& set_gains(const a_PID_Gains &gains);
-    a_PID& set_target(const a_Ticks &dist_target, const a_Degrees &head_target);
+    a_PID& set_target(const a_Ticks &dist_target);
+    a_PID& set_target(const a_Degrees &head_target);
     a_PID& reset();
     void drive();
 
@@ -68,14 +63,16 @@ private:
     double m_kD;
     double m_k_Dt;
     double m_k_min_intg;
+    double m_k_uncert;
 
-    std::tuple<double, double> m_targets;
-    std::tuple<double, double> m_errors;
-    std::tuple<double, double> m_last_errors;
-    std::tuple<double, double> m_derivatives;
+    double m_targ_dist, m_targ_head;
+    double m_targ_l, m_targ_r;
+    double m_err_l, m_err_r;
+    double m_lst_err_l, m_lst_err_r;
+    double m_derv_l, m_derv_r;
 
-    std::tuple<int, int> calculate();
-
+    void calculate_str();
+    void calculate_p_trn();
 };
 
 #endif  // A_PID_HPP
