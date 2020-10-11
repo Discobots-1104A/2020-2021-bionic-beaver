@@ -5,7 +5,6 @@
 //* Desc: PID class definitons.
 
 // TODO: Add async ability to the PID controller.
-// TODO: Reimplement point turn ability.
 
 //* Headers
 #include "main.h"   // Main header.
