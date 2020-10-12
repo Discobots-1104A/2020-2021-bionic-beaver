@@ -72,7 +72,6 @@ void competition_initialize()
 void initialize()
 {
     pros::lcd::initialize();
-    pros::delay(1000);
 
     h_obj_sensors.initialize();     // Initialize the sensor object.
     h_obj_sensors.add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.

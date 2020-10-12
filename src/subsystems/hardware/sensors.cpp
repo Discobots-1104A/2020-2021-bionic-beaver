@@ -40,6 +40,9 @@ h_Sensors::h_Sensors(
 //? Will take some time because of IMU reset.
 void h_Sensors::initialize()
 {
+    /// IMU reset.
+    m_sIMU.reset();
+
     /// Vision 
     m_sVision.clear_led();
     m_sVision.set_wifi_mode(0);
@@ -48,10 +51,9 @@ void h_Sensors::initialize()
     m_aL.reset();
     m_aR.reset();
     m_aM.reset();
-
-    /// IMU reset.
-    m_sIMU.reset();
-    pros::delay(2250);
+    
+    /// Block until IMU reset done.
+    do {pros::delay(5);} while (m_sIMU.is_calibrating());
 }
 
 /// Add a signature to the Vision sensor's volatile memory.
