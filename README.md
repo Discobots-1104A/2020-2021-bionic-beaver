@@ -2,6 +2,7 @@
 
 ![LICENSE](https://img.shields.io/github/license/IonicArgon/2020-2021-bionic-beaver)
 [![big man tyrone](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2F8_ZCXUnsZbk%2Fmaxresdefault.jpg&f=1&nofb=1)](https://www.youtube.com/watch?v=8_ZCXUnsZbk)
+~~click the image~~
 
 ## Contents
 
@@ -19,7 +20,7 @@ You can use the GitHub CLI or just download the .ZIP if you wish.
 
 ## Building
 
-1. Install PROS if you haven't already.
+1. Install PROS if you haven't already.  
     ~~(wow we're cool kids using pros)~~
 2. Navigate to the directory.
 3. Run `prosv5 b` to build alone.

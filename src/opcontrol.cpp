@@ -44,7 +44,7 @@ void drive_control()
             trn {check_deadzone(h_obj_ctrl.get_analog(h_ctrl_analog::E_CONTROLLER_ANALOG_RIGHT_X))};
 
         // Assign to drive.
-        h_obj_chassis.drive_vol(pow + trn, pow - trn);
+        h_obj_chassis->drive_vol(pow + trn, pow - trn);
 
         // Delay to not hog resources.
         pros::delay(5);
@@ -78,9 +78,9 @@ void conveyor_intake_control()
         // We just stop the motors otherwise.
         else
         {
-            h_obj_intake.set_vel();
-            h_obj_intake.reset_enc();
-            h_obj_conveyor.set_vel();
+            h_obj_intake->set_vel();
+            h_obj_intake->reset_enc();
+            h_obj_conveyor->set_vel();
         }
         
         // Delay to not hog resources.
@@ -93,9 +93,9 @@ void debug()
 {
     while (true)
     {
-        pros::lcd::print(0, "heading: %f", h_obj_sensors.get_heading());
-        pros::lcd::print(1, "tr left: %d", h_obj_sensors.get_enc(h_Encoder_IDs::LEFT));
-        pros::lcd::print(2, "tr right: %d", h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT));
+        pros::lcd::print(0, "heading: %f", h_obj_sensors->get_heading());
+        pros::lcd::print(1, "tr left: %d", h_obj_sensors->get_enc(h_Encoder_IDs::LEFT));
+        pros::lcd::print(2, "tr right: %d", h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT));
         pros::delay(10);
     }
 }
@@ -113,47 +113,47 @@ void opcontrol()
 // Indexing.
 void macro_indexing()
 {
-    pros::vision_object_s_t ball {h_obj_sensors.get_obj_sig(0, h_sorted_ball_id)};
+    pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sorted_ball_id)};
 
-    h_obj_conveyor.set_vel(
+    h_obj_conveyor->set_vel(
         (is_auto_sort ? ball_sort(ball, 0) : 600),
         600);
-    h_obj_intake.set_vel(600);
+    h_obj_intake->set_vel(600);
 }
 
 // Cycling.
 void macro_cycling()
 {
-    pros::vision_object_s_t ball {h_obj_sensors.get_obj_sig(0, h_sorted_ball_id)};
+    pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sorted_ball_id)};
 
-    h_obj_conveyor.set_vel(
+    h_obj_conveyor->set_vel(
         (is_auto_sort ? ball_sort(ball, 600) : 600),
         600);
-    h_obj_intake.set_vel(600);
+    h_obj_intake->set_vel(600);
 }
 
 // Shooting.
 void macro_shooting()
 {
-    h_obj_conveyor.set_vel(600);
-    h_obj_intake.set_abs(750, 600);
+    h_obj_conveyor->set_vel(600);
+    h_obj_intake->set_abs(750, 600);
 }
 
 // Run intakes.
 void macro_intake()
 {
-    h_obj_intake.set_vel(600);
+    h_obj_intake->set_vel(600);
 }
 
 // Emergency macro 1.
 void macro_outtake()
 {
-    h_obj_conveyor.set_vel(-600);
-    h_obj_intake.set_vel(-600);
+    h_obj_conveyor->set_vel(-600);
+    h_obj_intake->set_vel(-600);
 }
 
 // Emergency macro 2.
 void macro_conveyor_rev()
 {
-    h_obj_conveyor.set_vel(-600);
+    h_obj_conveyor->set_vel(-600);
 }

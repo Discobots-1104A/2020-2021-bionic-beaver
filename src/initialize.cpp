@@ -59,7 +59,10 @@ void selector_screen()
 // Disabled state callback.
 void disabled()
 {
-
+    delete a_obj_pid;
+    delete a_obj_bad_move;
+    a_obj_pid = nullptr;
+    a_obj_bad_move = nullptr;
 }
 
 // Competition initialization callback.
@@ -72,10 +75,14 @@ void competition_initialize()
 void initialize()
 {
     pros::lcd::initialize();
-    pros::delay(1000);
 
-    h_obj_sensors.initialize();     // Initialize the sensor object.
-    h_obj_sensors.add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.
+    h_obj_intake = new h_Intake{h_Intake_Ports{17, 7}};
+    h_obj_conveyor = new h_Conveyor{h_Conveyor_Ports{8, 15}};
+    h_obj_chassis = new h_Chassis{h_Drive_Ports{19, 20, 9, 10}};
+    h_obj_sensors = new h_Sensors{h_Smart_Sen_Ports{16, 6}, h_Analog_Sen_Ports{5, 1, 3}};
+
+    h_obj_sensors->initialize();     // Initialize the sensor object.
+    h_obj_sensors->add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.
                  .add_sig(h_obj_blu_sig, h_sVision_IDs::BLUE_ID);   // Add blue Vision sig.
 
     pros::lcd::print(0, "everything initialized.");
