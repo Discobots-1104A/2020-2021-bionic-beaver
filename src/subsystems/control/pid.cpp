@@ -17,70 +17,65 @@ void a_PID::calculate_str()
 {
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
 
+    int output_l, output_r;
+
     while ((m_targ_dist - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_t_uncert)
     {
-        int output_l, output_r;
+        m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
+        m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
 
-        if (m_targ_dist)
-        {
-            m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
-            m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
+        m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
+        m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
-            m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
-            m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
+        output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
+        output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
+        if (std::abs(output_l) > 200)
+            output_l = std::copysign(output_l, 200);
+        else if (std::abs(output_l) < 20)
+            output_l = std::copysign(output_l, 20);
 
-            output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
-            output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-            if (std::abs(output_l) > 200)
-                output_l = std::copysign(output_l, 200);
-            else if (std::abs(output_l) < 20)
-                output_l = std::copysign(output_l, 20);
+        if (std::abs(output_r) > 200)
+            output_r = std::copysign(output_r, 200);
+        else if (std::abs(output_r) < 20)
+            output_r = std::copysign(output_r, 20);
 
-            if (std::abs(output_r) > 200)
-                output_r = std::copysign(output_r, 200);
-            else if (std::abs(output_r) < 20)
-                output_r = std::copysign(output_r, 20);
-
-            m_lst_err_l = m_err_l;
-            m_lst_err_r = m_err_r;
-        }
+        m_lst_err_l = m_err_l;
+        m_lst_err_r = m_err_r;
 
         h_obj_chassis->drive_vel(output_l, output_r);
         pros::delay(uint_m_k_Dt);
     }
 }
 
+
 /// Calculation function for point turn movements.
 void a_PID::calculate_p_trn()
 {
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
+
+    int output_l, output_r;
     
     while ((m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
     {
-        int output_l, output_r;
+        m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
+        m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
 
-        if (m_targ_dist)
-        {
-            m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
-            m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
+        m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
+        m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
-            m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
-            m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
+        output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
+        output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
+        if (std::abs(output_l) > 200)
+            output_l = std::copysign(200, output_l);
+        else if (std::abs(output_l) < 20)
+            output_l = std::copysign(20, output_l);
+        if (std::abs(output_r) > 200)
+            output_r = std::copysign(200, output_r);
+        else if (std::abs(output_r) < 20)
+            output_r = std::copysign(20, output_r);
 
-            output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
-            output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-            if (std::abs(output_l) > 200)
-                output_l = std::copysign(200, output_l);
-            else if (std::abs(output_l) < 20)
-                output_l = std::copysign(20, output_l);
-            if (std::abs(output_r) > 200)
-                output_r = std::copysign(200, output_r);
-            else if (std::abs(output_r) < 20)
-                output_r = std::copysign(20, output_r);
-
-            m_lst_err_l = m_err_l;
-            m_lst_err_r = m_err_r;
-        }
+        m_lst_err_l = m_err_l;
+        m_lst_err_r = m_err_r;
 
         h_obj_chassis->drive_vel(output_l, output_r);
         pros::delay(uint_m_k_Dt);
@@ -141,6 +136,8 @@ void a_PID::reset()
     m_lst_err_r = 0.0;
     m_derv_l = 0.0;
     m_derv_r = 0.0;
+
+    h_obj_sensors->reset();
 }
 
 /// Starts the PID controller with the supplied targets. 
@@ -152,19 +149,20 @@ void a_PID::drive()
     {
         m_targ_l = m_targ_dist;
         m_targ_r = m_targ_dist;
-        
+
         calculate_str();
     }
     else if (m_targ_head)
     {
-        double diff {fmod((m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180};
-        double theta {((diff < -180) ? diff + 360 : diff)};
+        double diff { fmod( (m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180 };
+        double theta { ( (diff < -180) ? diff + 360 : diff ) * (M_PI / 180) };
 
-        double targ_inch {(k_Hardware::h_tw_len / 2) * theta};
-        double targ_inch_to_tick {std::round(targ_inch / (k_Hardware::h_tw_dia * M_PI / 360))};
-
-        m_targ_l = targ_inch_to_tick;
-        m_targ_r = -targ_inch_to_tick;
+        double targ_inch { (k_Hardware::h_tw_len / 2) * theta };
+        double revs { targ_inch / (k_Hardware::h_tw_dia * M_PI) };
+        double revs_to_ticks { revs * 360 };
+        
+        m_targ_l = revs_to_ticks;
+        m_targ_r = -revs_to_ticks;
 
         calculate_p_trn();
     }
