@@ -39,16 +39,12 @@ public:
     void drive_vel(int velocity = 0);
     void drive_vel(int l_velocity, int r_velocity);
     void drive_vol(int l_voltage = 0, int r_voltage = 0);
-    void wait_until_settled();
 
 private:
-    bool is_settled = true;
     pros::Motor m_LF;
     pros::Motor m_LB;
     pros::Motor m_RF;
     pros::Motor m_RB;
-
-    double avg_motor_pos();
 
 };
 

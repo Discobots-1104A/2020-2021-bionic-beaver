@@ -9,16 +9,6 @@
 #include "main.h"   // Main header.
 
 
-//* Helper Functions
-
-/// Gets the absolute average of the motor encoder positions.
-double h_Chassis::avg_motor_pos()
-{
-    return (std::abs(
-        (m_LF.get_position() + m_LB.get_position() + 
-         m_RF.get_position() + m_RB.get_position()) / 4));
-}
-
 //* Definitions
 
 /// class - Chassis. 
@@ -86,16 +76,4 @@ void h_Chassis::drive_vol(int l_voltage, int r_voltage)
     m_LB.move(l_voltage);
     m_RF.move(r_voltage);
     m_RB.move(r_voltage);
-}
-
-/// Halts all further execution until the chassis has reached its target.
-void h_Chassis::wait_until_settled()
-{
-    if (!is_settled)
-    {
-        while ((m_LF.get_target_position() - avg_motor_pos()) > k_Hardware::h_mot_pos_range)
-            { pros::delay(5); }
-    }
-
-    is_settled = true;
 }

@@ -41,6 +41,7 @@
  */
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
+#include "subsystems/control/bad-move.hpp"
 #include "subsystems/control/pid.hpp"
 #include "subsystems/hardware/chassis.hpp"
 #include "subsystems/hardware/conveyor.hpp"

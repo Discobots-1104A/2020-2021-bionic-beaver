@@ -10,23 +10,24 @@
 
 
 //* Local "global" variables
-a_PID pid{a_PID_Gains{0.1, 0, 0.5, 5, 0, 2, 0.25}};
+a_Bad_Move* chungus = new a_Bad_Move{};
 
 //* Functions
 
 // Main autonomous control callback.
 void autonomous()
 {
-    h_obj_sensors.reset();
-    pid.reset().set_target(a_Ticks{720}).drive();
+    h_obj_sensors->reset();
+    h_obj_chassis->set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    chungus->move_str(720);
     pros::delay(1000);
-    pid.set_target(a_Ticks{-720}).drive();
-    pros::delay(2000);
-    pid.set_target(a_Degrees{90}).drive();
+    chungus->move_str(-720);
     pros::delay(1000);
-    pid.set_target(a_Degrees{0}).drive();
+    chungus->move_pnt_trn(90);
     pros::delay(1000);
-    pid.set_target(a_Degrees{270}).drive();
+    chungus->move_pnt_trn(-90);
     pros::delay(1000);
-    pid.set_target(a_Degrees{0}).drive();
+    chungus->move_pnt_trn(-90);
+    pros::delay(1000);
+    chungus->move_pnt_trn(90);
 }

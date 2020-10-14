@@ -55,7 +55,7 @@ public:
     a_PID& set_gains(const a_PID_Gains &gains);
     a_PID& set_target(const a_Ticks &dist_target);
     a_PID& set_target(const a_Degrees &head_target);
-    a_PID& reset();
+    void reset();
     void drive();
 
 private:

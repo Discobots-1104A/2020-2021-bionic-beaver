@@ -10,15 +10,6 @@
 #include "main.h"   // Main header.
 
 
-//* Misc Functions
-
-/// Get the sign of the number supplied.
-/// \param val Any numerical value.
-/// \return An integer representing the sign of the number.
-template <typename T> int sgn(T val) {
-    return (T(0) < val) - (val < T(0));
-}
-
 //* Private definitions
 
 /// Calculation function for straight line movements.
@@ -26,36 +17,35 @@ void a_PID::calculate_str()
 {
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
 
-    while ((m_targ_dist - h_obj_sensors.get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_t_uncert)
+    while ((m_targ_dist - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_t_uncert)
     {
         int output_l, output_r;
 
         if (m_targ_dist)
         {
-            m_err_l = m_targ_l - h_obj_sensors.get_enc(h_Encoder_IDs::LEFT);
-            m_err_r = m_targ_r - h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT);
+            m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
+            m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
 
             m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
             m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
-
-            output_l = (m_err_l * m_kP) + (m_derv_l * m_kD);
-            output_r = (m_err_r * m_kP) + (m_derv_r * m_kD);
+            output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
+            output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
             if (std::abs(output_l) > 200)
-                output_l = sgn(output_l) * 200;
-            else if (std::abs(output_l) < 5)
-                output_l = sgn(output_l) * 5;
+                output_l = std::copysign(output_l, 200);
+            else if (std::abs(output_l) < 20)
+                output_l = std::copysign(output_l, 20);
 
             if (std::abs(output_r) > 200)
-                output_r = sgn(output_r) * 200;
-            else if (std::abs(output_r) < 5)
-                output_r = sgn(output_r) * 5;
+                output_r = std::copysign(output_r, 200);
+            else if (std::abs(output_r) < 20)
+                output_r = std::copysign(output_r, 20);
 
             m_lst_err_l = m_err_l;
             m_lst_err_r = m_err_r;
         }
 
-        h_obj_chassis.drive_vel(output_l, output_r);
+        h_obj_chassis->drive_vel(output_l, output_r);
         pros::delay(uint_m_k_Dt);
     }
 }
@@ -64,37 +54,35 @@ void a_PID::calculate_str()
 void a_PID::calculate_p_trn()
 {
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
-
-    while ((m_targ_head - h_obj_sensors.get_heading()) > m_k_h_uncert)
+    
+    while ((m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
     {
         int output_l, output_r;
 
         if (m_targ_dist)
         {
-            m_err_l = m_targ_l - h_obj_sensors.get_enc(h_Encoder_IDs::LEFT);
-            m_err_r = m_targ_r - h_obj_sensors.get_enc(h_Encoder_IDs::RIGHT);
+            m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
+            m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
 
             m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
             m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
-
-            output_l = (m_err_l * m_kP) + (m_derv_l * m_kD);
-            output_r = (m_err_r * m_kP) + (m_derv_r * m_kD);
+            output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
+            output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
             if (std::abs(output_l) > 200)
-                output_l = sgn(output_l) * 200;
-            else if (std::abs(output_l) < 5)
-                output_l = sgn(output_l) * 5;
-
+                output_l = std::copysign(200, output_l);
+            else if (std::abs(output_l) < 20)
+                output_l = std::copysign(20, output_l);
             if (std::abs(output_r) > 200)
-                output_r = sgn(output_r) * 200;
-            else if (std::abs(output_r) < 5)
-                output_r = sgn(output_r) * 5;
+                output_r = std::copysign(200, output_r);
+            else if (std::abs(output_r) < 20)
+                output_r = std::copysign(20, output_r);
 
             m_lst_err_l = m_err_l;
             m_lst_err_r = m_err_r;
         }
 
-        h_obj_chassis.drive_vel(output_l, output_r);
+        h_obj_chassis->drive_vel(output_l, output_r);
         pros::delay(uint_m_k_Dt);
     }
 }
@@ -104,7 +92,9 @@ void a_PID::calculate_p_trn()
 /// class - PID controller. 
 /// \param gains An a_PID_Gains struct with all gain values.
 a_PID::a_PID(const a_PID_Gains &gains)
-    : m_kP{gains.gn_kP}, m_kI{gains.gn_kI}, m_kD{gains.gn_kD}, m_k_Dt{gains.gn_k_Dt}, m_k_min_intg{gains.gn_k_min_intg}
+    : m_kP{gains.gn_kP}, m_kI{gains.gn_kI}, m_kD{gains.gn_kD}, 
+      m_k_Dt{gains.gn_k_Dt}, m_k_min_intg{gains.gn_k_min_intg},
+      m_k_t_uncert{gains.gn_k_t_uncert}, m_k_h_uncert{gains.gn_k_h_uncert}
     {}
 
 /// Sets the gains of the PID controller.
@@ -138,7 +128,7 @@ a_PID& a_PID::set_target(const a_Degrees &head_target)
 }
 
 /// Resets all targets, errors, and calculated gains.
-a_PID& a_PID::reset()
+void a_PID::reset()
 {
     m_targ_dist = 0.0;
     m_targ_head = 0.0;
@@ -151,7 +141,6 @@ a_PID& a_PID::reset()
     m_lst_err_r = 0.0;
     m_derv_l = 0.0;
     m_derv_r = 0.0;
-    return *this;
 }
 
 /// Starts the PID controller with the supplied targets. 
@@ -163,11 +152,12 @@ void a_PID::drive()
     {
         m_targ_l = m_targ_dist;
         m_targ_r = m_targ_dist;
-        calculate_str(); 
+        
+        calculate_str();
     }
     else if (m_targ_head)
     {
-        double diff {fmod((m_targ_head - h_obj_sensors.get_heading() + 180.0), 360.0) - 180};
+        double diff {fmod((m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180};
         double theta {((diff < -180) ? diff + 360 : diff)};
 
         double targ_inch {(k_Hardware::h_tw_len / 2) * theta};
@@ -179,6 +169,6 @@ void a_PID::drive()
         calculate_p_trn();
     }
 
-    h_obj_chassis.drive_vel();
-    a_PID::reset();
+    h_obj_chassis->drive_vel();
+    reset();
 }
