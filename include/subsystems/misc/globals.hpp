@@ -29,6 +29,9 @@ extern h_Conveyor*   h_obj_conveyor;     // Object for conveyor.
 extern h_Chassis*    h_obj_chassis;      // Object for chassis.
 extern h_Sensors*    h_obj_sensors;      // Object for sensors
 
+extern a_PID*       a_obj_pid;
+extern a_Bad_Move*  a_obj_bad_move;
+
 extern pros::vision_signature_s_t h_obj_red_sig;    // Red Vision signature.
 extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
 

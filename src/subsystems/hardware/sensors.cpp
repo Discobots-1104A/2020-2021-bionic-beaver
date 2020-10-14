@@ -42,7 +42,6 @@ void h_Sensors::initialize()
 {
     /// IMU reset.
     m_sIMU.reset();
-    pros::delay(3000);
 
     /// Vision 
     m_sVision.clear_led();
@@ -52,6 +51,8 @@ void h_Sensors::initialize()
     m_aL.reset();
     m_aR.reset();
     m_aM.reset();
+
+    do {pros::delay(5);} while (m_sIMU.is_calibrating());
 }
 
 /// Add a signature to the Vision sensor's volatile memory.
