@@ -19,7 +19,7 @@ void a_PID::calculate_str()
 
     int output_l, output_r;
 
-    while ((m_targ_dist - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES)) > m_k_t_uncert)
+    while (std::fabs(m_targ_dist - static_cast<double>(h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) > m_k_t_uncert)
     {
         m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
         m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
@@ -55,7 +55,7 @@ void a_PID::calculate_p_trn()
 
     int output_l, output_r;
     
-    while ((m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
+    while (std::fabs(m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
     {
         m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
         m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
