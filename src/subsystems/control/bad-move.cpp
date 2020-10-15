@@ -38,7 +38,7 @@ void a_Bad_Move::move_pnt_trn(double head)
     double diff { fmod( (head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180 };
     double theta { ( (diff < -180) ? diff + 360 : diff ) };
 
-    h_obj_chassis->drive_vel(std::copysign(50, head), std::copysign(50, -head));
+    h_obj_chassis->drive_vel(std::copysign(50, theta), std::copysign(50, -theta));
     while (std::fabs(head - h_obj_sensors->get_heading()) > 0.25)
     {
         pros::delay(5);
