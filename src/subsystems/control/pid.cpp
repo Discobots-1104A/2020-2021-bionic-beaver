@@ -96,6 +96,26 @@ a_PID::a_PID(const a_PID_Gains &gains)
       m_k_t_uncert{gains.gn_k_t_uncert}, m_k_h_uncert{gains.gn_k_h_uncert}
     {}
 
+/// Resets all targets, errors, and calculated gains.
+a_PID& a_PID::reset()
+{
+    m_targ_dist = 0.0;
+    m_targ_head = 0.0;
+    m_targ_l = 0.0;
+    m_targ_r = 0.0;
+
+    m_err_l = 0.0;
+    m_err_r = 0.0;
+    m_lst_err_l = 0.0;
+    m_lst_err_r = 0.0;
+    m_derv_l = 0.0;
+    m_derv_r = 0.0;
+
+    h_obj_sensors->reset();
+    
+    return *this;
+}
+
 /// Sets the gains of the PID controller.
 /// \param gains An a_PID_Gains struct with all gain values.
 a_PID& a_PID::set_gains(const a_PID_Gains &gains)
@@ -124,24 +144,6 @@ a_PID& a_PID::set_target(const a_Degrees &head_target)
 {
     m_targ_head = head_target.var;
     return *this;
-}
-
-/// Resets all targets, errors, and calculated gains.
-void a_PID::reset()
-{
-    m_targ_dist = 0.0;
-    m_targ_head = 0.0;
-    m_targ_l = 0.0;
-    m_targ_r = 0.0;
-
-    m_err_l = 0.0;
-    m_err_r = 0.0;
-    m_lst_err_l = 0.0;
-    m_lst_err_r = 0.0;
-    m_derv_l = 0.0;
-    m_derv_r = 0.0;
-
-    h_obj_sensors->reset();
 }
 
 /// Starts the PID controller with the supplied targets. 

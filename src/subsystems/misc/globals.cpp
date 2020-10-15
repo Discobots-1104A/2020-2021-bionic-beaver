@@ -11,13 +11,13 @@
 
 //* External objects
 
-h_Intake* h_obj_intake;
-h_Conveyor* h_obj_conveyor;
-h_Chassis* h_obj_chassis;
-h_Sensors* h_obj_sensors;
+h_Intake *h_obj_intake;
+h_Conveyor *h_obj_conveyor;
+h_Chassis *h_obj_chassis;
+h_Sensors *h_obj_sensors;
 
-a_PID* a_obj_pid;
-a_Bad_Move* a_obj_bad_move;
+a_PID *a_obj_pid;
+a_Bad_Move *a_obj_bad_move;
 
 pros::vision_signature_s_t h_obj_red_sig 
 {
