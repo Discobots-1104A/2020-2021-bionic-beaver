@@ -30,12 +30,12 @@ namespace k_Hardware    // Hardware constants.
 
 namespace k_Auto    // Autonomous constants.
 {
-    inline constexpr double a_def_kP {0.1};
-    inline constexpr double a_def_kI {0.0};
-    inline constexpr double a_def_kD {0.5};
-    inline constexpr double a_def_integ_windup {0.0};
-    inline constexpr double a_def_ocr_tick_range {2.0};
-    inline constexpr double a_def_imu_head_range {0.25};
+    inline constexpr double a_def_kP {0.1};                 // Default proportional gain.
+    inline constexpr double a_def_kI {0.0};                 // Default integral gain.
+    inline constexpr double a_def_kD {0.5};                 // Default derivative gain.
+    inline constexpr double a_def_integ_windup {0.0};       // Default integral windup threshold.
+    inline constexpr double a_def_ocr_tick_range {2.0};     // Default OCR tick percentage of error.
+    inline constexpr double a_def_imu_head_range {0.25};    // Default IMU heading percentage of error.
 }
 
 //* External objects
