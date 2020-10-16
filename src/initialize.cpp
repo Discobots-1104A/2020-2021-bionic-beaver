@@ -22,6 +22,10 @@ void clear_screen()
 // Selects autos and ball sorting colour
 void selector_screen()
 {
+    // Text to clarify controls.
+    pros::lcd::print(0, "use controller to select.");
+    pros::lcd::print(1, "left & right scroll, 'A' to select");
+
     // Current selection.
     int current_sel {0};
     // Infinite loop.
@@ -31,15 +35,15 @@ void selector_screen()
         switch (current_sel)
         {
         case 0:
-            pros::lcd::print(0, "sort col: red  ");     // Sort for red.
+            pros::lcd::print(2, "sort col: red  ");     // Sort for red.
             h_sorted_ball_id = h_sVision_IDs::RED_ID;
             break;
         case 1:
-            pros::lcd::print(0, "sort col: blue ");     // Sort for blue.
+            pros::lcd::print(2, "sort col: blue ");     // Sort for blue.
             h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
             break;
         case 2:
-            pros::lcd::print(0, "sort col: skills");    // Sort for skills colour (blue).
+            pros::lcd::print(2, "sort col: skills");    // Sort for skills colour (blue).
             h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
             break;
         }
@@ -52,12 +56,51 @@ void selector_screen()
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
         { 
             h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
-            clear_screen();             // Clear screen.
             break;                      // Exit the infinite loop.
         }
 
         pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
     }
+
+    // Reset current_sel.
+    current_sel = 0;
+    // Infinite loop.
+    while (true)
+    {
+        // Printing text on screen & selecting auto routine.
+        switch (current_sel)
+        {
+        case 0:
+            pros::lcd::print(3, "auto: red  ");     // Red routine.
+            a_routine = a_Autonomous_Routine::RED;
+            break;
+        case 1:
+            pros::lcd::print(3, "auto: blue ");     // Blue routine.
+            a_routine = a_Autonomous_Routine::BLUE;
+            break;
+        case 2:
+            pros::lcd::print(3, "auto: skills");    // Skills routine.
+            a_routine = a_Autonomous_Routine::SKILLS;
+            break;
+        }
+
+        // Associate each button used on the controller to a selection function.
+        if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
+            { if (current_sel > 0) {--current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
+            { if (current_sel < 2) {++current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
+        { 
+            h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
+            break;                      // Exit the infinite loop.
+        }
+
+        pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
+    }
+
+    // Wait then clear screen.
+    pros::delay(1000);
+    clear_screen();
 }
 
 // Disabled state callback.

@@ -14,6 +14,16 @@
 using h_ctrl_analog = pros::controller_analog_e_t;
 using h_ctrl_digital = pros::controller_digital_e_t;
 
+//* User-defined types
+
+/// enum - Autonomous routine.
+enum a_Autonomous_Routine
+{
+    RED,
+    BLUE,
+    SKILLS
+};
+
 //* Constants
 namespace k_Hardware    // Hardware constants.
 {
@@ -54,5 +64,7 @@ extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
 extern pros::Controller h_obj_ctrl;     // Controller object.
 
 extern h_sVision_IDs h_sorted_ball_id;  // Ball sort ID.
+
+extern a_Autonomous_Routine a_routine;  // Autonomous routine.
 
 #endif  // HARDWARE_HPP
