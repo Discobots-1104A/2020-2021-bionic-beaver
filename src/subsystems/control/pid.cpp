@@ -29,15 +29,15 @@ void a_PID::calculate_str()
 
         output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-        if (std::abs(output_l) > 200)
-            output_l = std::copysign(output_l, 200);
-        else if (std::abs(output_l) < 20)
-            output_l = std::copysign(output_l, 20);
+        if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
+            output_l = std::copysign(output_l, k_Hardware::h_max_chassis_vel);
+        else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
+            output_l = std::copysign(output_l, k_Hardware::h_min_chassis_vel);
 
-        if (std::abs(output_r) > 200)
-            output_r = std::copysign(output_r, 200);
-        else if (std::abs(output_r) < 20)
-            output_r = std::copysign(output_r, 20);
+        if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
+            output_r = std::copysign(output_r, k_Hardware::h_max_chassis_vel);
+        else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
+            output_r = std::copysign(output_r, k_Hardware::h_min_chassis_vel);
 
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;
@@ -68,15 +68,15 @@ void a_PID::calculate_p_trn()
 
         output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-        if (std::abs(output_l) > 200)
-            output_l = std::copysign(output_l, 200);
-        else if (std::abs(output_l) < 20)
-            output_l = std::copysign(output_l, 20);
+        if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
+            output_l = std::copysign(output_l, k_Hardware::h_max_chassis_vel);
+        else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
+            output_l = std::copysign(output_l, k_Hardware::h_min_chassis_vel);
 
-        if (std::abs(output_r) > 200)
-            output_r = std::copysign(output_r, 200);
-        else if (std::abs(output_r) < 20)
-            output_r = std::copysign(output_r, 20);
+        if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
+            output_r = std::copysign(output_r, k_Hardware::h_max_chassis_vel);
+        else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
+            output_r = std::copysign(output_r, k_Hardware::h_min_chassis_vel);
 
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;

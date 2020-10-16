@@ -52,7 +52,7 @@ void h_Sensors::initialize()
     m_aR.reset();
     m_aM.reset();
 
-    do {pros::delay(5);} while (m_sIMU.is_calibrating());
+    do {pros::delay(10);} while (m_sIMU.is_calibrating());
 }
 
 /// Add a signature to the Vision sensor's volatile memory.

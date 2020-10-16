@@ -34,7 +34,7 @@ struct a_Degrees
 };
 
 /// struct - PID constants. 
-//? In order of: kP, kI, kD, k_Dt, k_min_intg, k_uncert. 
+//? In order of: kP, kI, kD, k_Dt, k_min_intg, k_t_uncert, k_h_uncert. 
 struct a_PID_Gains
 {
     double gn_kP;

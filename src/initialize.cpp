@@ -14,7 +14,7 @@
 // Screen clear function b/c the native one segfaults stuff for some reason.
 void clear_screen()
 {
-    for (auto i{0}; i < 7; ++i)
+    for (auto i{0}; i < k_Hardware::h_llemu_lines; ++i)
         pros::lcd::clear_line(i);
 }
 

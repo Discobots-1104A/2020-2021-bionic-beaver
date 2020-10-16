@@ -15,11 +15,27 @@ using h_ctrl_analog = pros::controller_analog_e_t;
 using h_ctrl_digital = pros::controller_digital_e_t;
 
 //* Constants
-namespace k_Hardware
+namespace k_Hardware    // Hardware constants.
 {
     inline constexpr int h_mot_pos_range {5};       // Motor positional movement range.
     inline constexpr double h_tw_len {12.0};        // Tracking wheel wheelbase length.
-    inline constexpr double h_tw_dia {3.25};        // Tracking wheel diameter.       
+    inline constexpr double h_tw_dia {3.25};        // Tracking wheel diameter.
+    inline constexpr int h_deadzone {10};           // Deadzone value.
+    inline constexpr int h_rev_top {-600};          // For ball sorting later.
+    inline constexpr int h_llemu_lines {7};         // Max lines on LLEMU screen.
+    inline constexpr int h_max_chassis_vel {200};   // Max motor velocity on chassis.
+    inline constexpr int h_min_chassis_vel {20};    // Min motor velocity on chassis (for PID).
+    inline constexpr int h_max_readtime {10};       // Max millis rate the sensors can read. //! (note that OCRs for sure at 10ms, but idk about rest)   
+}
+
+namespace k_Auto    // Autonomous constants.
+{
+    inline constexpr double a_def_kP {0.1};
+    inline constexpr double a_def_kI {0.0};
+    inline constexpr double a_def_kD {0.5};
+    inline constexpr double a_def_integ_windup {0.0};
+    inline constexpr double a_def_ocr_tick_range {2.0};
+    inline constexpr double a_def_imu_head_range {0.25};
 }
 
 //* External objects

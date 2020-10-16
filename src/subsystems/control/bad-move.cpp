@@ -22,9 +22,9 @@ void a_Bad_Move::move_str(double dist)
 {
     h_obj_chassis->drive_vel(std::copysign(50, dist));
 
-    while (std::fabs(dist - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES)) > 5)
+    while (std::fabs(dist - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES)) > k_Auto::a_def_ocr_tick_range)
     {
-        pros::delay(5);
+        pros::delay(k_Hardware::h_max_readtime);
     }
 
     h_obj_chassis->drive_vel();
@@ -39,9 +39,9 @@ void a_Bad_Move::move_pnt_trn(double head)
     double theta { ( (diff < -180) ? diff + 360 : diff ) };
 
     h_obj_chassis->drive_vel(std::copysign(50, theta), std::copysign(50, -theta));
-    while (std::fabs(head - h_obj_sensors->get_heading()) > 0.25)
+    while (std::fabs(head - h_obj_sensors->get_heading()) > k_Auto::a_def_imu_head_range)
     {
-        pros::delay(5);
+        pros::delay(k_Hardware::h_max_readtime);
     }
 
     h_obj_chassis->drive_vel();

@@ -25,13 +25,13 @@ void macro_conveyor_rev();  // Emergecy macro 2.
 // Deadzone function
 int check_deadzone(int var)
 {
-    return (std::abs(var) > 10 ? var : 0);
+    return (std::abs(var) > k_Hardware::h_deadzone ? var : 0);
 }
 
 // Ball sorting for later
 int ball_sort(pros::vision_object_s_t &ball, int top_pow)
 {
-    return ((ball.width > 50) ? -600 : top_pow);
+    return ((ball.width > 50) ? k_Hardware::h_rev_top : top_pow);
 }
 
 // Driver control
@@ -47,7 +47,7 @@ void drive_control()
         h_obj_chassis->drive_vol(pow + trn, pow - trn);
 
         // Delay to not hog resources.
-        pros::delay(5);
+        pros::delay(10);
     }
 }
 
@@ -84,7 +84,7 @@ void conveyor_intake_control()
         }
         
         // Delay to not hog resources.
-        pros::delay(5);
+        pros::delay(10);
     }
 }
 
