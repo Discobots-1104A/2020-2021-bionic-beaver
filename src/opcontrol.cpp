@@ -43,7 +43,7 @@ int ball_sort(pros::vision_object_s_t &ball, int top_pow)
 // Driver control.
 void drive_control()
 {
-    while (true)
+    while (!pros::competition::is_autonomous())
     {
         // Get power and turn voltages.
         int pow {check_deadzone(h_obj_ctrl.get_analog(h_ctrl_analog::E_CONTROLLER_ANALOG_RIGHT_Y))},
@@ -60,7 +60,7 @@ void drive_control()
 // Conveyor and intake control.
 void conveyor_intake_control()
 {
-    while (true)
+    while (!pros::competition::is_autonomous())
     {
         // Big elif block to determine which buttons were pressed.
         // Links corrosponding functions with the button.
@@ -94,19 +94,6 @@ void conveyor_intake_control()
     }
 }
 
-// Debugging function.
-void debug()
-{
-    // Infinite loop.
-    while (true)
-    {
-        pros::lcd::print(0, "heading: %f", h_obj_sensors->get_heading());   // Print heading.
-        pros::lcd::print(1, "tr left: %d", h_obj_sensors->get_enc(h_Encoder_IDs::LEFT));    // Print left encoder value.
-        pros::lcd::print(2, "tr right: %d", h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT));  // Print right encoder value.
-        pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
-    }
-}
-
 // Main operator control callback.
 void opcontrol()
 {
@@ -115,7 +102,6 @@ void opcontrol()
 
     pros::Task chassis_task {drive_control, "tChassis"};
     pros::Task conveyor_intake_task {conveyor_intake_control, "tConveyorIntake"};
-    pros::Task debug_task {debug, "tDebug"};
 }
 
 //* Macros

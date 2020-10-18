@@ -22,7 +22,7 @@ void a_PID::calculate_str()
     int output_l, output_r;
 
     // Loop as long as the chassis has not reached its target.
-    while (std::fabs(m_targ_dist - static_cast<double>(h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) > m_k_t_uncert)
+    while (std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) >= m_k_t_uncert)
     {
         // Calculate errors.
         m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
@@ -177,8 +177,8 @@ void a_PID::drive()
     if (m_targ_dist)
     {
         // Set the targets.
-        m_targ_l = m_targ_dist;
-        m_targ_r = m_targ_dist;
+        m_targ_l = static_cast<int>(m_targ_dist);
+        m_targ_r = static_cast<int>(m_targ_dist);
 
         // Start distance calculation.
         calculate_str();

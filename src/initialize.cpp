@@ -97,9 +97,7 @@ void selector_screen()
 
         pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
     }
-
-    // Wait then clear screen.
-    pros::delay(1000);
+    
     clear_screen();
 }
 

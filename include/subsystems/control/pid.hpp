@@ -24,7 +24,7 @@ enum a_Sides
 /// struct - Encoder ticks 
 struct a_Ticks
 {
-    double var;
+    int var;
 };
 
 /// struct - Degrees
@@ -67,7 +67,8 @@ private:
     double m_k_t_uncert;
     double m_k_h_uncert;
 
-    double m_targ_dist, m_targ_head;
+    int m_targ_dist;
+    double m_targ_head;
     double m_targ_l, m_targ_r;
     double m_err_l, m_err_r;
     double m_lst_err_l, m_lst_err_r;
