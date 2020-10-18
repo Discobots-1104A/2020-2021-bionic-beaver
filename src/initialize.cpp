@@ -23,8 +23,8 @@ void clear_screen()
 void selector_screen()
 {
     // Text to clarify controls.
-    pros::lcd::print(0, "use controller to select");
-    pros::lcd::print(1, "left & right scroll | A to sel");
+    pros::lcd::print(0, "use controller to select.");
+    pros::lcd::print(1, "left & right scroll, 'A' to select");
 
     // Current selection.
     int current_sel {0};
@@ -99,7 +99,6 @@ void selector_screen()
     }
     
     clear_screen();
-    h_obj_ctrl.clear();
 }
 
 // Disabled state callback.
@@ -139,6 +138,5 @@ void initialize()
     pros::delay(500);
     clear_screen(); // Clear screen.
 
-    h_obj_ctrl.print(0, 0, "check brain");
     selector_screen();  // Run selection screen.
 }
