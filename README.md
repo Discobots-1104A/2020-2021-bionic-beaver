@@ -1,8 +1,8 @@
 # 2020-2021-bionic-beaver
 
-![LICENSE](https://img.shields.io/github/license/IonicArgon/2020-2021-bionic-beaver)
+[![LICENSE](https://img.shields.io/github/license/IonicArgon/2020-2021-bionic-beaver?style=flat-square)](LICENSE)
+[![EMAIL](https://img.shields.io/static/v1?label=&message=1104a@bramptonrobotics.org&color=red&logo=gmail&logoColor=white&style=flat-square)](mailto:1104a@bramptonrobotics.org)
 [![big man tyrone](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2F8_ZCXUnsZbk%2Fmaxresdefault.jpg&f=1&nofb=1)](https://www.youtube.com/watch?v=8_ZCXUnsZbk)
-~~click the image~~
 
 ## Contents
 
