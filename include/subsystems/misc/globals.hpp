@@ -33,7 +33,7 @@ namespace k_Hardware    // Hardware constants.
     inline constexpr int h_deadzone {10};           // Deadzone value.
     inline constexpr int h_rev_top {-600};          // For ball sorting later.
     inline constexpr int h_llemu_lines {7};         // Max lines on LLEMU screen.
-    inline constexpr int h_max_chassis_vel {200};   // Max motor velocity on chassis.
+    inline constexpr int h_max_chassis_vel {150};   // Max motor velocity on chassis.
     inline constexpr int h_min_chassis_vel {20};    // Min motor velocity on chassis (for PID).
     inline constexpr int h_max_readtime {10};       // Max millis rate the sensors can read. //! (note that OCRs for sure at 10ms, but idk about rest)   
 }
@@ -50,13 +50,13 @@ namespace k_Auto    // Autonomous constants.
 
 //* External objects
 
-extern h_Intake*     h_obj_intake;      // Object for intakes.
-extern h_Conveyor*   h_obj_conveyor;    // Object for conveyor.
-extern h_Chassis*    h_obj_chassis;     // Object for chassis.
-extern h_Sensors*    h_obj_sensors;     // Object for sensors
+extern h_Intake     *h_obj_intake;      // Pointer to intake object.
+extern h_Conveyor   *h_obj_conveyor;    // Pointer to conveyor object.
+extern h_Chassis    *h_obj_chassis;     // Pointer to chassis object.
+extern h_Sensors    *h_obj_sensors;     // Pointer to sensors object.
 
-extern a_PID*       a_obj_pid;          // Object for PID.
-extern a_Bad_Move*  a_obj_bad_move;     // Objecr for simple movement.
+extern a_PID        *a_obj_pid;         // Pointer to a_PID object.
+extern a_Bad_Move   *a_obj_bad_move;    // Pointer to simple movement object.
 
 extern pros::vision_signature_s_t h_obj_red_sig;    // Red Vision signature.
 extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
@@ -65,6 +65,6 @@ extern pros::Controller h_obj_ctrl;     // Controller object.
 
 extern h_sVision_IDs h_sorted_ball_id;  // Ball sort ID.
 
-extern a_Autonomous_Routine a_routine;  // Autonomous routine.
+extern a_Autonomous_Routine a_routine;  // Autonomous routine ID.
 
 #endif  // HARDWARE_HPP

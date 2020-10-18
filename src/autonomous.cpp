@@ -27,20 +27,22 @@ void blue()
 void skills()
 {
     a_obj_pid->reset();
-    a_obj_pid->set_target(a_Ticks{720}).drive();
+    a_obj_pid->set_target(a_Ticks{1440}).drive();
     pros::delay(1000);
-    a_obj_pid->set_target(a_Ticks{-600}).drive();
+    a_obj_pid->set_target(a_Ticks{-1440}).drive();
     pros::delay(1000);
 }
 
 // Main autonomous control callback.
 void autonomous()
 {
+    // Create new a_PID object into heap memory.
     a_obj_pid = new a_PID{a_PID_Gains{
         k_Auto::a_def_kP, k_Auto::a_def_kI, k_Auto::a_def_kD, 
         k_Hardware::h_max_readtime, k_Auto::a_def_integ_windup, 
         k_Auto::a_def_ocr_tick_range, k_Auto::a_def_imu_head_range}};
     
+    // Run each auto routine based on selected auto.
     switch (a_routine)
     {
     case a_Autonomous_Routine::RED:
