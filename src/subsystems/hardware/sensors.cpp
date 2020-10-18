@@ -74,7 +74,7 @@ pros::vision_object_s_t h_Sensors::get_obj_sig(int size, h_sVision_IDs ID)
 }
 
 /// Get the heading from the IMU
-/// \return A heading value from -360 - 360 deg.
+/// \return A heading value from 0 - 360 deg.
 double h_Sensors::get_heading()
 {
     return m_sIMU.get_heading();
