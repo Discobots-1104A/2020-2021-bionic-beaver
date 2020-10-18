@@ -54,6 +54,13 @@ void a_PID::calculate_str()
         // Set output power to the drive.
         h_obj_chassis->drive_vel(output_l, output_r);
 
+        //! This is debug code.
+        pros::lcd::print(0, "targ:%f", std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))));
+        pros::lcd::print(1, "err_l:%f", m_err_l);
+        pros::lcd::print(2, "err_r:%f", m_err_r);
+        pros::lcd::print(3, "drv_l:%f", m_derv_l);
+        pros::lcd::print(4, "drv_r:%f", m_derv_r);
+
         // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
     }
