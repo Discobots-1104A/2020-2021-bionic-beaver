@@ -33,7 +33,7 @@ namespace k_Hardware    // Hardware constants.
     inline constexpr int h_deadzone {10};           // Deadzone value.
     inline constexpr int h_rev_top {-600};          // For ball sorting later.
     inline constexpr int h_llemu_lines {7};         // Max lines on LLEMU screen.
-    inline constexpr int h_max_chassis_vel {200};   // Max motor velocity on chassis.
+    inline constexpr int h_max_chassis_vel {150};   // Max motor velocity on chassis.
     inline constexpr int h_min_chassis_vel {20};    // Min motor velocity on chassis (for PID).
     inline constexpr int h_max_readtime {10};       // Max millis rate the sensors can read. //! (note that OCRs for sure at 10ms, but idk about rest)   
 }

@@ -27,9 +27,9 @@ void blue()
 void skills()
 {
     a_obj_pid->reset();
-    a_obj_pid->set_target(a_Ticks{720}).drive();
+    a_obj_pid->set_target(a_Ticks{1440}).drive();
     pros::delay(1000);
-    a_obj_pid->set_target(a_Ticks{-600}).drive();
+    a_obj_pid->set_target(a_Ticks{-1440}).drive();
     pros::delay(1000);
 }
 

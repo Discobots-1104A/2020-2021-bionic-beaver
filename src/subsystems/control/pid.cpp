@@ -38,14 +38,14 @@ void a_PID::calculate_str()
 
         // Check whether the values are too high or too low to be used (left side).
         if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
-            output_l = std::copysign(output_l, k_Hardware::h_max_chassis_vel);
+            output_l = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
         else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
-            output_l = std::copysign(output_l, k_Hardware::h_min_chassis_vel);
+            output_l = std::copysign(k_Hardware::h_min_chassis_vel, output_l);
         // Check whether the values are too high or too low to be used (right side).
         if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
-            output_r = std::copysign(output_r, k_Hardware::h_max_chassis_vel);
+            output_r = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
         else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
-            output_r = std::copysign(output_r, k_Hardware::h_min_chassis_vel);
+            output_r = std::copysign(k_Hardware::h_min_chassis_vel, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
@@ -55,11 +55,13 @@ void a_PID::calculate_str()
         h_obj_chassis->drive_vel(output_l, output_r);
 
         //! This is debug code.
-        pros::lcd::print(0, "targ:%f", std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))));
+        pros::lcd::print(0, "targ:%d", std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))));
         pros::lcd::print(1, "err_l:%f", m_err_l);
         pros::lcd::print(2, "err_r:%f", m_err_r);
         pros::lcd::print(3, "drv_l:%f", m_derv_l);
         pros::lcd::print(4, "drv_r:%f", m_derv_r);
+        pros::lcd::print(5, "pow_l:%d", output_l);
+        pros::lcd::print(6, "pow_r:%d", output_r);
 
         // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
@@ -94,14 +96,14 @@ void a_PID::calculate_p_trn()
 
         // Check whether the values are too high or too low to be used (left side).
         if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
-            output_l = std::copysign(output_l, k_Hardware::h_max_chassis_vel);
+            output_l = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
         else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
-            output_l = std::copysign(output_l, k_Hardware::h_min_chassis_vel);
+            output_l = std::copysign(k_Hardware::h_min_chassis_vel, output_l);
         // Check whether the values are too high or too low to be used (right side).
         if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
-            output_r = std::copysign(output_r, k_Hardware::h_max_chassis_vel);
+            output_r = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
         else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
-            output_r = std::copysign(output_r, k_Hardware::h_min_chassis_vel);
+            output_r = std::copysign(k_Hardware::h_min_chassis_vel, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
