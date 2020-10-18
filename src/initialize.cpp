@@ -99,6 +99,7 @@ void selector_screen()
     }
     
     clear_screen();
+    h_obj_ctrl.clear();
 }
 
 // Disabled state callback.
@@ -138,5 +139,6 @@ void initialize()
     pros::delay(500);
     clear_screen(); // Clear screen.
 
+    h_obj_ctrl.print(0, 0, "check brain");
     selector_screen();  // Run selection screen.
 }
