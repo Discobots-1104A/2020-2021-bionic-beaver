@@ -6,30 +6,36 @@
 
 ## Contents
 
-This is Discobots 1104A's 2020-2021 code repo.  
+This is Discobots 1104A's code repository for the VEX VRC 2020-2021 Season: Change Up.
 
 ## Cloning
 
-1. Install Git if you haven't already.  
-    ~~(bruh why are you using github if you don't have git)~~
-2. Navigate to the directory you wish to clone to.
-3. Clone with `git clone https://github.com/IonicArgon/2020-2021-bionic-beaver.git`
-4. If you wish to specify a branch, use the `-b` flag.
+The method we illustrate utilizes Git, a version control program. However, you can make use of GitHub Desktop, the GitHub CLI, or download the raw .ZIP if you wished.
 
-You can use the GitHub CLI or just download the .ZIP if you wish.
+1. Install Git if you haven't already.
+2. Navigate to the directory you wish to clone to.
+3. Clone with `git clone https://github.com/Discobots-1104A/2020-2021-bionic-beaver.git`
+4. If you wish to specify a branch, use the `-b` flag.
 
 ## Building
 
-1. Install PROS if you haven't already.  
-    ~~(wow we're cool kids using pros)~~
-2. Navigate to the directory.
-3. Run `prosv5 b` to build alone.
-4. `prosv5 mu` can be used to build and upload.
+### Dependencies
 
-## Issues and Pull Requests
+- PROS
+  - You can get it [here](https://github.com/purduesigbots/pros-cli/releases).
 
-Yeah uhhh good luck trying to.  
-I mean you can still fork the code but like, why would you do that? ~~our code is stinky~~
+### Instructions
+
+The method we illustrate utilizes the PROS CLI. However, you can use the PROS Editor (the one based on Atom) instead.
+
+1. Navigate to the directory.
+2. Run `prosv5 b` to build alone.
+3. `prosv5 mu` can be used to build and upload.
+
+## Contributing
+
+Though we have issue templates and pull request templates, you most likely won't be able to contribute to our code--only added collaborators can contribute.  
+That doesn't mean you're not free to clone it, but we dunno why you'd want to clone our bad code.
 
 ## License
 
