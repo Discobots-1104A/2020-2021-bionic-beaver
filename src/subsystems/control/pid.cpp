@@ -37,15 +37,15 @@ void a_PID::calculate_str()
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
 
         // Check whether the values are too high or too low to be used (left side).
-        if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
-            output_l = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
-        else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
-            output_l = std::copysign(k_Hardware::h_min_chassis_vel, output_l);
+        if (std::abs(output_l) > k_Auto::a_max_str_speed)
+            output_l = std::copysign(k_Auto::a_max_str_speed, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_chassis_vel)
+            output_l = std::copysign(k_Auto::a_min_chassis_vel, output_l);
         // Check whether the values are too high or too low to be used (right side).
-        if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
-            output_r = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
-        else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
-            output_r = std::copysign(k_Hardware::h_min_chassis_vel, output_r);
+        if (std::abs(output_r) > k_Auto::a_max_str_speed)
+            output_r = std::copysign(k_Auto::a_max_str_speed, output_l);
+        else if (std::abs(output_r) < k_Auto::a_min_chassis_vel)
+            output_r = std::copysign(k_Auto::a_min_chassis_vel, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
@@ -86,15 +86,15 @@ void a_PID::calculate_p_trn()
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
 
         // Check whether the values are too high or too low to be used (left side).
-        if (std::abs(output_l) > k_Hardware::h_max_chassis_vel)
-            output_l = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
-        else if (std::abs(output_l) < k_Hardware::h_min_chassis_vel)
-            output_l = std::copysign(k_Hardware::h_min_chassis_vel, output_l);
+        if (std::abs(output_l) > k_Auto::a_max_p_trn_speed)
+            output_l = std::copysign(k_Auto::a_max_p_trn_speed, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_chassis_vel)
+            output_l = std::copysign(k_Auto::a_min_chassis_vel, output_l);
         // Check whether the values are too high or too low to be used (right side).
-        if (std::abs(output_r) > k_Hardware::h_max_chassis_vel)
-            output_r = std::copysign(k_Hardware::h_max_chassis_vel, output_l);
-        else if (std::abs(output_r) < k_Hardware::h_min_chassis_vel)
-            output_r = std::copysign(k_Hardware::h_min_chassis_vel, output_r);
+        if (std::abs(output_r) > k_Auto::a_max_p_trn_speed)
+            output_r = std::copysign(k_Auto::a_max_p_trn_speed, output_r);
+        else if (std::abs(output_r) < k_Auto::a_min_chassis_vel)
+            output_r = std::copysign(k_Auto::a_min_chassis_vel, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
@@ -105,6 +105,12 @@ void a_PID::calculate_p_trn()
 
         // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt); 
+
+        //! Everything after this comment is debug code.
+        pros::lcd::print(0, "diff:%f theta:%f", diff, theta);
+        pros::lcd::print(1, "err_l:%f err_r:%f", m_err_l, m_err_r);
+        pros::lcd::print(2, "drv_l:%f drv_r:%f", m_derv_l, m_derv_r);
+        pros::lcd::print(3, "pow_l:%d pow_r:%d", output_l, output_r);
     }
 }
 
@@ -186,6 +192,9 @@ void a_PID::drive()
     // Otherwise if it's a heading target...
     else if (m_targ_head)
     {
+        if (m_targ_head == 360.0)
+            m_targ_head = 0;
+        
         // Start heading calculation
         calculate_p_trn();
     }
