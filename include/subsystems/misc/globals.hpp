@@ -46,6 +46,9 @@ namespace k_Auto    // Autonomous constants.
     inline constexpr double a_def_integ_windup {0.0};       // Default integral windup threshold.
     inline constexpr int a_def_ocr_tick_range {5};          // Default OCR tick percentage of error.
     inline constexpr double a_def_imu_head_range {0.25};    // Default IMU heading percentage of error.
+    inline constexpr double a_p_trn_kP {1.5};               // Point turn proportional gain.
+    inline constexpr double a_p_trn_kI {0.0};               // Point turn integral gain.
+    inline constexpr double a_p_trn_kD {0.75};              // Point turn derivative gain.
 }
 
 //* External objects

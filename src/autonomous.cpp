@@ -30,7 +30,24 @@ void skills()
     a_obj_pid->set_target(a_Ticks{1440}).drive();
     pros::delay(1000);
     a_obj_pid->set_target(a_Ticks{-1440}).drive();
+    pros::delay(2000);
+
+    a_obj_pid->set_gains(a_PID_Gains{
+        k_Auto::a_p_trn_kP, k_Auto::a_p_trn_kI, k_Auto::a_p_trn_kD,
+        k_Hardware::h_max_readtime, k_Auto::a_def_integ_windup,
+        k_Auto::a_def_ocr_tick_range, k_Auto::a_def_imu_head_range});
+    a_obj_pid->set_target(a_Degrees{90.0}).drive();
     pros::delay(1000);
+    a_obj_pid->set_target(a_Degrees{0.0}).drive();
+    pros::delay(1000);
+    a_obj_pid->set_target(a_Degrees{270.0}).drive();
+    pros::delay(1000);
+    a_obj_pid->set_target(a_Degrees{0.0}).drive();
+    pros::delay(1000);
+    a_obj_pid->set_target(a_Degrees{180.0}).drive();
+    pros::delay(1000);
+    a_obj_pid->set_target(a_Degrees{0.0}).drive();
+    pros::delay(2000);
 }
 
 // Main autonomous control callback.
