@@ -54,9 +54,11 @@ void skills()
     pros::delay(250);
     h_obj_conveyor->set_vel();
     h_obj_intake->set_vel(600);
+    h_obj_conveyor->set_abs(0, 600, 0, 600);
     a_obj_pid->set_target(a_Ticks{1269}).drive();
     pros::delay(100);
     h_obj_intake->set_vel();
+    h_obj_conveyor->reset_enc();
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{215.0}).drive();
     pros::delay(100);
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1220}).drive();
