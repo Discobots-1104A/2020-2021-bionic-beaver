@@ -37,8 +37,11 @@ public:
     );
     h_Conveyor& set_brake_mode(pros::motor_brake_mode_e brake_mode);
     h_Conveyor& set_brake_mode(pros::motor_brake_mode_e brake_mode_cb, pros::motor_brake_mode_e brake_mode_ct);
+    h_Conveyor& reset_enc();
     void set_vel(int velocity = 0);
     void set_vel(int t_velocity, int b_velocity);
+    void set_abs(double position, int velocity);
+    void set_abs(double t_position, double b_position, int t_velocity, int b_velocity);
 
 private:
     pros::Motor m_CB;
