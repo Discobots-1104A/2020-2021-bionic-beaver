@@ -104,13 +104,7 @@ void a_PID::calculate_p_trn()
         h_obj_chassis->drive_vel(output_l, output_r);
 
         // Delay because the OCRs cannot record values faster than this.
-        pros::delay(uint_m_k_Dt); 
-
-        //! Everything after this comment is debug code.
-        pros::lcd::print(0, "diff:%f theta:%f", diff, theta);
-        pros::lcd::print(1, "err_l:%f err_r:%f", m_err_l, m_err_r);
-        pros::lcd::print(2, "drv_l:%f drv_r:%f", m_derv_l, m_derv_r);
-        pros::lcd::print(3, "pow_l:%d pow_r:%d", output_l, output_r);
+        pros::delay(uint_m_k_Dt);
     }
 }
 

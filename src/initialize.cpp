@@ -99,7 +99,7 @@ void selector_screen()
     }
     
     clear_screen();
-    h_obj_ctrl.clear();
+    h_obj_ctrl.clear_line(0);
 }
 
 // Disabled state callback.
