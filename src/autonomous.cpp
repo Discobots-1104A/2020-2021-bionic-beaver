@@ -10,7 +10,12 @@
 
 
 //* Defines for testing purposes.
-#define SECTION_ONE
+#define SECTION_THREE
+
+//* Function declarations for the tasks.
+
+void intake_until_in();
+
 
 //* Local "global" objects.
 
@@ -27,55 +32,132 @@ a_PID_Gains gains_p_trn {
     k_Auto::a_def_ocr_tick_range, k_Auto::a_def_imu_head_range
 };
 
-//* Functions
+// Task for intake_until_in()
+pros::Task t_intake_until_in {intake_until_in};
 
-// This is an autonomous macro which scores the alliance ball before descoring the opponent balls. 
-// The first while loop aims to score the alliance ball into the tower. 
-// The second while loop aims to descore the opponent balls from the tower. If we 
-// detect that we sucked the red ball back in, score it back in from the top again.
-void score_and_descore()
+//* Macro functions
+
+// This autonomous macro is for scoring a ball.
+void score()
 {
+    // Infinite loop.
     while (true)
     {
-        pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
-        if (ball.width < 50)
+        // Look for a ball with the specified size.
+        pros::vision_object_s_t ball {h_obj_sensors->get_obj_siz(0)};
+        
+        // If ball is red and width is greater than 200...
+        if (ball.signature == h_sVision_IDs::RED_ID && ball.width > 200)
         {
-            pros::delay(2000);
+            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            pros::delay(100);
+            h_obj_conveyor->set_vel();
             break;
         }
-        
+        // Otherwise if we find no ball...
+        else if (ball.signature == h_sVision_IDs::NULL_ID)
+        {
+            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            pros::delay(100);
+            h_obj_conveyor->set_vel();
+            break;
+        }
+
+        // Otherwise, just keep running the conveyors.
         h_obj_conveyor->set_vel(600);
         pros::delay(k_Hardware::h_max_readtime);
     }
+}
 
+// This autonomous macro is for descoring the balls.
+void descore()
+{
+    // Run the conveyor and intakes for .75 seconds before beginning to 
+    // prevent the loop from exiting immediately.
+    h_obj_conveyor->set_vel(600);
+    h_obj_intake->set_vel(600);
+    pros::delay(750);
+
+    // Infinite loop 1.
     while (true)
     {
+        // Look for a ball with the specified size.
         pros::vision_object_s_t ball {h_obj_sensors->get_obj_siz(0)};
+
+        // If the signature is red and the width is greater than 50...
         if (ball.signature == static_cast<int>(h_sVision_IDs::RED_ID) && ball.width > 50)
         {
+            // Cut power to the intakes and exit the loop.
             h_obj_intake->set_vel();
             break;
         }
+        // Else if there are no objects detected...
+        else if (ball.signature == h_sVision_IDs::NULL_ID)
+        {
+            // Cut power and exit the function.
+            h_obj_conveyor->set_vel();
+            h_obj_intake->set_vel();
+            return;
+        }
 
+        // Otherwise just eject the balls.
         h_obj_conveyor->set_vel((ball.width > 50) ? -600 : 600, 600);
         h_obj_intake->set_vel(600);
         pros::delay(k_Hardware::h_max_readtime);
     }
 
+    // Infinite loop 2.
     while (true)
     {
+        // Look for a ball with the specified signature, red.
         pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
-        if (ball.width < 50)
+        
+        // If ball width is greater than 200...
+        if (ball.width > 200)
         {
-            pros::delay(3000);
+            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            pros::delay(100);
             h_obj_conveyor->set_vel();
             break;
         }
-        
+
+        // Otherwise, just keep running the conveyors.
         h_obj_conveyor->set_vel(600);
         pros::delay(k_Hardware::h_max_readtime);
     }
 }
+
+// This autonomous macro is for intaking the balls as we drive.
+void intake_until_in()
+{
+    // If the task is notified...
+    while (t_intake_until_in.notify_take(true, TIMEOUT_MAX))
+    {
+        // Infinite loop.
+        while (true)
+        {
+            // Look for a ball with the specified signature, red.
+            pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
+            
+            // If ball width is greater than 50...
+            if (ball.width > 40)
+            {
+                // Cut conveyor and intake power immediately and exit the loop.
+                h_obj_conveyor->set_vel();
+                h_obj_intake->set_vel();
+                break;
+            }
+
+            // Otherwise, just keep running the conveyors and intake.
+            h_obj_conveyor->set_vel(600);
+            h_obj_intake->set_vel(600);
+            pros::delay(k_Hardware::h_max_readtime);
+        }
+    }
+}
+
+
+//* Routine functions.
 
 // Red routine.
 void red()
@@ -92,113 +174,94 @@ void blue()
 // Skills routine.
 void skills()
 {
-    // --BEGINNING OF SECTION ONE--
-    // This section scores the preload into the tower immediately and backs out by about a foot.
-    // This grants us 19 points immediately through 3 descored rows + 1 alliance ball.
+    //--START OF SECTION ONE--//
+    // This part just scores the preload ball into Goal I.
+    // It immediately grants us 19 points:
+    //   - 3 descored rows * 6.
+    //   - 1 alliance ball scored.
 
-    // Reset sensors.
-    h_obj_sensors->reset();
+    // Reset the encoders.
+    h_obj_sensors->reset_enc();
 
-    // Flip the hood out.
-    h_obj_conveyor->set_vel(600, 0);
-    pros::delay(250);
-    h_obj_conveyor->set_vel();
+    // Score the preload ball in.
+    // The use of the Vision sensor is to make sure that the ball does go in.
+    score();
 
-    // Score the ball into the tower.
-    h_obj_conveyor->set_vel(600);
-    pros::delay(1000);
-    h_obj_conveyor->set_vel();
+    // Back out by 6 inches or so.
+    a_obj_pid->set_target(a_Ticks{-6.0_in}).drive();
 
-    // Then back out about one foot.
-    a_obj_pid->set_target(a_Ticks{-423}).drive();
-    pros::delay(100);
+    // Turn to 90 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{90.0}).drive();
+
 #if defined SECTION_ONE
     return;
 #endif
-    // --END OF SECTION ONE--
+    //---END OF SECTION ONE---//
 
-    // --BEGINNING OF SECTION TWO--
-    // This section moves the robot towards the alliance ball nearest to the tangent of the center 
-    // tower, of which is parallel to our starting side. The robot then intakes the ball, drives 
-    // up to the tower, and scores the ball in, descoring a minimum of 1 opponent balls.
-    // This bumps our score up to 39; 3 more descored rows, 1 more alliance ball, and a minimum of 1
-    // opponent ball descored. If all 3 opponent balls are descored, it's bumped up to 42 points instead.
+    //--START OF SECTION TWO--//
+    // This part drives the robot to Goal F and scores an alliance ball.
+    // It bumps our score up to 26 points.
+    //  - 1 descored row * 6.
+    //  - 1 alliance ball scored.
 
-    // Turn 64 degrees relative to our starting position.
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{064.0}).drive();
-    pros::delay(100);
+    // Drive forward for about 4.25 feet.
+    // Turn on the intakes and conveyor too so we can intake the ball.
+    t_intake_until_in.notify();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{4.3_ft}).drive();
 
-    // Start the intakes and drive 2 * sqrt(5) ft (about 4.47) towards the ball, intaking it.
-    h_obj_intake->set_vel(600);
-    h_obj_conveyor->set_abs(0, 10000, 0, 600);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1800}).drive();
-    pros::delay(500);
-    h_obj_conveyor->reset_enc();
-    h_obj_intake->set_vel();
+    // Turn to 180 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{179.0}).drive();
 
-    // Return to our home heading that was set during initialization.
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{360.0}).drive();
-    pros::delay(100);
+    // Drive forward by 6.5 inches or so.
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{6.5_in}).drive();
 
-    // Drive into the middle tower (about a foot). The intakes are turned on to 
-    // assist with the posts on the middle tower. 
-    h_obj_intake->set_vel(600);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{400}).drive();
+    // Score the alliance ball in.
+    // The use of the Vision sensor is to make sure that the ball does go in.
+    score();
 
-    // Score the alliance ball into the tower. Vision sensor is used to automatically 
-    // sort the balls here.
-    score_and_descore();
+    // Back out by 6.25 inches or so.
+    a_obj_pid->set_target(a_Ticks{-6.25_in}).drive();
 
-    // Back out a foot. Reverse the intakes to help with the posts.
-    h_obj_intake->set_vel(-600);
-    a_obj_pid->set_target(a_Ticks{-423}).drive();
-    h_obj_intake->set_vel();
-    pros::delay(100);
+    // Turn to 90 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{91.0}).drive();
+
 #if defined SECTION_TWO
     return;
 #endif
-    // --END OF SECTION TWO--
+    //---END OF SECTION TWO---//
 
-    // --BEGINNING OF SECTION THREE--
-    // This final section navigates the robot towards the opposing corner tower (relative to the
-    // one that was descored in section one). We suck in the closest ball to us as we travel to the 
-    // tower, and then score the ball into the tower.
-    // This bumps our score up to a final of 58, up to a maximum of 60 depending on how many
-    // balls were descored from the center.
-    // 8 descored rows + 1 scored row + 3 alliance balls + 1-3 descored opponent balls.
+    //--START OF SECTION THREE--//
+    // This, for now, is the final part of the autonomous skills routine.
+    // We drive to Goal C and score an alliance ball into the tower.
+    // We then empty out the opponent balls in the tower.
+    // This bumps our score up to a final of 47 points.
+    //   - 2 descored rows * 6.
+    //   - 1 scored row * 6.
+    //   - 1 scored alliance ball.
+    //   - 2 descored opponent balls.
 
-    // Turn 45 degrees.
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{050.0}).drive();
-    pros::delay(100);
+    // Drive forward for about 3.9 feet.
+    // Turn on the intakes and conveyor too so we can intake the ball.
+    t_intake_until_in.notify();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{3.9_ft}).drive();
 
-    // Start the intakes and begin driving 4 * sqrt(2) ft (about 5.66).
-    h_obj_intake->set_vel(600);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{2393}).drive();
-    pros::delay(100);
-    h_obj_intake->set_vel();
+    // Turn to 135 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{135.0}).drive();
 
-    // Return to our home heading that was set during initialization.
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{360.0}).drive();
-    pros::delay(100);
+    // Drive forward by 1.25 ft or so.
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.25_ft}).drive();
 
-    // Drive forward for about 2 feet.
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{846}).drive();
-    pros::delay(100);
+    // Score the alliance ball in.
+    // The use of the Vision sensor is to make sure that the ball does go in.
+    score();
 
-    // Turn 45 degrees, then go forward for about 2 - 3 feet ish.
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{045.0}).drive();
-    pros::delay(100);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1021}).drive();
-    pros::delay(100);
+    // Back out by 1.25 ft or so. This is our final movement.
+    a_obj_pid->set_target(a_Ticks{-1.25_ft}).drive();
 
-    // Score the alliance ball into the tower. Vision sensor is used to automatically 
-    // sort the balls here.
-    score_and_descore();
-
-    // Back out 1 foot. This is our final movement.
-    a_obj_pid->set_target(a_Ticks{-423}).drive();
-    pros::delay(100);
-    // --END OF SECTION THREE--
+#if defined SECTION_THREE
+    return;
+#endif
+    //---END OF SECTION THREE---//
 }
 
 // Main autonomous control callback.

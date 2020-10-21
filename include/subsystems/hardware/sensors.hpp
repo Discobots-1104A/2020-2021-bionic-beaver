@@ -18,7 +18,8 @@
 enum h_sVision_IDs
 {
     RED_ID = 1,
-    BLUE_ID
+    BLUE_ID,
+    NULL_ID = 255
 };
 
 /// enum - Encoder IDs
@@ -74,7 +75,7 @@ public:
 
     double get_heading();
 
-    h_Sensors& reset();
+    h_Sensors& reset_enc();
     int32_t get_enc(h_Encoder_IDs ID);
 
 

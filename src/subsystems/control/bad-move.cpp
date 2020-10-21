@@ -34,7 +34,7 @@ void a_Bad_Move::move_str(double dist)
     h_obj_chassis->drive_vel();
 
     // Reset OCR values.
-    h_obj_sensors->reset();
+    h_obj_sensors->reset_enc();
 }
 
 /// Point turn around center of robot.
@@ -59,5 +59,5 @@ void a_Bad_Move::move_pnt_trn(double head)
     h_obj_chassis->drive_vel();
 
     // Reset OCR values.
-    h_obj_sensors->reset();
+    h_obj_sensors->reset_enc();
 }

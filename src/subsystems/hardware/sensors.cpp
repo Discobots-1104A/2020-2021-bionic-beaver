@@ -89,7 +89,7 @@ double h_Sensors::get_heading()
 }
 
 /// Reset all the encoder values.
-h_Sensors& h_Sensors::reset()
+h_Sensors& h_Sensors::reset_enc()
 {
     m_aL.reset();
     m_aR.reset();

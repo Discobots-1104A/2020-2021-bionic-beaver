@@ -24,7 +24,7 @@ void selector_screen()
 {
     // Text to clarify controls.
     pros::lcd::print(0, "use controller to select.");
-    pros::lcd::print(1, "left & right scroll 'A' to sel");
+    pros::lcd::print(1, "left & right scroll");
     pros::lcd::print(2, "'A' to select");
 
     // Current selection.

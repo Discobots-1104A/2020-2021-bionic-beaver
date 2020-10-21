@@ -24,6 +24,16 @@ enum a_Autonomous_Routine
     SKILLS
 };
 
+/// literal - feet.
+/// \param var Value.
+/// \return Feet to ticks.
+int operator"" _ft (long double var);
+
+/// literal - inches.
+/// \param var Value.
+/// \return Inches to ticks.
+int operator"" _in (long double var);
+
 //* Constants
 namespace k_Hardware    // Hardware constants.
 {
@@ -38,7 +48,7 @@ namespace k_Hardware    // Hardware constants.
 
 namespace k_Auto    // Autonomous constants.
 {
-    inline constexpr double a_def_kP {0.1};                 // Default proportional gain.
+    inline constexpr double a_def_kP {0.135};               // Default proportional gain.
     inline constexpr double a_def_kI {0.0};                 // Default integral gain.
     inline constexpr double a_def_kD {0.5};                 // Default derivative gain.
     inline constexpr double a_def_integ_windup {0.0};       // Default integral windup threshold.
@@ -49,7 +59,8 @@ namespace k_Auto    // Autonomous constants.
     inline constexpr double a_p_trn_kD {2.5};               // Point turn derivative gain.
     inline constexpr int a_max_str_speed {175};             // Maximum speed for straight driving.
     inline constexpr int a_max_p_trn_speed {50};            // Maximum speed for point turning.
-    inline constexpr int a_min_chassis_vel {15};            // Minimum motor velocity on chassis (for PID).
+    inline constexpr int a_min_str_speed {30};              // Minimum speed for straight driving.
+    inline constexpr int a_min_p_trn_speed {15};            // Minimum speed for point turning.
 }
 
 //* External objects

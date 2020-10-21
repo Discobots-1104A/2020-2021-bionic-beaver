@@ -9,6 +9,21 @@
 //*Headers
 #include "main.h"
 
+
+//* User-defined types
+
+int operator"" _ft (long double var)
+{
+    long double revs {(var * 12) / (3.25 * M_PI)};
+    return static_cast<int>(std::roundl(revs * 360));
+}
+
+int operator"" _in (long double var)
+{
+    long double revs {var / (3.25 * M_PI)};
+    return static_cast<int>(std::roundl(revs * 360));
+}
+
 //* External objects
 
 h_Intake    *h_obj_intake;      // Pointer to intake object.

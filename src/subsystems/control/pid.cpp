@@ -39,13 +39,13 @@ void a_PID::calculate_str()
         // Check whether the values are too high or too low to be used (left side).
         if (std::abs(output_l) > k_Auto::a_max_str_speed)
             output_l = std::copysign(k_Auto::a_max_str_speed, output_l);
-        else if (std::abs(output_l) < k_Auto::a_min_chassis_vel)
-            output_l = std::copysign(k_Auto::a_min_chassis_vel, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_str_speed)
+            output_l = std::copysign(k_Auto::a_min_str_speed, output_l);
         // Check whether the values are too high or too low to be used (right side).
         if (std::abs(output_r) > k_Auto::a_max_str_speed)
             output_r = std::copysign(k_Auto::a_max_str_speed, output_l);
-        else if (std::abs(output_r) < k_Auto::a_min_chassis_vel)
-            output_r = std::copysign(k_Auto::a_min_chassis_vel, output_r);
+        else if (std::abs(output_r) < k_Auto::a_min_str_speed)
+            output_r = std::copysign(k_Auto::a_min_str_speed, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
@@ -88,13 +88,13 @@ void a_PID::calculate_p_trn()
         // Check whether the values are too high or too low to be used (left side).
         if (std::abs(output_l) > k_Auto::a_max_p_trn_speed)
             output_l = std::copysign(k_Auto::a_max_p_trn_speed, output_l);
-        else if (std::abs(output_l) < k_Auto::a_min_chassis_vel)
-            output_l = std::copysign(k_Auto::a_min_chassis_vel, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_p_trn_speed)
+            output_l = std::copysign(k_Auto::a_min_p_trn_speed, output_l);
         // Check whether the values are too high or too low to be used (right side).
         if (std::abs(output_r) > k_Auto::a_max_p_trn_speed)
             output_r = std::copysign(k_Auto::a_max_p_trn_speed, output_r);
-        else if (std::abs(output_r) < k_Auto::a_min_chassis_vel)
-            output_r = std::copysign(k_Auto::a_min_chassis_vel, output_r);
+        else if (std::abs(output_r) < k_Auto::a_min_p_trn_speed)
+            output_r = std::copysign(k_Auto::a_min_p_trn_speed, output_r);
 
         // Set previous errors.
         m_lst_err_l = m_err_l;
@@ -133,7 +133,7 @@ a_PID& a_PID::reset()
     m_derv_l = 0.0;
     m_derv_r = 0.0;
 
-    h_obj_sensors->reset();
+    h_obj_sensors->reset_enc();
     
     return *this;
 }
