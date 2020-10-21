@@ -24,6 +24,16 @@ enum a_Autonomous_Routine
     SKILLS
 };
 
+/// literal - feet.
+/// \param var Value.
+/// \return Feet to ticks.
+int operator"" _ft (long double var);
+
+/// literal - inches.
+/// \param var Value.
+/// \return Inches to ticks.
+int operator"" _in (long double var);
+
 //* Constants
 namespace k_Hardware    // Hardware constants.
 {
