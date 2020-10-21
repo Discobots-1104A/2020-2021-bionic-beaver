@@ -49,7 +49,7 @@ namespace k_Auto    // Autonomous constants.
     inline constexpr double a_p_trn_kD {2.5};               // Point turn derivative gain.
     inline constexpr int a_max_str_speed {175};             // Maximum speed for straight driving.
     inline constexpr int a_max_p_trn_speed {50};            // Maximum speed for point turning.
-    inline constexpr int a_min_chassis_vel {20};            // Minimum motor velocity on chassis (for PID).
+    inline constexpr int a_min_chassis_vel {15};            // Minimum motor velocity on chassis (for PID).
 }
 
 //* External objects

@@ -48,8 +48,8 @@ h_Chassis& h_Chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
 void h_Chassis::drive_vel(int velocity)
 {
     m_LF.move_velocity(velocity);
-    m_LB.move_velocity(velocity);
     m_RF.move_velocity(velocity);
+    m_LB.move_velocity(velocity);
     m_RB.move_velocity(velocity);    
 }
 
@@ -61,8 +61,8 @@ void h_Chassis::drive_vel(int velocity)
 void h_Chassis::drive_vel(int l_velocity, int r_velocity)
 {
     m_LF.move_velocity(l_velocity);
-    m_LB.move_velocity(l_velocity);
     m_RF.move_velocity(r_velocity);
+    m_LB.move_velocity(l_velocity);
     m_RB.move_velocity(r_velocity);
 }
 
@@ -73,7 +73,7 @@ void h_Chassis::drive_vel(int l_velocity, int r_velocity)
 void h_Chassis::drive_vol(int l_voltage, int r_voltage)
 {
     m_LF.move(l_voltage);
-    m_LB.move(l_voltage);
     m_RF.move(r_voltage);
+    m_LB.move(l_voltage);
     m_RB.move(r_voltage);
 }
