@@ -198,7 +198,7 @@ void skills()
     a_obj_pid->set_target(a_Ticks{1.0_ft}).drive();
     pros::delay(50);
 
-    // Score the preload ball in.
+    // Score the alliance ball in.
     // The use of the Vision sensor is to make sure that the ball does go in.
     score();
 
@@ -216,6 +216,40 @@ void skills()
     //---END OF SECTION TWO---//
 
     //--START OF SECTION THREE--//
+    // This, for now, is the final part of the autonomous skills routine.
+    // We drive to Goal C and score an alliance ball into the tower.
+    // We then empty out the opponent balls in the tower.
+    // This bumps our score up to a final of 47 points.
+    //   - 2 descored rows * 6.
+    //   - 1 scored row * 6.
+    //   - 1 scored alliance ball.
+    //   - 2 descored opponent balls.
+
+    // Drive forward for about 4 feet.
+    // Turn on the intakes and conveyor too so we can intake the ball.
+    t_intake_until_in.notify();
+    a_obj_pid->set_target(a_Ticks{4.0_ft}).drive();
+    pros::delay(50);
+
+    // Turn to 135 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{135.0}).drive();
+    pros::delay(50);
+
+    // Drive forward by a foot or so.
+    a_obj_pid->set_target(a_Ticks{1.0_ft}).drive();
+    pros::delay(50);
+
+    // Score the alliance ball in.
+    // The use of the Vision sensor is to make sure that the ball does go in.
+    score();
+
+    // Descore the opponent balls.
+    // The use of the Vision sensor is to make sure that we don't suck out our own ball.
+    descore();
+
+    // Back out by a foot or so. This is our final movement.
+    a_obj_pid->set_target(a_Ticks{-1.0_ft}).drive();
+    pros::delay(50);
 
 #if defined SECTION_THREE
     return;
