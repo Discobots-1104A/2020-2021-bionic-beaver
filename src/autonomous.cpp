@@ -10,7 +10,7 @@
 
 
 //* Defines for testing purposes.
-#define SECTION_
+#define SECTION_ONE
 
 //* Local "global" objects.
 
@@ -29,14 +29,52 @@ a_PID_Gains gains_p_trn {
 
 //* Functions
 
-/// Ball sorting function. Determines whether it should reverse the top roller or 
-/// not to eject a ball.
-/// \param ball The ball of the given sorted signature.
-/// \param top_pow The default power of the top roller.
-/// \return The top value or the reversing value depending on the size of the object.
-int a_ball_sort(pros::vision_object_s_t &ball, int top_pow)
+// This is an autonomous macro which scores the alliance ball before descoring the opponent balls. 
+// The first while loop aims to score the alliance ball into the tower. 
+// The second while loop aims to descore the opponent balls from the tower. If we 
+// detect that we sucked the red ball back in, score it back in from the top again.
+void score_and_descore()
 {
-    return ((ball.width > 50) ? k_Hardware::h_rev_top : top_pow);
+    while (true)
+    {
+        pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
+        if (ball.width < 50)
+        {
+            pros::delay(2000);
+            break;
+        }
+        
+        h_obj_conveyor->set_vel(600);
+        pros::delay(k_Hardware::h_max_readtime);
+    }
+
+    while (true)
+    {
+        pros::vision_object_s_t ball {h_obj_sensors->get_obj_siz(0)};
+        if (ball.signature == static_cast<int>(h_sVision_IDs::RED_ID) && ball.width > 50)
+        {
+            h_obj_intake->set_vel();
+            break;
+        }
+
+        h_obj_conveyor->set_vel((ball.width > 50) ? -600 : 600, 600);
+        h_obj_intake->set_vel(600);
+        pros::delay(k_Hardware::h_max_readtime);
+    }
+
+    while (true)
+    {
+        pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
+        if (ball.width < 50)
+        {
+            pros::delay(3000);
+            h_obj_conveyor->set_vel();
+            break;
+        }
+        
+        h_obj_conveyor->set_vel(600);
+        pros::delay(k_Hardware::h_max_readtime);
+    }
 }
 
 // Red routine.
@@ -86,7 +124,7 @@ void skills()
     // This bumps our score up to 39; 3 more descored rows, 1 more alliance ball, and a minimum of 1
     // opponent ball descored. If all 3 opponent balls are descored, it's bumped up to 42 points instead.
 
-    // Turn -152 degrees relative to our starting position.
+    // Turn 64 degrees relative to our starting position.
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{064.0}).drive();
     pros::delay(100);
 
@@ -107,17 +145,9 @@ void skills()
     h_obj_intake->set_vel(600);
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{400}).drive();
 
-    // And then score the alliance ball into the tower. Vision sensor is used to automatically 
+    // Score the alliance ball into the tower. Vision sensor is used to automatically 
     // sort the balls here.
-    for (auto i {0}; i < 4000; i += 10)
-    {
-        pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sorted_ball_id)};
-        h_obj_conveyor->set_vel(a_ball_sort(ball, 600), 600);
-        pros::delay(10);
-    }
-    h_obj_conveyor->set_vel();
-    h_obj_intake->set_vel();
-    pros::delay(100);
+    score_and_descore();
 
     // Back out a foot. Reverse the intakes to help with the posts.
     h_obj_intake->set_vel(-600);
@@ -161,10 +191,9 @@ void skills()
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1021}).drive();
     pros::delay(100);
 
-    // Score the ball into the tower.
-    h_obj_conveyor->set_vel(600);
-    pros::delay(500);
-    h_obj_conveyor->set_vel();
+    // Score the alliance ball into the tower. Vision sensor is used to automatically 
+    // sort the balls here.
+    score_and_descore();
 
     // Back out 1 foot. This is our final movement.
     a_obj_pid->set_target(a_Ticks{-423}).drive();

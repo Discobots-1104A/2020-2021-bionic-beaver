@@ -73,6 +73,14 @@ pros::vision_object_s_t h_Sensors::get_obj_sig(int size, h_sVision_IDs ID)
     return m_sVision.get_by_sig(size, static_cast<std::uint32_t>(ID));
 }
 
+/// Get a Vision object from a size.
+/// \param size The size of the object to find.
+/// \return A Vision sensor object.
+pros::vision_object_s_t h_Sensors::get_obj_siz(int size)
+{
+    return m_sVision.get_by_size(size);
+}
+
 /// Get the heading from the IMU
 /// \return A heading value from 0 - 360 deg.
 double h_Sensors::get_heading()
