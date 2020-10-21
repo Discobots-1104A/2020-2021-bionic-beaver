@@ -10,7 +10,7 @@
 
 
 //* Defines for testing purposes.
-#define SECTION_
+#define SECTION_ONE
 
 //* Local "global" objects.
 
@@ -93,6 +93,37 @@ void blue()
 void skills()
 {
     //--START OF SECTION ONE--//
+    // This part just scores the preload ball into Goal I.
+    // It immediately grants us 19 points:
+    //   - 3 descored rows * 6.
+    //   - 1 alliance ball scored.
+
+    // Reset the encoders.
+    h_obj_sensors->reset_enc();
+
+    // Score the preload ball in.
+    // The use of the Vision sensor is to make sure that the ball does go in.
+    while (true)
+    {
+        pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
+        if (ball.width > 200)
+        {
+            pros::delay(2000);
+            h_obj_conveyor->set_vel();
+            break;
+        }
+
+        h_obj_conveyor->set_vel(600);
+        pros::delay(k_Hardware::h_max_readtime);
+    }
+
+    // Back out by a foot or so.
+    a_obj_pid->set_target(a_Ticks{1.0_ft}).drive();
+    pros::delay(50);
+
+    // Turn to 90 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{90.0}).drive();
+    pros::delay(50);
 
 #if defined SECTION_ONE
     return;

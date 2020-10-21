@@ -74,7 +74,7 @@ public:
 
     double get_heading();
 
-    h_Sensors& reset();
+    h_Sensors& reset_enc();
     int32_t get_enc(h_Encoder_IDs ID);
 
 
