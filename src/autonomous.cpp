@@ -49,7 +49,7 @@ void score()
         // If ball is red and width is greater than 200...
         if (ball.signature == h_sVision_IDs::RED_ID && ball.width > 200)
         {
-            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            // Wait .1 seconds, then cut power to the conveyors and exit the loop.
             pros::delay(100);
             h_obj_conveyor->set_vel();
             break;
@@ -57,7 +57,7 @@ void score()
         // Otherwise if we find no ball...
         else if (ball.signature == h_sVision_IDs::NULL_ID)
         {
-            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            // Wait .1 seconds, then cut power to the conveyors and exit the loop.
             pros::delay(100);
             h_obj_conveyor->set_vel();
             break;
@@ -115,7 +115,7 @@ void descore()
         // If ball width is greater than 200...
         if (ball.width > 200)
         {
-            // Wait .25 seconds, then cut power to the conveyors and exit the loop.
+            // Wait .1 seconds, then cut power to the conveyors and exit the loop.
             pros::delay(100);
             h_obj_conveyor->set_vel();
             break;
@@ -204,12 +204,12 @@ void skills()
     //  - 1 descored row * 6.
     //  - 1 alliance ball scored.
 
-    // Drive forward for about 4.25 feet.
+    // Drive forward for about 4.3 feet.
     // Turn on the intakes and conveyor too so we can intake the ball.
     t_intake_until_in.notify();
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{4.3_ft}).drive();
 
-    // Turn to 180 degrees heading relative to our starting position
+    // Turn to 179 degrees heading relative to our starting position
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{179.0}).drive();
 
     // Drive forward by 6.5 inches or so.
@@ -222,7 +222,7 @@ void skills()
     // Back out by 6.25 inches or so.
     a_obj_pid->set_target(a_Ticks{-6.25_in}).drive();
 
-    // Turn to 90 degrees heading relative to our starting position
+    // Turn to 91 degrees heading relative to our starting position
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{91.0}).drive();
 
 #if defined SECTION_TWO
@@ -234,11 +234,10 @@ void skills()
     // This, for now, is the final part of the autonomous skills routine.
     // We drive to Goal C and score an alliance ball into the tower.
     // We then empty out the opponent balls in the tower.
-    // This bumps our score up to a final of 47 points.
+    // This bumps our score up to a final of 45 points.
     //   - 2 descored rows * 6.
     //   - 1 scored row * 6.
     //   - 1 scored alliance ball.
-    //   - 2 descored opponent balls.
 
     // Drive forward for about 3.9 feet.
     // Turn on the intakes and conveyor too so we can intake the ball.
