@@ -139,8 +139,8 @@ void intake_until_in()
             // Look for a ball with the specified signature, red.
             pros::vision_object_s_t ball {h_obj_sensors->get_obj_sig(0, h_sVision_IDs::RED_ID)};
             
-            // If ball width is greater than 75...
-            if (ball.width > 50)
+            // If ball width is greater than 50...
+            if (ball.width > 40)
             {
                 // Cut conveyor and intake power immediately and exit the loop.
                 h_obj_conveyor->set_vel();
@@ -210,7 +210,7 @@ void skills()
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{4.3_ft}).drive();
 
     // Turn to 180 degrees heading relative to our starting position
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{180.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{179.0}).drive();
 
     // Drive forward by 6.5 inches or so.
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{6.5_in}).drive();
@@ -219,11 +219,11 @@ void skills()
     // The use of the Vision sensor is to make sure that the ball does go in.
     score();
 
-    // Back out by 6.5 inches or so.
-    a_obj_pid->set_target(a_Ticks{-6.5_in}).drive();
+    // Back out by 6.25 inches or so.
+    a_obj_pid->set_target(a_Ticks{-6.25_in}).drive();
 
     // Turn to 90 degrees heading relative to our starting position
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{90.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{91.0}).drive();
 
 #if defined SECTION_TWO
     return;
@@ -240,10 +240,10 @@ void skills()
     //   - 1 scored alliance ball.
     //   - 2 descored opponent balls.
 
-    // Drive forward for about 3.75 feet.
+    // Drive forward for about 3.9 feet.
     // Turn on the intakes and conveyor too so we can intake the ball.
     t_intake_until_in.notify();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{3.75_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{3.9_ft}).drive();
 
     // Turn to 135 degrees heading relative to our starting position
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{135.0}).drive();
