@@ -24,7 +24,8 @@ void selector_screen()
 {
     // Text to clarify controls.
     pros::lcd::print(0, "use controller to select.");
-    pros::lcd::print(1, "left & right scroll, 'A' to select");
+    pros::lcd::print(1, "left & right scroll 'A' to sel");
+    pros::lcd::print(2, "'A' to select");
 
     // Current selection.
     int current_sel {0};
@@ -35,15 +36,15 @@ void selector_screen()
         switch (current_sel)
         {
         case 0:
-            pros::lcd::print(2, "sort col: red  ");     // Sort for red.
+            pros::lcd::print(3, "sort col: red  ");     // Sort for red.
             h_sorted_ball_id = h_sVision_IDs::RED_ID;
             break;
         case 1:
-            pros::lcd::print(2, "sort col: blue ");     // Sort for blue.
+            pros::lcd::print(3, "sort col: blue ");     // Sort for blue.
             h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
             break;
         case 2:
-            pros::lcd::print(2, "sort col: skills");    // Sort for skills colour (blue).
+            pros::lcd::print(3, "sort col: skills");    // Sort for skills colour (blue).
             h_sorted_ball_id = h_sVision_IDs::BLUE_ID;
             break;
         }
@@ -71,15 +72,15 @@ void selector_screen()
         switch (current_sel)
         {
         case 0:
-            pros::lcd::print(3, "auto: red  ");     // Red routine.
+            pros::lcd::print(4, "auto: red  ");     // Red routine.
             a_routine = a_Autonomous_Routine::RED;
             break;
         case 1:
-            pros::lcd::print(3, "auto: blue ");     // Blue routine.
+            pros::lcd::print(4, "auto: blue ");     // Blue routine.
             a_routine = a_Autonomous_Routine::BLUE;
             break;
         case 2:
-            pros::lcd::print(3, "auto: skills");    // Skills routine.
+            pros::lcd::print(4, "auto: skills");    // Skills routine.
             a_routine = a_Autonomous_Routine::SKILLS;
             break;
         }
@@ -99,7 +100,7 @@ void selector_screen()
     }
     
     clear_screen();
-    h_obj_ctrl.clear_line(0);
+    h_obj_ctrl.print(0, 0, "           ");
 }
 
 // Disabled state callback.
@@ -140,5 +141,6 @@ void initialize()
     clear_screen(); // Clear screen.
 
     h_obj_ctrl.print(0, 0, "check brain");
+    h_obj_ctrl.rumble("---");
     selector_screen();  // Run selection screen.
 }
