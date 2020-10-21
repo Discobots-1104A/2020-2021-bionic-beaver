@@ -18,7 +18,8 @@
 enum h_sVision_IDs
 {
     RED_ID = 1,
-    BLUE_ID
+    BLUE_ID,
+    NULL_ID = 255
 };
 
 /// enum - Encoder IDs
