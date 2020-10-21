@@ -15,34 +15,46 @@
 /// Calculation function for straight line movements.
 void a_PID::calculate_str()
 {
+    // Explicitly convert m_k_Dt for use in pros::delay() later.
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
 
+    // Output for left and right sides.
     int output_l, output_r;
 
-    while (std::fabs(m_targ_dist - static_cast<double>(h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) > m_k_t_uncert)
+    // Loop as long as the chassis has not reached its target.
+    while (std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) >= m_k_t_uncert)
     {
+        // Calculate errors.
         m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
         m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
 
+        // Calculate derivatives.
         m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
         m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
+        // Explicitely convert the values to integers to write to the motors.
         output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-        if (std::abs(output_l) > 200)
-            output_l = std::copysign(output_l, 200);
-        else if (std::abs(output_l) < 20)
-            output_l = std::copysign(output_l, 20);
 
-        if (std::abs(output_r) > 200)
-            output_r = std::copysign(output_r, 200);
-        else if (std::abs(output_r) < 20)
-            output_r = std::copysign(output_r, 20);
+        // Check whether the values are too high or too low to be used (left side).
+        if (std::abs(output_l) > k_Auto::a_max_str_speed)
+            output_l = std::copysign(k_Auto::a_max_str_speed, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_str_speed)
+            output_l = std::copysign(k_Auto::a_min_str_speed, output_l);
+        // Check whether the values are too high or too low to be used (right side).
+        if (std::abs(output_r) > k_Auto::a_max_str_speed)
+            output_r = std::copysign(k_Auto::a_max_str_speed, output_l);
+        else if (std::abs(output_r) < k_Auto::a_min_str_speed)
+            output_r = std::copysign(k_Auto::a_min_str_speed, output_r);
 
+        // Set previous errors.
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;
 
+        // Set output power to the drive.
         h_obj_chassis->drive_vel(output_l, output_r);
+
+        // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
     }
 }
@@ -57,27 +69,41 @@ void a_PID::calculate_p_trn()
     
     while (std::fabs(m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
     {
-        m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
-        m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
+        // Calculate the shortest angle towards the target from current heading.
+        double diff { fmod( (m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180 };
+        double theta { ( (diff < -180) ? diff + 360 : diff ) };
 
+        // Set errors.
+        m_err_l = theta;
+        m_err_r = -theta;
+
+        // Calculate derivatives.
         m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
         m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
+        // Explicitely convert the values to integers to write to the motors.
         output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
         output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
-        if (std::abs(output_l) > 200)
-            output_l = std::copysign(200, output_l);
-        else if (std::abs(output_l) < 20)
-            output_l = std::copysign(20, output_l);
-        if (std::abs(output_r) > 200)
-            output_r = std::copysign(200, output_r);
-        else if (std::abs(output_r) < 20)
-            output_r = std::copysign(20, output_r);
 
+        // Check whether the values are too high or too low to be used (left side).
+        if (std::abs(output_l) > k_Auto::a_max_p_trn_speed)
+            output_l = std::copysign(k_Auto::a_max_p_trn_speed, output_l);
+        else if (std::abs(output_l) < k_Auto::a_min_p_trn_speed)
+            output_l = std::copysign(k_Auto::a_min_p_trn_speed, output_l);
+        // Check whether the values are too high or too low to be used (right side).
+        if (std::abs(output_r) > k_Auto::a_max_p_trn_speed)
+            output_r = std::copysign(k_Auto::a_max_p_trn_speed, output_r);
+        else if (std::abs(output_r) < k_Auto::a_min_p_trn_speed)
+            output_r = std::copysign(k_Auto::a_min_p_trn_speed, output_r);
+
+        // Set previous errors.
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;
 
+        // Set output power to the drive.
         h_obj_chassis->drive_vel(output_l, output_r);
+
+        // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
     }
 }
@@ -91,6 +117,26 @@ a_PID::a_PID(const a_PID_Gains &gains)
       m_k_Dt{gains.gn_k_Dt}, m_k_min_intg{gains.gn_k_min_intg},
       m_k_t_uncert{gains.gn_k_t_uncert}, m_k_h_uncert{gains.gn_k_h_uncert}
     {}
+
+/// Resets all targets, errors, calculated gains, and sensor readings.
+a_PID& a_PID::reset()
+{
+    m_targ_dist = 0.0;
+    m_targ_head = 0.0;
+    m_targ_l = 0.0;
+    m_targ_r = 0.0;
+
+    m_err_l = 0.0;
+    m_err_r = 0.0;
+    m_lst_err_l = 0.0;
+    m_lst_err_r = 0.0;
+    m_derv_l = 0.0;
+    m_derv_r = 0.0;
+
+    h_obj_sensors->reset_enc();
+    
+    return *this;
+}
 
 /// Sets the gains of the PID controller.
 /// \param gains An a_PID_Gains struct with all gain values.
@@ -122,51 +168,34 @@ a_PID& a_PID::set_target(const a_Degrees &head_target)
     return *this;
 }
 
-/// Resets all targets, errors, and calculated gains.
-void a_PID::reset()
-{
-    m_targ_dist = 0.0;
-    m_targ_head = 0.0;
-    m_targ_l = 0.0;
-    m_targ_r = 0.0;
-
-    m_err_l = 0.0;
-    m_err_r = 0.0;
-    m_lst_err_l = 0.0;
-    m_lst_err_r = 0.0;
-    m_derv_l = 0.0;
-    m_derv_r = 0.0;
-
-    h_obj_sensors->reset();
-}
-
 /// Starts the PID controller with the supplied targets. 
 /// Automatically deduces whether it should drive in a straight line, or 
 /// do a point turn based on targets supplied.
 void a_PID::drive()
 {
+    // If we detect a distance target...
     if (m_targ_dist)
     {
-        m_targ_l = m_targ_dist;
-        m_targ_r = m_targ_dist;
+        // Set the targets.
+        m_targ_l = static_cast<int>(m_targ_dist);
+        m_targ_r = static_cast<int>(m_targ_dist);
 
+        // Start distance calculation.
         calculate_str();
     }
+    // Otherwise if it's a heading target...
     else if (m_targ_head)
     {
-        double diff { fmod( (m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180 };
-        double theta { ( (diff < -180) ? diff + 360 : diff ) * (M_PI / 180) };
-
-        double targ_inch { (k_Hardware::h_tw_len / 2) * theta };
-        double revs { targ_inch / (k_Hardware::h_tw_dia * M_PI) };
-        double revs_to_ticks { revs * 360 };
+        if (m_targ_head == 360.0)
+            m_targ_head = 0;
         
-        m_targ_l = revs_to_ticks;
-        m_targ_r = -revs_to_ticks;
-
+        // Start heading calculation
         calculate_p_trn();
     }
 
+    // Stop the motors.
     h_obj_chassis->drive_vel();
+
+    // Reset all values.
     reset();
 }

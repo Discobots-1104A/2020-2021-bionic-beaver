@@ -9,17 +9,32 @@
 //*Headers
 #include "main.h"
 
+
+//* User-defined types
+
+int operator"" _ft (long double var)
+{
+    long double revs {(var * 12) / (3.25 * M_PI)};
+    return static_cast<int>(std::roundl(revs * 360));
+}
+
+int operator"" _in (long double var)
+{
+    long double revs {var / (3.25 * M_PI)};
+    return static_cast<int>(std::roundl(revs * 360));
+}
+
 //* External objects
 
-h_Intake* h_obj_intake;
-h_Conveyor* h_obj_conveyor;
-h_Chassis* h_obj_chassis;
-h_Sensors* h_obj_sensors;
+h_Intake    *h_obj_intake;      // Pointer to intake object.
+h_Conveyor  *h_obj_conveyor;    // Pointer to conveyor object.
+h_Chassis   *h_obj_chassis;     // Pointer to chassis object.
+h_Sensors   *h_obj_sensors;     // Pointer to sensors object.
 
-a_PID* a_obj_pid;
-a_Bad_Move* a_obj_bad_move;
+a_PID       *a_obj_pid;         // Pointer to a_PID object.
+a_Bad_Move  *a_obj_bad_move;    // Pointer to simple movement object.
 
-pros::vision_signature_s_t h_obj_red_sig 
+pros::vision_signature_s_t h_obj_red_sig    // Red Vision signature.
 {
     pros::Vision::signature_from_utility
     (
@@ -28,7 +43,7 @@ pros::vision_signature_s_t h_obj_red_sig
     )
 };
 
-pros::vision_signature_s_t h_obj_blu_sig 
+pros::vision_signature_s_t h_obj_blu_sig    // Blue Vision signature.
 {
     pros::Vision::signature_from_utility
     (
@@ -37,6 +52,8 @@ pros::vision_signature_s_t h_obj_blu_sig
     )
 };
 
-pros::Controller h_obj_ctrl {pros::controller_id_e_t::E_CONTROLLER_MASTER};
+pros::Controller h_obj_ctrl {pros::controller_id_e_t::E_CONTROLLER_MASTER}; // Controller object.
 
-h_sVision_IDs h_sorted_ball_id;
+h_sVision_IDs h_sorted_ball_id;     // Ball sort ID.
+
+a_Autonomous_Routine a_routine;     // Autonomous routine ID.

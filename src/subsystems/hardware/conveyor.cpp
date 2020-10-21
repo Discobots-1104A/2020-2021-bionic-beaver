@@ -49,6 +49,16 @@ h_Conveyor& h_Conveyor::set_brake_mode(pros::motor_brake_mode_e brake_mode_cb, p
     return *this;
 }
 
+/// "Resets" the positions of the motors' internal encoders of the conveyors. 
+//! Does not actually reset the encoders. Instead, it sets its zero 
+//! to the current position.
+h_Conveyor& h_Conveyor::reset_enc()
+{
+    m_CT.tare_position();
+    m_CB.tare_position();
+    return *this;
+}
+
 /// Sets the velocity to both conveyor motors with a supplied velocity value.
 /// Supplying no or zeroed parameters stops the motors.
 /// \param velocity Velocity supplied.
@@ -67,4 +77,31 @@ void h_Conveyor::set_vel(int t_velocity, int b_velocity)
 {
     m_CB.move_velocity(b_velocity);
     m_CT.move_velocity(t_velocity);
+}
+
+/// Move the conveyors based on an absolute position with supplied position and 
+/// velocity values.
+//? This is a very niche function for autonomous purposes. 
+//! Has no default parameters. You must supply position and velocity. 
+/// \param position The position to move to in the units supplied.
+/// \param velocity The velocity to move towards the position.
+void h_Conveyor::set_abs(double position, int velocity)
+{
+    m_CT.move_absolute(position, velocity);
+    m_CB.move_absolute(position, velocity);
+}
+
+/// This is an overload for the set_abs function that allows for control over the 
+/// individual rollers. Moves them based on the supplied position and velocity 
+/// values. 
+//? This is a very niche function for autonomous purposes. 
+//! Has no default parameters. You must supply position and velocity. 
+/// \param t_position The position to move the top rollers, in the units supplied.
+/// \param b_position The position to move the bottom rollers, in the units supplied.
+/// \param t_velocity The velocity to move the top rollers towards said position.
+/// \param b_velocity The velocity to move the bottom rollers towards said position.
+void h_Conveyor::set_abs(double t_position, double b_position, int t_velocity, int b_velocity)
+{
+    m_CT.move_absolute(t_position, t_velocity);
+    m_CB.move_absolute(b_position, b_velocity);
 }

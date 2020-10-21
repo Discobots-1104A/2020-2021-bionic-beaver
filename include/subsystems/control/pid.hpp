@@ -24,7 +24,7 @@ enum a_Sides
 /// struct - Encoder ticks 
 struct a_Ticks
 {
-    double var;
+    int var;
 };
 
 /// struct - Degrees
@@ -34,7 +34,7 @@ struct a_Degrees
 };
 
 /// struct - PID constants. 
-//? In order of: kP, kI, kD, k_Dt, k_min_intg, k_uncert. 
+//? In order of: kP, kI, kD, k_Dt, k_min_intg, k_t_uncert, k_h_uncert. 
 struct a_PID_Gains
 {
     double gn_kP;
@@ -52,10 +52,10 @@ class a_PID
 {
 public:
     a_PID(const a_PID_Gains &gains);
+    a_PID& reset();
     a_PID& set_gains(const a_PID_Gains &gains);
     a_PID& set_target(const a_Ticks &dist_target);
     a_PID& set_target(const a_Degrees &head_target);
-    void reset();
     void drive();
 
 private:
@@ -67,7 +67,8 @@ private:
     double m_k_t_uncert;
     double m_k_h_uncert;
 
-    double m_targ_dist, m_targ_head;
+    int m_targ_dist;
+    double m_targ_head;
     double m_targ_l, m_targ_r;
     double m_err_l, m_err_r;
     double m_lst_err_l, m_lst_err_r;

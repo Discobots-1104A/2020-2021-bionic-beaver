@@ -52,7 +52,7 @@ void h_Sensors::initialize()
     m_aR.reset();
     m_aM.reset();
 
-    do {pros::delay(5);} while (m_sIMU.is_calibrating());
+    do {pros::delay(10);} while (m_sIMU.is_calibrating());
 }
 
 /// Add a signature to the Vision sensor's volatile memory.
@@ -73,15 +73,23 @@ pros::vision_object_s_t h_Sensors::get_obj_sig(int size, h_sVision_IDs ID)
     return m_sVision.get_by_sig(size, static_cast<std::uint32_t>(ID));
 }
 
+/// Get a Vision object from a size.
+/// \param size The size of the object to find.
+/// \return A Vision sensor object.
+pros::vision_object_s_t h_Sensors::get_obj_siz(int size)
+{
+    return m_sVision.get_by_size(size);
+}
+
 /// Get the heading from the IMU
-/// \return A heading value from -360 - 360 deg.
+/// \return A heading value from 0 - 360 deg.
 double h_Sensors::get_heading()
 {
     return m_sIMU.get_heading();
 }
 
 /// Reset all the encoder values.
-h_Sensors& h_Sensors::reset()
+h_Sensors& h_Sensors::reset_enc()
 {
     m_aL.reset();
     m_aR.reset();

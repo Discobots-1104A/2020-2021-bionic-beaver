@@ -15,10 +15,11 @@
 //* User-defined types
 
 /// enum - Vision Sensor IDs
-enum class h_sVision_IDs
+enum h_sVision_IDs
 {
     RED_ID = 1,
-    BLUE_ID
+    BLUE_ID,
+    NULL_ID = 255
 };
 
 /// enum - Encoder IDs
@@ -70,10 +71,11 @@ public:
 
     h_Sensors& add_sig(pros::vision_signature_s_t sig, h_sVision_IDs ID);
     pros::vision_object_s_t get_obj_sig(int size, h_sVision_IDs ID);
+    pros::vision_object_s_t get_obj_siz(int size);
 
     double get_heading();
 
-    h_Sensors& reset();
+    h_Sensors& reset_enc();
     int32_t get_enc(h_Encoder_IDs ID);
 
 
