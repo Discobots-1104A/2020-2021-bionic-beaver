@@ -70,6 +70,7 @@ public:
 
     h_Sensors& add_sig(pros::vision_signature_s_t sig, h_sVision_IDs ID);
     pros::vision_object_s_t get_obj_sig(int size, h_sVision_IDs ID);
+    pros::vision_object_s_t get_obj_siz(int size);
 
     double get_heading();
 
