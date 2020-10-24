@@ -256,6 +256,10 @@ void skills()
 
     // Back out by 1.25 ft or so. This is our final movement.
     a_obj_pid->set_target(a_Ticks{-1.25_ft}).drive();
+    
+    //Turn to 45 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{45.0}).drive();
+
 
 #if defined SECTION_THREE
     return;
