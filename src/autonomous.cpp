@@ -258,13 +258,65 @@ void skills()
     a_obj_pid->set_target(a_Ticks{-1.25_ft}).drive();
     
     //Turn to 45 degrees heading relative to our starting position
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{45.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{90.0}).drive();
 
 
 #if defined SECTION_THREE
     return;
 #endif
     //---END OF SECTION THREE---//
+
+    //---START OF SECTION FOUR---//
+    // This is the first part of the counter clockwise rotation back to our original position
+    // We drive to goal B and intake the balls and place them in the tower
+    // We then empty out the opponent balls in the tower.
+    // This bumps our score up to ___________
+
+    // reset encoder
+    h_obj_sensors->reset_enc();
+
+    //Turn to 360 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{360.0}).drive();
+
+    // Drive forward for about 4.3 feet.
+    // Turn on the intakes and conveyor too so we can intake the ball.
+    t_intake_until_in.notify();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.75_ft}).drive();
+
+    //score ball
+    score();
+
+    // Back out by 0.9 ft or so.
+    a_obj_pid->set_target(a_Ticks{-0.9_ft}).drive();
+    
+
+    //Turn to 270 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{270.0}).drive();
+    
+
+
+#if defined SECTION_FOUR
+    return;
+#endif
+    //---END OF SECTION FOUR---//
+
+    //---START OF SECTION FIVE---//
+    // ---
+
+    // Drive forward for about 8.25 feet.
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{8.25_ft}).drive();
+
+    // Turn on the intakes and conveyor too so we can intake the ball.
+    // Drive forward for about 1.75 feet.
+    t_intake_until_in.notify();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{8.25_ft}).drive();
+
+    //Turn to 180 degrees heading relative to our starting position
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{180.0}).drive();
+
+    // Drive forward for about 1.75 feet.
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.75_ft}).drive();
+
 }
 
 // Main autonomous control callback.
