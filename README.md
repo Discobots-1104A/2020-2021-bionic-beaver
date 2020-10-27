@@ -1,42 +1,58 @@
+<!-- markdownlint-disable MD041-->
+![banner](resources/banner.png)
+
 # 2020-2021-bionic-beaver
 
-[![LICENSE](https://img.shields.io/github/license/IonicArgon/2020-2021-bionic-beaver?style=flat-square)](LICENSE)
-[![EMAIL](https://img.shields.io/static/v1?label=&message=1104a@bramptonrobotics.org&color=red&logo=gmail&logoColor=white&style=flat-square)](mailto:1104a@bramptonrobotics.org)
-[![big man tyrone](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2F8_ZCXUnsZbk%2Fmaxresdefault.jpg&f=1&nofb=1)](https://www.youtube.com/watch?v=8_ZCXUnsZbk)
+[![GitHub license](https://img.shields.io/github/license/Discobots-1104A/2020-2021-bionic-beaver?style=flat-square&color=informational)](LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/Discobots-1104A/2020-2021-bionic-beaver?style=flat-square&color=informational)](https://github.com/Discobots-1104A/2020-2021-bionic-beaver/graphs/contributors)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Discobots-1104A/2020-2021-bionic-beaver?style=flat-square&color=informational)](https://github.com/Discobots-1104A/2020-2021-bionic-beaver/commits)
+[![EMAIL](https://img.shields.io/static/v1?label=&message=1104a@bramptonrobotics.org&color=red&logo=gmail&logoColor=white&style=flat-square)](mailto:1104a@bramptonrobotics.org)  
 
 ## Contents
 
-This is Discobots 1104A's code repository for the VEX VRC 2020-2021 Season: Change Up.
+This is Discobots 1104A's source code for the VEX VRC 2020-2021 Season: Change Up.  
+The code we write is in C++. Most of the PROS kernel, however, is written in C.  
+The current version of PROS used in this program is [`v3.3.0`](https://github.com/purduesigbots/pros/releases/tag/3.3.0).
 
 ## Cloning
 
-The method we illustrate utilizes Git, a version control program. However, you can make use of GitHub Desktop, the GitHub CLI, or download the raw .ZIP if you wished.
+Feel free to use whatever method you would like (GitHub Desktop, Git SSH, etc.).  
+We've opted to outline a few methods here.  
 
-1. Install Git if you haven't already.
-2. Navigate to the directory you wish to clone to.
-3. Clone with `git clone https://github.com/Discobots-1104A/2020-2021-bionic-beaver.git`
-4. If you wish to specify a branch, use the `-b` flag.
+### Git
+
+```nan
+git clone https://github.com/Discobots-1104A/2020-2021-bionic-beaver.git
+```
+
+### GitHub CLI
+
+```nan
+gh repo clone Discobots-1104A/2020-2021-bionic-beaver
+```
 
 ## Building
 
 ### Dependencies
 
-- PROS
-  - You can get it [here](https://github.com/purduesigbots/pros-cli/releases).
+- PROS CLI v3.1.4
+  - Used to build the project.
+  - You can download it [here.](https://github.com/purduesigbots/pros-cli/releases/tag/3.1.4)
+- **OPTIONAL:** PROS plugin for Atom.
+  - The plugin interfaces with the CLI, making build a click away.
+  - We do not illustrate how to use it here, but feel free to use it.
+  - You can install the plugin manually, or *more preferably*, install it using the PROS CLI installer for Windows or which ever install method is best suited for your platform.
 
-### Instructions
+### Instructions - PROS CLI
 
-The method we illustrate utilizes the PROS CLI. However, you can use the PROS Editor (the one based on Atom) instead.
+1. `cd` (or a platform alternative) to your directory of your choosing.
+2. `prosv5 build` or `prosv5 b` to build the project.  
+**OPTIONAL:** `prosv5 mu` can be used to build and upload.
 
-1. Navigate to the directory.
-2. Run `prosv5 b` to build alone.
-3. `prosv5 mu` can be used to build and upload.
+### Contributing
 
-## Contributing
+Unfortunately, contribution to this repository will only be allowed for added collaborators—the public nature of this repository is mainly for archival and educational purposes for other teams. You are still **free to clone** the repository as you wish, though.
 
-Though we have issue templates and pull request templates, you most likely won't be able to contribute to our code--only added collaborators can contribute.  
-That doesn't mean you're not free to clone it, but we dunno why you'd want to clone our bad code.
+### License
 
-## License
-
-This repository is licensed under the [MIT License](https://mit-license.org/).
+This repository is licensed under the [`MIT License`](https://github.com/Discobots-1104A/2020-2021-bionic-beaver).
