@@ -49,10 +49,10 @@ gh repo clone Discobots-1104A/2020-2021-bionic-beaver
 2. `prosv5 build` or `prosv5 b` to build the project.  
 **OPTIONAL:** `prosv5 mu` can be used to build and upload.
 
-### Contributing
+## Contributing
 
 Unfortunately, contribution to this repository will only be allowed for added collaborators—the public nature of this repository is mainly for archival and educational purposes for other teams. You are still **free to clone** the repository as you wish, though.
 
-### License
+## License
 
 This repository is licensed under the [`MIT License`](https://github.com/Discobots-1104A/2020-2021-bionic-beaver).
