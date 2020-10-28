@@ -9,7 +9,7 @@
 #include "main.h"
 
 
-// Set brake modes
+/// Set brake modes
 h_chassis& h_chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
 {
     pros::c::motor_set_brake_mode(m_pt_motor_lf, brake_mode);
@@ -18,7 +18,7 @@ h_chassis& h_chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
     pros::c::motor_set_brake_mode(m_rv_motor_rb, brake_mode);
 }
 
-// Constructor
+/// Constructor
 h_chassis::h_chassis
     (
         h_chassis_l pt_l, h_chassis_r pt_r,
@@ -51,4 +51,40 @@ h_chassis::h_chassis
     pros::c::motor_set_reversed(m_pt_motor_lb, m_rv_motor_lb);
     pros::c::motor_set_reversed(m_pt_motor_rf, m_rv_motor_rf);
     pros::c::motor_set_reversed(m_pt_motor_rb, m_rv_motor_rb); 
+}
+
+/// Move chassis, motors groups together, voltage
+void h_chassis::move(int vol)
+{
+    pros::c::motor_move(m_pt_motor_lf, vol);
+    pros::c::motor_move(m_pt_motor_lb, vol);
+    pros::c::motor_move(m_pt_motor_rf, vol);
+    pros::c::motor_move(m_pt_motor_rb, vol);
+}
+
+/// Move chassis, motors groups separate, voltage
+void h_chassis::move(int vol_l, int vol_r)
+{
+    pros::c::motor_move(m_pt_motor_lf, vol_l);
+    pros::c::motor_move(m_pt_motor_lb, vol_l);
+    pros::c::motor_move(m_pt_motor_rf, vol_r);
+    pros::c::motor_move(m_pt_motor_rb, vol_r); 
+}
+
+/// Move chassis, motors groups together, velocity
+void h_chassis::move_vel(int vel)
+{
+    pros::c::motor_move_velocity(m_pt_motor_lf, vel);
+    pros::c::motor_move_velocity(m_pt_motor_lb, vel);
+    pros::c::motor_move_velocity(m_pt_motor_rf, vel);
+    pros::c::motor_move_velocity(m_pt_motor_rb, vel);
+}
+
+/// Move chassis, motors groups separate, velocity
+void h_chassis::move_vel(int vel_l, int vel_r)
+{
+    pros::c::motor_move_velocity(m_pt_motor_lf, vel_l);
+    pros::c::motor_move_velocity(m_pt_motor_lb, vel_l);
+    pros::c::motor_move_velocity(m_pt_motor_rf, vel_r);
+    pros::c::motor_move_velocity(m_pt_motor_rb, vel_r); 
 }
