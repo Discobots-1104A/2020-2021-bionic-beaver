@@ -6,10 +6,69 @@
 //*
 //* Desc:       Chassis declarations.
 
+//! Try to prefix the main declarations with "h_"
+
 #ifndef CHASSIS_HPP
 #define CHASSIS_HPP
 
 #include "api.h"
 
+/// Left side chassis motors
+struct h_chassis_l
+{
+    std::uint8_t m_motor_f;
+    std::uint8_t m_motor_b;
+};
+
+/// Right side chassis motors
+struct h_chassis_r
+{
+    std::uint8_t m_motor_f;
+    std::uint8_t m_motor_b;
+};
+
+/// Chassis control class
+class h_chassis
+{
+public:
+    // Constructor
+    h_chassis(
+        h_chassis_l pt_l, h_chassis_r pt_r,
+        bool rv_l, bool rv_r,
+        pros::motor_gearset_e cart, pros::motor_brake_mode_e brake, pros::motor_brake_mode_e enc_unit
+    );
+
+    // Movement
+    void move(int vol);
+    void move(int vol_l, int vol_r);
+    void move_vel(int vel);
+    void move_vel(int vel_l, int vel_r);
+
+    // Config
+    h_chassis& set_brake_mode(pros::motor_brake_mode_e brake_mode);
+
+
+private:
+    // Port numbers
+    std::uint8_t    m_pt_motor_lf,
+                    m_pt_motor_lb,
+                    m_pt_motor_rf,
+                    m_pt_motor_rb;
+
+    // Motor is reversed
+    bool    m_rv_motor_lf,
+            m_rv_motor_lb,
+            m_rv_motor_rf,
+            m_rv_motor_rb;
+
+    // Gearset
+    pros::motor_gearset_e m_cart;
+
+    // Brake mode
+    pros::motor_brake_mode_e m_brake;
+
+    // Encoder units
+    pros::motor_encoder_units_e m_enc_unit;
+};
 
 #endif  // CHASSIS_HPP
