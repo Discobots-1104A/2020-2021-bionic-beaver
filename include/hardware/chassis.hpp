@@ -34,8 +34,10 @@ public:
     // Constructor
     h_chassis(
         h_chassis_l pt_l, h_chassis_r pt_r,
-        bool rv_l, bool rv_r,
-        pros::motor_gearset_e cart, pros::motor_brake_mode_e brake, pros::motor_brake_mode_e enc_unit
+        pros::motor_gearset_e cart = pros::E_MOTOR_GEARSET_18, 
+        pros::motor_brake_mode_e brake = pros::E_MOTOR_BRAKE_COAST, 
+        pros::motor_encoder_units_e enc_unit = pros::E_MOTOR_ENCODER_COUNTS,
+        bool rv_l = false, bool rv_r = true
     );
 
     // Movement
