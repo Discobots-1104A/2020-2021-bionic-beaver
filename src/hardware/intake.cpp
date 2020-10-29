@@ -43,3 +43,17 @@ h_intake::h_intake
     pros::c::motor_set_reversed(m_pt_motor_l, m_rv_motor_l);
     pros::c::motor_set_reversed(m_pt_motor_r, m_rv_motor_r);
 }
+
+/// Move intakes, motors together, velocity
+void h_intake::move_vel(int vel)
+{
+    pros::c::motor_move_velocity(m_pt_motor_l, vel);
+    pros::c::motor_move_velocity(m_pt_motor_r, vel);
+}
+
+/// Move intakes, motors separate, velocity
+void h_intake::move_vel(int vel_l, int vel_r)
+{
+    pros::c::motor_move_velocity(m_pt_motor_l, vel_l);
+    pros::c::motor_move_velocity(m_pt_motor_r, vel_r);
+}
