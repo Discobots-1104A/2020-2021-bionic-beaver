@@ -37,7 +37,7 @@ h_chassis::h_chassis
     pros::c::motor_set_gearing(m_pt_motor_rf, cart);
     pros::c::motor_set_gearing(m_rv_motor_rb, cart);
 
-    // Set break modes
+    // Set brake modes
     set_brake_mode(brake);
 
     // Set encoder units
