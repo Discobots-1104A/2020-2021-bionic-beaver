@@ -39,8 +39,8 @@ private:
                     m_pt_motor_r;
 
     // Motor is reversed
-    bool    m_pt_motor_l,
-            m_pt_motor_r;
+    bool    m_rv_motor_l,
+            m_rv_motor_r;
 
     // Gearset
     pros::motor_gearset_e m_cart;
