@@ -11,8 +11,8 @@
 ## Contents
 
 This is Discobots 1104A's source code for the VEX VRC 2020-2021 Season: Change Up.  
-The code we write is in C++. Most of the PROS kernel, however, is written in C.  
-The current version of PROS used in this program is [`v3.3.0`](https://github.com/purduesigbots/pros/releases/tag/3.3.0).
+Most of the code is written in C++. The main kernel is primarily written in C, though there is a C++ wrapper for it.    
+The current version of PROS used in this program is [`v3.3.1`](https://github.com/purduesigbots/pros/releases/tag/3.3.1).
 
 ## Cloning
 
@@ -39,7 +39,7 @@ gh repo clone Discobots-1104A/2020-2021-bionic-beaver
   - Used to build the project.
   - You can download it [here.](https://github.com/purduesigbots/pros-cli/releases/tag/3.1.4)
 - **OPTIONAL:** PROS plugin for Atom.
-  - The plugin interfaces with the CLI, making build a click away.
+  - The plugin interfaces with the CLI, making building a click away.
   - We do not illustrate how to use it here, but feel free to use it.
   - You can install the plugin manually, or *more preferably*, install it using the PROS CLI installer for Windows or which ever install method is best suited for your platform.
 
@@ -55,4 +55,4 @@ Unfortunately, contribution to this repository will only be allowed for added co
 
 ## License
 
-This repository is licensed under the [`MIT License`](https://github.com/Discobots-1104A/2020-2021-bionic-beaver).
+This repository is licensed under the [`MIT License`](https://mit-license.org/).
