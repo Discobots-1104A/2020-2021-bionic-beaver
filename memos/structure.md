@@ -48,7 +48,7 @@ public:
 
     // might need other functions i'll see
 
-private:
+protected:
     // motor numbers here i guess
     pros::e_motor_gearset_e cart;
     pros::e_motor_brake_mode_e brake_mode;
