@@ -11,7 +11,7 @@
 ## Contents
 
 This is Discobots 1104A's source code for the VEX VRC 2020-2021 Season: Change Up.  
-Most of the code is written in C++. The main kernel is primarily written in C, though there is a C++ wrapper for it.    
+Most of the code is written in C++. The main kernel is primarily written in C, though there is a C++ wrapper for it.  
 The current version of PROS used in this program is [`v3.3.1`](https://github.com/purduesigbots/pros/releases/tag/3.3.1).
 
 ## Cloning
