@@ -20,14 +20,14 @@ struct h_Chassis_Scales
     {
         double  m_length;   // Length in inches
         double  m_width;    // Width in inches
-    };
+    } frame_dims;
 
     // Chassis wheel dimensions
     struct h_Chassis_Wheel_Dims
     {
         double  m_wheel_diameter;   // Diameter in inches
         double  m_wheelbase_length; // Wheelbase length in inches
-    };
+    } wheel_dims;
 
     // Chassis configs
     struct h_Chassis_Misc
@@ -35,16 +35,16 @@ struct h_Chassis_Scales
         int m_max_motor_velocity;   // Max motor velocity in RPM
         int m_max_total_velocity;   // Max total velocity in RPM
         double  m_gear_ratio;   // Overall gear ratio in decimal form
-    };
+    } misc;
 };
 
 /// Chassis motor port numbers
 struct h_Chassis_Port_Numbers
 {
-    std::uint8_t    m_motor_lf;     // Motor left front
-    std::uint8_t    m_motor_lb;     // Motor left back
-    std::uint8_t    m_motor_rf;     // Motor right front
-    std::uint8_t    m_motor_rb;     // Motor right back
+    int     m_motor_lf;     // Motor left front
+    int     m_motor_lb;     // Motor left back
+    int     m_motor_rf;     // Motor right front
+    int     m_motor_rb;     // Motor right back
 };
 
 /// Chassis class. Contains all variables and member functions pertaining to 
@@ -119,8 +119,8 @@ private:
     // Motor config
     const pros::motor_gearset_e m_cart;         // Gearset of chassis
                                                 //! Const b/c it should never change after init
-    pros::motor_brake_mode_e    brake_mode;     // Brake mode of chassis
-    pros::motor_encoder_units_e enc_unit;       // Encoder units of chassis
+    pros::motor_brake_mode_e    m_brake_mode;   // Brake mode of chassis
+    pros::motor_encoder_units_e m_enc_unit;     // Encoder units of chassis
 
 
     // Chassis scales
