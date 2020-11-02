@@ -85,10 +85,11 @@ public:
 
     // Telemetry - per motor
 
-    std::tuple<int, int, int, int>              get_efficiency_per_motor(void);
     std::tuple<int, int, int, int>              get_current_per_motor(void);
+    std::tuple<int, int, int, int>              get_voltage_per_motor(void);
     std::tuple<double, double, double, double>  get_power_per_motor(void);
     std::tuple<double, double, double, double>  get_temperature_per_motor(void);
+    std::tuple<double, double, double, double>  get_efficiency_per_motor(void);
     std::tuple<bool, bool, bool, bool>          is_stopped_per_motor(void);
     std::tuple<bool, bool, bool, bool>          is_over_temp_per_motor(void);
 

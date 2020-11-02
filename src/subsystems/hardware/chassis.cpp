@@ -123,7 +123,7 @@ int h_Skid_Steer_Chassis::get_chassis_voltage(void)
 }
 
 /// Get the average power of all motors on the chassis.
-/// \return Average power.
+/// \return Average power in watts.
 double h_Skid_Steer_Chassis::get_chassis_power(void)
 {
     return ((pros::c::motor_get_power(m_motor_lf) +
@@ -133,7 +133,7 @@ double h_Skid_Steer_Chassis::get_chassis_power(void)
 }
 
 /// Get the average temperature of all motors on the chassis.
-/// \return Average temperature.
+/// \return Average temperature in Celcius.
 double h_Skid_Steer_Chassis::get_chassis_temperature(void)
 {
     return ((pros::c::motor_get_temperature(m_motor_lf) +
@@ -143,13 +143,104 @@ double h_Skid_Steer_Chassis::get_chassis_temperature(void)
 }
 
 /// Get the average efficiency of all motors on the chassis.
-/// \return Average efficiency to the closest percent.
+/// \return Average efficiency in percentage.
 double h_Skid_Steer_Chassis::get_chassis_efficiency(void)
 {
     return ((pros::c::motor_get_efficiency(m_motor_lf) +
              pros::c::motor_get_efficiency(m_motor_lb) +
              pros::c::motor_get_efficiency(m_motor_rf) +
              pros::c::motor_get_efficiency(m_motor_rb)) / 4.0);
+}
+
+/// Get the current draws of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return Current draws in milliamps in a 4-integer tuple.
+std::tuple<int, int, int, int> h_Skid_Steer_Chassis::get_current_per_motor(void)
+{
+    return std::make_tuple<int, int, int, int>(
+        pros::c::motor_get_current_draw(m_motor_lf),
+        pros::c::motor_get_current_draw(m_motor_lb),
+        pros::c::motor_get_current_draw(m_motor_rf),
+        pros::c::motor_get_current_draw(m_motor_rb)
+    );
+}
+
+/// Get the voltages of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return Voltages in millivolts in a 4-integer tuple.
+std::tuple<int, int, int, int> h_Skid_Steer_Chassis::get_voltage_per_motor(void)
+{
+    return std::make_tuple<int, int, int, int>(
+        pros::c::motor_get_voltage(m_motor_lf),
+        pros::c::motor_get_voltage(m_motor_lb),
+        pros::c::motor_get_voltage(m_motor_rf),
+        pros::c::motor_get_voltage(m_motor_rb)
+    );
+}
+
+/// Get the power of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return Power in watts in a 4-double tuple.
+std::tuple<double, double, double, double> h_Skid_Steer_Chassis::get_power_per_motor(void)
+{
+    return std::make_tuple<double, double, double, double>(
+        pros::c::motor_get_power(m_motor_lf),
+        pros::c::motor_get_power(m_motor_lb),
+        pros::c::motor_get_power(m_motor_rf),
+        pros::c::motor_get_power(m_motor_rb)
+    );
+}
+
+/// Get the temperatures of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return Temperatures in Celcius in a 4-double tuple.
+std::tuple<double, double, double, double> h_Skid_Steer_Chassis::get_temperature_per_motor(void)
+{
+    return std::make_tuple<double, double, double, double>(
+        pros::c::motor_get_temperature(m_motor_lf),
+        pros::c::motor_get_temperature(m_motor_lb),
+        pros::c::motor_get_temperature(m_motor_rf),
+        pros::c::motor_get_temperature(m_motor_rb)
+    );
+};
+
+/// Get the efficiencies of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return Efficiencies in percentages in a 4-double tuple.
+std::tuple<double, double, double, double> h_Skid_Steer_Chassis::get_efficiency_per_motor(void)
+{
+    return std::make_tuple<double, double, double, double>(
+        pros::c::motor_get_efficiency(m_motor_lf),
+        pros::c::motor_get_efficiency(m_motor_lb),
+        pros::c::motor_get_efficiency(m_motor_rf),
+        pros::c::motor_get_efficiency(m_motor_rb)
+    );
+}
+
+/// Get the stopped status of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return A 4-boolean tuple.
+std::tuple<bool, bool, bool, bool> h_Skid_Steer_Chassis::is_stopped_per_motor(void)
+{
+    return std::make_tuple<bool, bool, bool, bool>(
+        pros::c::motor_is_stopped(m_motor_lf) ? true : false,
+        pros::c::motor_is_stopped(m_motor_lb) ? true : false,
+        pros::c::motor_is_stopped(m_motor_rf) ? true : false,
+        pros::c::motor_is_stopped(m_motor_rb) ? true : false
+    );
+}
+
+/// Get the over-temperature status of each motor. 
+/// In the order of: LF, LB, RF, RB.
+/// \return A 4-boolean tuple.
+std::tuple<bool, bool, bool, bool> h_Skid_Steer_Chassis::is_over_temp_per_motor(void)
+{
+    return std::make_tuple<bool, bool, bool, bool>(
+        pros::c::motor_is_over_temp(m_motor_lf) ? true : false,
+        pros::c::motor_is_over_temp(m_motor_lb) ? true : false,
+        pros::c::motor_is_over_temp(m_motor_rf) ? true : false,
+        pros::c::motor_is_over_temp(m_motor_rb) ? true : false
+    );
 }
 
 
