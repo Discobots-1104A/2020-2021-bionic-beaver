@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD041-->
-![banner](resources/banner.png)
+[![banner](resources/banner.png)](https://www.youtube.com/watch?v=8_ZCXUnsZbk)
 
 # 2020-2021-bionic-beaver
 
