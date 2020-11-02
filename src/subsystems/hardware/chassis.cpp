@@ -282,6 +282,7 @@ h_Skid_Steer_Chassis& h_Skid_Steer_Chassis::set_brake_mode(pros::motor_brake_mod
     pros::c::motor_set_brake_mode(m_motor_lb, brake_mode);
     pros::c::motor_set_brake_mode(m_motor_rf, brake_mode);
     pros::c::motor_set_brake_mode(m_motor_rb, brake_mode);
+    m_brake_mode = brake_mode;
     return *this;
 }
 
@@ -295,5 +296,6 @@ h_Skid_Steer_Chassis& h_Skid_Steer_Chassis::set_encoder_units(pros::motor_encode
     pros::c::motor_set_encoder_units(m_motor_lb, enc_unit);
     pros::c::motor_set_encoder_units(m_motor_rf, enc_unit);
     pros::c::motor_set_encoder_units(m_motor_rb, enc_unit);
+    m_enc_unit = enc_unit;
     return *this;
 }
