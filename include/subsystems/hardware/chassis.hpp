@@ -78,9 +78,9 @@ public:
 
     int     get_chassis_efficiency(void);
     int     get_chassis_current(void);
+    int     get_chassis_voltage(void);
     double  get_chassis_power(void);
     double  get_chassis_temperature(void);
-    double  get_chassis_voltage(void);
 
 
     // Telemetry - per motor
