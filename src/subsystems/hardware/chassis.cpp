@@ -40,6 +40,18 @@ h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
     pros::c::motor_set_reversed(m_motor_lb, (port_nums.m_motor_lb < 0) ? true : false);
     pros::c::motor_set_reversed(m_motor_rf, (port_nums.m_motor_rf < 0) ? true : false);
     pros::c::motor_set_reversed(m_motor_rb, (port_nums.m_motor_rb < 0) ? true : false);
+
+    // Assign motor cartridges
+    pros::c::motor_set_gearing(m_motor_lf, m_cart);
+    pros::c::motor_set_gearing(m_motor_lb, m_cart);
+    pros::c::motor_set_gearing(m_motor_rf, m_cart);
+    pros::c::motor_set_gearing(m_motor_rb, m_cart);
+
+    // Assign brake modes
+    set_brake_mode(brake_mode);
+
+    // Assign encoder units
+    set_encoder_units(enc_unit);
 }
 
 
