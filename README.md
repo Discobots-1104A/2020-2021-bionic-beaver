@@ -45,7 +45,7 @@ gh repo clone Discobots-1104A/2020-2021-bionic-beaver
 
 ### Instructions - PROS CLI
 
-1. `cd` (or a platform alternative) to your directory of your choosing.
+1. `cd` (or a platform alternative) to the directory of your choosing.
 2. `prosv5 build` or `prosv5 b` to build the project.  
 **OPTIONAL:** `prosv5 mu` can be used to build and upload.
 
@@ -55,4 +55,6 @@ Unfortunately, contribution to this repository will only be allowed for added co
 
 ## License
 
-This repository is licensed under the [`MIT License`](https://mit-license.org/).
+Our code is licensed under the [`MIT License`](https://mit-license.org/).  
+PROS is licensed under the [`Mozilla Public License 2.0`](https://www.mozilla.org/en-US/MPL/2.0/).  
+The VEX SDK (used to develop PROS) is proprietary.
