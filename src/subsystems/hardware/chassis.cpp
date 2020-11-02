@@ -9,13 +9,15 @@
 #include "main.h"
 
 
+//* Constructor and destructor *//
+
 /// Skid steer chassis constructor. Port nums and scales must be supplied. Motor 
 /// configs have default parameters. Interfaces with PROS C functions to configure 
 /// each drive motor.
 /// \param port_nums Supplied port numbers. Negative numbers reverse the motor.
 /// \param scales Supplied chassis scales.
 /// \param cart Supplied motor cartridges.
-/// \param brake_mode Supplied motor brake modes.
+/// \param brake_mode Supplied motor brake mode.
 /// \param enc_unit Supplied motor encoder units.
 h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
 (
@@ -38,4 +40,38 @@ h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
     pros::c::motor_set_reversed(m_motor_lb, (port_nums.m_motor_lb < 0) ? true : false);
     pros::c::motor_set_reversed(m_motor_rf, (port_nums.m_motor_rf < 0) ? true : false);
     pros::c::motor_set_reversed(m_motor_rb, (port_nums.m_motor_rb < 0) ? true : false);
+}
+
+
+//* Movement *//
+
+
+//* Telemetry *//
+
+
+//* Configuration *//
+
+/// Sets the brake mode of the chassis.
+/// \param brake_mode Supplied motor brake mode.
+/// \return this* pointer for function chaining.
+h_Skid_Steer_Chassis& h_Skid_Steer_Chassis::set_brake_mode(pros::motor_brake_mode_e brake_mode)
+{
+    pros::c::motor_set_brake_mode(m_motor_lf, brake_mode);
+    pros::c::motor_set_brake_mode(m_motor_lb, brake_mode);
+    pros::c::motor_set_brake_mode(m_motor_rf, brake_mode);
+    pros::c::motor_set_brake_mode(m_motor_rb, brake_mode);
+    return *this;
+}
+
+
+/// Sets the encoder units of the chassis.
+/// \param enc_unit Supplied motor encoder units.
+/// \return this* pointer for function chaining.
+h_Skid_Steer_Chassis& h_Skid_Steer_Chassis::set_encoder_units(pros::motor_encoder_units_e enc_unit)
+{
+    pros::c::motor_set_encoder_units(m_motor_lf, enc_unit);
+    pros::c::motor_set_encoder_units(m_motor_lb, enc_unit);
+    pros::c::motor_set_encoder_units(m_motor_rf, enc_unit);
+    pros::c::motor_set_encoder_units(m_motor_rb, enc_unit);
+    return *this;
 }
