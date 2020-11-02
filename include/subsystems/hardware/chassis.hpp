@@ -76,11 +76,11 @@ public:
 
     // Telemetry - chassis average
 
-    int     get_chassis_efficiency(void);
     int     get_chassis_current(void);
     int     get_chassis_voltage(void);
     double  get_chassis_power(void);
     double  get_chassis_temperature(void);
+    double  get_chassis_efficiency(void);
 
 
     // Telemetry - per motor
@@ -89,7 +89,6 @@ public:
     std::tuple<int, int, int, int>              get_current_per_motor(void);
     std::tuple<double, double, double, double>  get_power_per_motor(void);
     std::tuple<double, double, double, double>  get_temperature_per_motor(void);
-    std::tuple<double, double, double, double>  get_voltage_per_motor(void);
     std::tuple<bool, bool, bool, bool>          is_stopped_per_motor(void);
     std::tuple<bool, bool, bool, bool>          is_over_temp_per_motor(void);
 

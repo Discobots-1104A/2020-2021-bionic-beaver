@@ -102,16 +102,6 @@ void h_Skid_Steer_Chassis::move_vel(int vel_l, int vel_r)
 
 //* Telemetry *//
 
-/// Get the average efficiency of all motors on the chassis.
-/// \return Average efficiency to the closest percent.
-int h_Skid_Steer_Chassis::get_chassis_efficiency(void)
-{
-    return std::round((pros::c::motor_get_efficiency(m_motor_lf) +
-                       pros::c::motor_get_efficiency(m_motor_lb) +
-                       pros::c::motor_get_efficiency(m_motor_rf) +
-                       pros::c::motor_get_efficiency(m_motor_rb)) / 4);
-}
-
 /// Get the average current draw of all motors on the chassis.
 /// \return Average current draw to the closest milliamp.
 int h_Skid_Steer_Chassis::get_chassis_current(void)
@@ -119,7 +109,7 @@ int h_Skid_Steer_Chassis::get_chassis_current(void)
     return std::round((pros::c::motor_get_current_draw(m_motor_lf) +
                        pros::c::motor_get_current_draw(m_motor_lb) +
                        pros::c::motor_get_current_draw(m_motor_rf) +
-                       pros::c::motor_get_current_draw(m_motor_rb)) / 4);
+                       pros::c::motor_get_current_draw(m_motor_rb)) / 4.0);
 }
 
 /// Get the average voltage of all motors on the chassis.
@@ -129,7 +119,7 @@ int h_Skid_Steer_Chassis::get_chassis_voltage(void)
     return std::round((pros::c::motor_get_voltage(m_motor_lf) +
                        pros::c::motor_get_voltage(m_motor_lb) +
                        pros::c::motor_get_voltage(m_motor_rf) +
-                       pros::c::motor_get_voltage(m_motor_rb)) / 4);
+                       pros::c::motor_get_voltage(m_motor_rb)) / 4.0);
 }
 
 /// Get the average power of all motors on the chassis.
@@ -139,7 +129,7 @@ double h_Skid_Steer_Chassis::get_chassis_power(void)
     return ((pros::c::motor_get_power(m_motor_lf) +
              pros::c::motor_get_power(m_motor_lb) +
              pros::c::motor_get_power(m_motor_rf) +
-             pros::c::motor_get_power(m_motor_rb)) / 4);
+             pros::c::motor_get_power(m_motor_rb)) / 4.0);
 }
 
 /// Get the average temperature of all motors on the chassis.
@@ -149,7 +139,17 @@ double h_Skid_Steer_Chassis::get_chassis_temperature(void)
     return ((pros::c::motor_get_temperature(m_motor_lf) +
              pros::c::motor_get_temperature(m_motor_lb) +
              pros::c::motor_get_temperature(m_motor_rf) +
-             pros::c::motor_get_temperature(m_motor_rb)) / 4);
+             pros::c::motor_get_temperature(m_motor_rb)) / 4.0);
+}
+
+/// Get the average efficiency of all motors on the chassis.
+/// \return Average efficiency to the closest percent.
+double h_Skid_Steer_Chassis::get_chassis_efficiency(void)
+{
+    return ((pros::c::motor_get_efficiency(m_motor_lf) +
+             pros::c::motor_get_efficiency(m_motor_lb) +
+             pros::c::motor_get_efficiency(m_motor_rf) +
+             pros::c::motor_get_efficiency(m_motor_rb)) / 4.0);
 }
 
 
