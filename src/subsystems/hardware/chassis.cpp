@@ -57,6 +57,48 @@ h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
 
 //* Movement *//
 
+/// Moves the left and right side motors together to drive straight.
+/// \param vol Joystick voltage from -127 - 127.
+void h_Skid_Steer_Chassis::move(int vol)
+{
+    pros::c::motor_move(m_motor_lf, vol);
+    pros::c::motor_move(m_motor_lb, vol);
+    pros::c::motor_move(m_motor_rf, vol);
+    pros::c::motor_move(m_motor_rb, vol);
+}
+
+/// Moves left and right side motors independently from each other.
+/// \param vol_l Left side joystick voltage from -127 - 127.
+/// \param vol_r Right side joystick voltage from -127 - 127.
+void h_Skid_Steer_Chassis::move(int vol_l, int vol_r)
+{
+    pros::c::motor_move(m_motor_lf, vol_l);
+    pros::c::motor_move(m_motor_lb, vol_l);
+    pros::c::motor_move(m_motor_rf, vol_r);
+    pros::c::motor_move(m_motor_rb, vol_r);
+}
+
+/// Move the left and right side motors together to drive straight.
+/// \param vel Velocity in RPM within the range of the previously supplied cartridge.
+void h_Skid_Steer_Chassis::move_vel(int vel)
+{
+    pros::c::motor_move_velocity(m_motor_lf, vel);
+    pros::c::motor_move_velocity(m_motor_lb, vel);
+    pros::c::motor_move_velocity(m_motor_rf, vel);
+    pros::c::motor_move_velocity(m_motor_rb, vel);
+}
+
+/// Move left and right side motors independently from each other.
+/// \param vel_l Left side velocity in RPM within the range of the previously supplied cartridge.
+/// \param vel_r Right side velocity in RPM within the range of the previously supplied cartridge.
+void h_Skid_Steer_Chassis::move_vel(int vel_l, int vel_r)
+{
+    pros::c::motor_move_velocity(m_motor_lf, vel_l);
+    pros::c::motor_move_velocity(m_motor_lb, vel_l);
+    pros::c::motor_move_velocity(m_motor_rf, vel_r);
+    pros::c::motor_move_velocity(m_motor_rb, vel_r);
+}
+
 
 //* Telemetry *//
 
