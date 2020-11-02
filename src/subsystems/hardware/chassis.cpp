@@ -246,6 +246,33 @@ std::tuple<bool, bool, bool, bool> h_Skid_Steer_Chassis::is_over_temp_per_motor(
 
 //* Configuration *//
 
+/// \return Robot length in inches.
+double h_Skid_Steer_Chassis::get_length(void) {return m_length;}
+
+/// \return Robot width in inches.
+double h_Skid_Steer_Chassis::get_width(void) {return m_width;}
+
+/// \return Robot wheel diameter in inches.
+double h_Skid_Steer_Chassis::get_wheel_diameter(void) {return m_wheel_diameter;}
+
+/// \return Robot wheelbase length in inches.
+double h_Skid_Steer_Chassis::get_wheelbase_lenth(void) {return m_wheelbase_length;}
+
+/// \return Robot chassis gear ratio in decimal form.
+double h_Skid_Steer_Chassis::get_gear_ratio(void) {return m_gear_ratio;}
+
+/// \return Robot max motor velocity in RPM.
+int h_Skid_Steer_Chassis::get_max_motor_velocity(void) {return m_max_motor_velocity;}
+
+/// \return Robot max total velocity in RPM.
+int h_Skid_Steer_Chassis::get_max_total_velocity(void) {return m_max_total_velocity;}
+
+/// \return Current set brake mode.
+pros::motor_brake_mode_e h_Skid_Steer_Chassis::get_brake_mode(void) {return m_brake_mode;}
+
+/// \return Current set encoder units.
+pros::motor_encoder_units_e h_Skid_Steer_Chassis::get_encoder_units(void) {return m_enc_unit;}
+
 /// Sets the brake mode of the chassis.
 /// \param brake_mode Supplied motor brake mode.
 /// \return this* pointer for function chaining.
