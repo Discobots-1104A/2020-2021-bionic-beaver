@@ -243,7 +243,6 @@ h_Conveyor& h_Conveyor::set_encoder_units(pros::motor_encoder_units_e enc_unit)
 {
     pros::c::motor_set_encoder_units(m_motor_t, enc_unit);
     pros::c::motor_set_encoder_units(m_motor_b, enc_unit);
-    m_brake_mode_t = enc_unit;
-    m_brake_mode_b = enc_unit;
+    m_enc_unit = enc_unit;
     return *this;
 }
