@@ -191,3 +191,22 @@ std::tuple<bool, bool> h_Conveyor::is_over_temp_per_motor(void)
 
 
 //* Configuration *//
+
+/// \return Conveyor max motor velocity in RPM.
+int h_Conveyor::get_max_motor_velocity(void) {return m_max_motor_velocity;}
+
+/// \return Conveyor max top roller velocity in RPM.
+int h_Conveyor::get_max_top_roller_velocity(void) {return m_max_top_roller_velocity;}
+
+/// In the order of: TOP, BOTTOM.
+/// \return A 2-brake mode tuple.
+std::tuple<pros::motor_brake_mode_e, pros::motor_brake_mode_e> h_Conveyor::get_brake_modes(void)
+{
+    return std::make_tuple(
+        m_brake_mode_t, 
+        m_brake_mode_b
+    );
+}
+
+/// \return Current set encoder units.
+pros::motor_encoder_units_e h_Conveyor::get_encoder_units(void) {return m_enc_unit;}
