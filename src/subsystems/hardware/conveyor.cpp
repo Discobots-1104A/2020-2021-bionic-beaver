@@ -210,3 +210,40 @@ std::tuple<pros::motor_brake_mode_e, pros::motor_brake_mode_e> h_Conveyor::get_b
 
 /// \return Current set encoder units.
 pros::motor_encoder_units_e h_Conveyor::get_encoder_units(void) {return m_enc_unit;}
+
+/// Sets the brake mode of all conveyor motors.
+/// \param brake_mode Supplied motor brake mode.
+/// \return this* pointer for function chaining.
+h_Conveyor& h_Conveyor::set_brake_mode(pros::motor_brake_mode_e brake_mode)
+{
+    pros::c::motor_set_brake_mode(m_motor_t, brake_mode);
+    pros::c::motor_set_brake_mode(m_motor_b, brake_mode);
+    m_brake_mode_t = brake_mode;
+    m_brake_mode_b = brake_mode;
+    return *this;
+}
+
+/// Sets the individual brake modes of the conveyor motors.
+/// \param brake_mode_t Supplied top motor brake mode.
+/// \param brake_mode_b Supplied bottom motor brake mode.
+/// \return this* pointer for function chaining.
+h_Conveyor& h_Conveyor::set_brake_mode(pros::motor_brake_mode_e brake_mode_t, pros::motor_brake_mode_e brake_mode_b)
+{
+    pros::c::motor_set_brake_mode(m_motor_t, brake_mode_t);
+    pros::c::motor_set_brake_mode(m_motor_b, brake_mode_b);
+    m_brake_mode_t = brake_mode_t;
+    m_brake_mode_b = brake_mode_b;
+    return *this; 
+}
+
+/// Sets the encoder units of the conveyor.
+/// \param enc_unit Supplied motor encoder units.
+/// \return this* pointer for function chaining.
+h_Conveyor& h_Conveyor::set_encoder_units(pros::motor_encoder_units_e enc_unit)
+{
+    pros::c::motor_set_encoder_units(m_motor_t, enc_unit);
+    pros::c::motor_set_encoder_units(m_motor_b, enc_unit);
+    m_brake_mode_t = enc_unit;
+    m_brake_mode_b = enc_unit;
+    return *this;
+}
