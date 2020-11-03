@@ -113,7 +113,7 @@ double h_Conveyor::get_conveyor_efficiency(void)
 }
 
 /// Get the current draws of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return Current draws in milliamps in a 2-integer tuple.
 std::tuple<int, int> h_Conveyor::get_current_per_motor(void)
 {
@@ -124,7 +124,7 @@ std::tuple<int, int> h_Conveyor::get_current_per_motor(void)
 }
 
 /// Get the voltages of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return Voltages in millivolts in a 2-integer tuple.
 std::tuple<int, int> h_Conveyor::get_voltage_per_motor(void)
 {
@@ -135,7 +135,7 @@ std::tuple<int, int> h_Conveyor::get_voltage_per_motor(void)
 }
 
 /// Get the power of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return Power in watts in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_power_per_motor(void)
 {
@@ -146,7 +146,7 @@ std::tuple<double, double> h_Conveyor::get_power_per_motor(void)
 }
 
 /// Get the temperatures of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return Temperatures in Celcius in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_temperature_per_motor(void)
 {
@@ -157,7 +157,7 @@ std::tuple<double, double> h_Conveyor::get_temperature_per_motor(void)
 }
 
 /// Get the efficiencies of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return Efficiencies in percentages in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_efficiency_per_motor(void)
 {
@@ -168,7 +168,7 @@ std::tuple<double, double> h_Conveyor::get_efficiency_per_motor(void)
 }
 
 /// Get the stopped status of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return A 2-boolean tuple.
 std::tuple<bool, bool> h_Conveyor::is_stopped_per_motor(void)
 {
@@ -179,7 +179,7 @@ std::tuple<bool, bool> h_Conveyor::is_stopped_per_motor(void)
 }
 
 /// Get the over-temperature status of each motor. 
-/// In the order of: TOP, BOTTOM
+/// In the order of: TOP, BOTTOM.
 /// \return A 2-boolean tuple.
 std::tuple<bool, bool> h_Conveyor::is_over_temp_per_motor(void)
 {
