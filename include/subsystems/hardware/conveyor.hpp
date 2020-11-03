@@ -89,10 +89,11 @@ private:
 
 
     // Motor config
-    const pros::motor_gearset_e m_cart;         // Gearset of chassis
+    const pros::motor_gearset_e m_cart;         // Gearset of conveyor
                                                 //! Const b/c it should never change after init
-    pros::motor_brake_mode_e    m_brake_mode;   // Brake mode of chassis
-    pros::motor_encoder_units_e m_enc_unit;     // Encoder units of chassis
+    pros::motor_brake_mode_e    m_brake_mode_t; // Brake mode of top motor
+    pros::motor_brake_mode_e    m_brake_mode_b; // Brake mode of bottom motor
+    pros::motor_encoder_units_e m_enc_unit;     // Encoder units of conveyor
 
 
     // Conveyor scales
