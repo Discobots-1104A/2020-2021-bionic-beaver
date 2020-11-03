@@ -65,3 +65,123 @@ void h_Intake::move_vel(int vel_l, int vel_r)
     pros::c::motor_move_velocity(m_motor_l, vel_l);
     pros::c::motor_move_velocity(m_motor_r, vel_r);
 }
+
+
+//* Telemetry *//
+
+/// Get the average current draw of all motors on the intake.
+/// \return Average current draw to the closest milliamp.
+int h_Intake::get_intake_current(void)
+{
+    return std::round((pros::c::motor_get_current_draw(m_motor_l) +
+                       pros::c::motor_get_current_draw(m_motor_r)) / 4.0);
+}
+
+/// Get the average voltage of all motors on the intake.
+/// \return Average voltage to the closest millivolt.
+int h_Intake::get_intake_voltage(void)
+{
+    return std::round((pros::c::motor_get_voltage(m_motor_l) +
+                       pros::c::motor_get_voltage(m_motor_r)) / 4.0);
+}
+
+/// Get the average power of all motors on the intake.
+/// \return Average power in watts.
+double h_Intake::get_intake_power(void)
+{
+    return ((pros::c::motor_get_power(m_motor_l) +
+             pros::c::motor_get_power(m_motor_r)) / 4.0);
+}
+
+/// Get the average temperature of all motors on the intake.
+/// \return Average temperature in Celcius.
+double h_Intake::get_intake_temperature(void)
+{
+    return ((pros::c::motor_get_temperature(m_motor_l) +
+             pros::c::motor_get_temperature(m_motor_r)) / 4.0);
+}
+
+/// Get the average efficiency of all motors on the intake.
+/// \return Average efficiency in percentage.
+double h_Intake::get_intake_efficiency(void)
+{
+    return ((pros::c::motor_get_efficiency(m_motor_l) +
+             pros::c::motor_get_efficiency(m_motor_r)) / 4.0);
+}
+
+/// Get the current draws of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return Current draws in milliamps in a 2-integer tuple.
+std::tuple<int, int> h_Intake::get_current_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_get_current_draw(m_motor_l),
+        pros::c::motor_get_current_draw(m_motor_r)
+    );
+}
+
+/// Get the voltages of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return Voltages in millivolts in a 2-integer tuple.
+std::tuple<int, int> h_Intake::get_voltage_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_get_voltage(m_motor_l),
+        pros::c::motor_get_voltage(m_motor_r)
+    );
+}
+
+/// Get the power of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return Power in watts in a 2-double tuple.
+std::tuple<double, double> h_Intake::get_power_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_get_power(m_motor_l),
+        pros::c::motor_get_power(m_motor_r)
+    );
+}
+
+/// Get the temperatures of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return Temperatures in Celcius in a 2-double tuple.
+std::tuple<double, double> h_Intake::get_temperature_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_get_temperature(m_motor_l),
+        pros::c::motor_get_temperature(m_motor_r)
+    );
+}
+
+/// Get the efficiencies of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return Efficiencies in percentages in a 2-double tuple.
+std::tuple<double, double> h_Intake::get_efficiency_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_get_efficiency(m_motor_l),
+        pros::c::motor_get_efficiency(m_motor_r)
+    );
+}
+
+/// Get the stopped status of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return A 2-boolean tuple.
+std::tuple<bool, bool> h_Intake::is_stopped_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_is_stopped(m_motor_l) ? true : false,
+        pros::c::motor_is_stopped(m_motor_r) ? true : false
+    );
+}
+
+/// Get the over-temperature status of each motor. 
+/// In the order of: LEFT, RIGHT.
+/// \return A 2-boolean tuple.
+std::tuple<bool, bool> h_Intake::is_over_temp_per_motor(void)
+{
+    return std::make_tuple(
+        pros::c::motor_is_over_temp(m_motor_l) ? true : false,
+        pros::c::motor_is_over_temp(m_motor_r) ? true : false
+    );
+}
