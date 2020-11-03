@@ -45,3 +45,23 @@ h_Intake::h_Intake
     // Assign encoder units
     set_encoder_units(m_enc_unit);
 }
+
+
+//* Movement *//
+
+/// Moves the intake motors together.
+/// \param vel Velocity in RPM within the range of the previously supplied cartridge.
+void h_Intake::move_vel(int vel)
+{
+    pros::c::motor_move_velocity(m_motor_l, vel);
+    pros::c::motor_move_velocity(m_motor_r, vel);
+}
+
+/// Moves the intake motors separately.
+/// \param vel_l Left velocity in RPM within the range of the previously supplied cartridge.
+/// \param vel_r Right velocity in RPM within the range of the previously supplied cartridge.
+void h_Intake::move_vel(int vel_l, int vel_r)
+{
+    pros::c::motor_move_velocity(m_motor_l, vel_l);
+    pros::c::motor_move_velocity(m_motor_r, vel_r);
+}
