@@ -71,7 +71,6 @@ public:
     // Configuration
 
     int get_max_motor_velocity(void);
-    int get_max_top_roller_velocity(void);
     pros::motor_brake_mode_e        get_brake_mode(void);
     pros::motor_encoder_units_e     get_encoder_units(void);
     h_Intake& set_brake_mode(pros::motor_brake_mode_e brake_mode);

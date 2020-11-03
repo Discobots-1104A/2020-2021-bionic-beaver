@@ -185,3 +185,37 @@ std::tuple<bool, bool> h_Intake::is_over_temp_per_motor(void)
         pros::c::motor_is_over_temp(m_motor_r) ? true : false
     );
 }
+
+
+//* Configuration *//
+
+/// \return Intake max motor velocity in RPM.
+int h_Intake::get_max_motor_velocity(void) {return m_max_motor_velocity;}
+
+/// \return Current set brake mode.
+pros::motor_brake_mode_e h_Intake::get_brake_mode(void) {return m_brake_mode;}
+
+/// \return Current set encoder units.
+pros::motor_encoder_units_e h_Intake::get_encoder_units(void) {return m_enc_unit;}
+
+/// Sets the brake mode of the intakes.
+/// \param brake_mode Supplied motor brake mode.
+/// \return this* pointer for function chaining.
+h_Intake& h_Intake::set_brake_mode(pros::motor_brake_mode_e brake_mode)
+{
+    pros::c::motor_set_brake_mode(m_motor_l, brake_mode);
+    pros::c::motor_set_brake_mode(m_motor_r, brake_mode);
+    m_brake_mode = brake_mode;
+    return *this;
+}
+
+/// Sets the encoder units of the intakes.
+/// \param enc_unit Supplied motor encoder units.
+/// \return this* pointer for function chaining.
+h_Intake& h_Intake::set_encoder_units(pros::motor_encoder_units_e enc_unit)
+{
+    pros::c::motor_set_encoder_units(m_motor_l, enc_unit);
+    pros::c::motor_set_encoder_units(m_motor_r, enc_unit);
+    m_enc_unit = enc_unit;
+    return *this;
+}
