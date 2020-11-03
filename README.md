@@ -87,7 +87,7 @@ git clone https://github.com/Discobots-1104A/2020-2021-bionic-beaver.git
 
 ## Contributing
 
-Unfortunately, contribution to this repository is limited to added collaborators (for obvious reason). You are, however, still **free to clone** the repository as you wish.
+Unfortunately, contribution to this repository is limited to added collaborators (for obvious reasons). You are, however, still **free to clone** the repository as you wish.
 
 ## License
 
