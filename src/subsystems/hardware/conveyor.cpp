@@ -72,5 +72,45 @@ void h_Conveyor::move_vel(int vel_t, int vel_b)
 
 //* Telemetry *//
 
+/// Get the average current draw of all motors on the conveyor.
+/// \return Average current draw to the closest milliamp.
+int h_Conveyor::get_conveyor_current(void)
+{
+    return std::round((pros::c::motor_get_current_draw(m_motor_t) +
+                       pros::c::motor_get_current_draw(m_motor_b)) / 4.0);
+}
+
+/// Get the average voltage of all motors on the conveyor.
+/// \return Average voltage to the closest millivolt.
+int h_Conveyor::get_conveyor_voltage(void)
+{
+    return std::round((pros::c::motor_get_voltage(m_motor_t) +
+                       pros::c::motor_get_voltage(m_motor_b)) / 4.0);
+}
+
+/// Get the average power of all motors on the conveyor.
+/// \return Average power in watts.
+double h_Conveyor::get_conveyor_power(void)
+{
+    return ((pros::c::motor_get_power(m_motor_t) +
+             pros::c::motor_get_power(m_motor_b)) / 4.0);
+}
+
+/// Get the average temperature of all motors on the conveyor.
+/// \return Average temperature in Celcius.
+double h_Conveyor::get_conveyor_temperature(void)
+{
+    return ((pros::c::motor_get_temperature(m_motor_t) +
+             pros::c::motor_get_temperature(m_motor_b)) / 4.0);
+}
+
+/// Get the average efficiency of all motors on the conveyor.
+/// \return Average efficiency in percentage.
+double h_Conveyor::get_conveyor_efficiency(void)
+{
+    return ((pros::c::motor_get_efficiency(m_motor_t) +
+             pros::c::motor_get_efficiency(m_motor_b)) / 4.0);
+}
+
 
 //* Configuration *//
