@@ -42,6 +42,10 @@
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 
+//* Hardware
+#include "subsystems/hardware/chassis.hpp"
+#include "subsystems/hardware/conveyor.hpp"
+
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
  * Motor, you can use the namespace with the following commented out line.
@@ -76,6 +80,7 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+#include <utility>
 #endif
 
 #endif  // _PROS_MAIN_H_
