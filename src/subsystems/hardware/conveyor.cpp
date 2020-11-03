@@ -117,7 +117,7 @@ double h_Conveyor::get_conveyor_efficiency(void)
 /// \return Current draws in milliamps in a 2-integer tuple.
 std::tuple<int, int> h_Conveyor::get_current_per_motor(void)
 {
-    return std::make_tuple<int, int>(
+    return std::make_tuple(
         pros::c::motor_get_current_draw(m_motor_t),
         pros::c::motor_get_current_draw(m_motor_b)
     );
@@ -128,7 +128,7 @@ std::tuple<int, int> h_Conveyor::get_current_per_motor(void)
 /// \return Voltages in millivolts in a 2-integer tuple.
 std::tuple<int, int> h_Conveyor::get_voltage_per_motor(void)
 {
-    return std::make_tuple<int, int>(
+    return std::make_tuple(
         pros::c::motor_get_voltage(m_motor_t),
         pros::c::motor_get_voltage(m_motor_b)
     );
@@ -139,7 +139,7 @@ std::tuple<int, int> h_Conveyor::get_voltage_per_motor(void)
 /// \return Power in watts in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_power_per_motor(void)
 {
-    return std::make_tuple<double, double>(
+    return std::make_tuple(
         pros::c::motor_get_power(m_motor_t),
         pros::c::motor_get_power(m_motor_b)
     );
@@ -150,7 +150,7 @@ std::tuple<double, double> h_Conveyor::get_power_per_motor(void)
 /// \return Temperatures in Celcius in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_temperature_per_motor(void)
 {
-    return std::make_tuple<double, double>(
+    return std::make_tuple(
         pros::c::motor_get_temperature(m_motor_t),
         pros::c::motor_get_temperature(m_motor_b)
     );
@@ -161,7 +161,7 @@ std::tuple<double, double> h_Conveyor::get_temperature_per_motor(void)
 /// \return Efficiencies in percentages in a 2-double tuple.
 std::tuple<double, double> h_Conveyor::get_efficiency_per_motor(void)
 {
-    return std::make_tuple<double, double>(
+    return std::make_tuple(
         pros::c::motor_get_efficiency(m_motor_t),
         pros::c::motor_get_efficiency(m_motor_b)
     );
@@ -172,7 +172,7 @@ std::tuple<double, double> h_Conveyor::get_efficiency_per_motor(void)
 /// \return A 2-boolean tuple.
 std::tuple<bool, bool> h_Conveyor::is_stopped_per_motor(void)
 {
-    return std::make_tuple<bool, bool>(
+    return std::make_tuple(
         pros::c::motor_is_stopped(m_motor_t) ? true : false,
         pros::c::motor_is_stopped(m_motor_b) ? true : false
     );
@@ -183,7 +183,7 @@ std::tuple<bool, bool> h_Conveyor::is_stopped_per_motor(void)
 /// \return A 2-boolean tuple.
 std::tuple<bool, bool> h_Conveyor::is_over_temp_per_motor(void)
 {
-    return std::make_tuple<bool, bool>(
+    return std::make_tuple(
         pros::c::motor_is_over_temp(m_motor_t) ? true : false,
         pros::c::motor_is_over_temp(m_motor_b) ? true : false
     );
