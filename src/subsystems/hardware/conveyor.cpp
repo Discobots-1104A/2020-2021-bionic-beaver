@@ -50,8 +50,24 @@ h_Conveyor::h_Conveyor
 }
 
 
-
 //* Movement *//
+
+/// Moves the conveyor motors together.
+/// \param vel Velocity in RPM within the range of the previously supplied cartridge.
+void h_Conveyor::move_vel(int vel)
+{
+    pros::c::motor_move_velocity(m_motor_t, vel);
+    pros::c::motor_move_velocity(m_motor_b, vel);
+}
+
+/// Moves the conveyor motors separately.
+/// \param vel_t Top velocity in RPM within the range of the previously supplied cartridge.
+/// \param vel_b Bottom velocity in RPM within the range of the previously supplied cartridge.
+void h_Conveyor::move_vel(int vel_t, int vel_b)
+{
+    pros::c::motor_move_velocity(m_motor_t, vel_t);
+    pros::c::motor_move_velocity(m_motor_b, vel_b);
+}
 
 
 //* Telemetry *//
