@@ -48,10 +48,10 @@ h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
     pros::c::motor_set_gearing(m_motor_rb, m_cart);
 
     // Assign brake modes
-    set_brake_mode(brake_mode);
+    set_brake_mode(m_brake_mode);
 
     // Assign encoder units
-    set_encoder_units(enc_unit);
+    set_encoder_units(m_enc_unit);
 }
 
 
