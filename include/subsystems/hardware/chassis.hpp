@@ -20,22 +20,22 @@ struct h_Chassis_Scales
     {
         double  m_length;   // Length in inches
         double  m_width;    // Width in inches
-    } frame_dims;
+    } m_frame_dims;
 
     // Chassis wheel dimensions
     struct h_Chassis_Wheel_Dims
     {
         double  m_wheel_diameter;   // Diameter in inches
         double  m_wheelbase_length; // Wheelbase length in inches
-    } wheel_dims;
+    } m_wheel_dims;
 
     // Chassis configs
-    struct h_Chassis_Misc
+    struct h_Chassis_Motor_Config
     {
         int m_max_motor_velocity;   // Max motor velocity in RPM
         int m_max_total_velocity;   // Max total velocity in RPM
         double  m_gear_ratio;   // Overall gear ratio in decimal form
-    } misc;
+    } m_motor_config;
 };
 
 /// Chassis motor port numbers

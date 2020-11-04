@@ -30,9 +30,10 @@ h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
       m_motor_lb{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_lb))},
       m_motor_rf{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_rf))}, 
       m_motor_rb{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_rb))},
-      m_length{scales.frame_dims.m_length}, m_width{scales.frame_dims.m_width},
-      m_wheel_diameter{scales.wheel_dims.m_wheel_diameter}, m_wheelbase_length{scales.wheel_dims.m_wheelbase_length},
-      m_gear_ratio{scales.misc.m_gear_ratio}, m_max_motor_velocity{scales.misc.m_max_motor_velocity}, m_max_total_velocity{scales.misc.m_max_total_velocity},
+      m_length{scales.m_frame_dims.m_length}, m_width{scales.m_frame_dims.m_width},
+      m_wheel_diameter{scales.m_wheel_dims.m_wheel_diameter}, m_wheelbase_length{scales.m_wheel_dims.m_wheelbase_length},
+      m_gear_ratio{scales.m_motor_config.m_gear_ratio}, m_max_motor_velocity{scales.m_motor_config.m_max_motor_velocity}, 
+      m_max_total_velocity{scales.m_motor_config.m_max_total_velocity},
       m_cart{cart}, m_brake_mode{brake_mode}, m_enc_unit{enc_unit}
 {
     // Assign motor direction
