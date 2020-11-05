@@ -15,6 +15,7 @@
 
 
 /// User-defined literal for ADI ports later
+
 std::uint8_t operator"" _ADI (char adi_port);
 
 /// Vision sensor signatures enum
@@ -70,8 +71,9 @@ struct h_Sensors_Smart_Ports
 struct h_Sensors_ADI_Config
 {
     // Constructor for struct
+
     h_Sensors_ADI_Config(
-        char enc_left_top, char enc_right_top, char enc_mid_top,
+        std::uint8_t enc_left_top, std::uint8_t enc_right_top, std::uint8_t enc_mid_top,
         bool enc_left_rev, bool enc_right_rev, bool enc_mid_rev
     );
 
@@ -137,13 +139,10 @@ private:
     const std::uint8_t  m_s_imu;        // IMU
 
 
-    // ADI port numbers
-    const std::uint8_t  m_adi_enc_lt;   // Left encoder, top port
-    const std::uint8_t  m_adi_enc_lb;   // Left encoder, bottom port
-    const std::uint8_t  m_adi_enc_rt;   // Right encoder, top port
-    const std::uint8_t  m_adi_enc_rb;   // Right encoder, bottom port
-    const std::uint8_t  m_adi_enc_mt;   // Middle encoder, top port
-    const std::uint8_t  m_adi_enc_mb;   // Middle encoder, bottom port 
+    // ADI objects
+    const pros::c::adi_encoder_t    m_adi_enc_l;    // Left encoder
+    const pros::c::adi_encoder_t    m_adi_enc_r;    // Right encoder
+    const pros::c::adi_encoder_t    m_adi_enc_m;    // Middle encoder
 
 
     // Vision sensor config
@@ -152,9 +151,9 @@ private:
 
 
     // Tracking wheel config
-    const bool      m_adi_enc_l_reversed;   // If left encoder is reversed
-    const bool      m_adi_enc_r_reversed;   // If right encoder is reversed
-    const bool      m_adi_enc_m_reversed;   // If middle encoder is reversed
+    const double    m_tracking_wheel_wheelbase;        // Wheelbase from left to right tracking wheel
+    const double    m_side_tracking_wheel_radius;      // Half of the left-to-right wheelbase
+    const double    m_middle_tracking_wheel_radius;    // Radius from midpoint of line the wheel is on to center of robot
 
 };
 
