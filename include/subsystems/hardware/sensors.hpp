@@ -33,12 +33,19 @@ enum class h_Sensors_Vision_Signature_Sets
     CENTER
 };
 
+/// IMU acceleration mode
+enum class h_Sensors_IMU_Accel_Mode
+{
+    METERS,
+    GFORCE
+};
+
 /// Tracking wheel enum
 enum class h_Sensors_Tracking_Wheel_IDs
 {
     LEFT,
     RIGHT,
-    CENTER
+    MIDDLE
 };
 
 /// Sensors scales
@@ -47,8 +54,9 @@ struct h_Sensors_Scales
     // Vision sensor related
     struct h_Sensors_Vision_Scales
     {
-        double m_vision_sensor_height;  // Vision sensor height in inches
-        double m_vision_sensor_angle;   // Vision sensor angle in degrees
+                    double      m_vision_sensor_height; // Vision sensor height in inches
+                    double      m_vision_sensor_angle;  // Vision sensor angle in degrees
+        pros::vision_zero_e_t   m_vision_zero_point;    // Vision sensor zero point.
     } m_vision_scales;
 
     // Tracking wheel related
@@ -63,8 +71,8 @@ struct h_Sensors_Scales
 /// Smart ports
 struct h_Sensors_Smart_Ports
 {
-    int     m_vision;   // Vision sensor
-    int     m_imu;      // IMU
+    std::uint8_t    m_vision;   // Vision sensor
+    std::uint8_t    m_imu;      // IMU
 };
 
 /// ADI ports and reversed states
@@ -115,7 +123,7 @@ public:
     pros::vision_object_s_t vision_get_by_sig(int size, h_Sensors_Vision_Signatures sig_id);
     pros::vision_object_s_t vision_get_by_size(int size);
     pros::vision_zero_e_t   vision_get_zero_point(void);
-                h_Sensors&  vision_set_signature(h_Sensors_Vision_Signatures sig_id, pros::vision_signature_s_t sig);
+                h_Sensors&  vision_set_signature(h_Sensors_Vision_Signatures sig_id, pros::vision_signature_s_t *sig);
                 h_Sensors&  vision_set_zero_point(pros::vision_zero_e_t zero_point);
 
 
@@ -124,7 +132,7 @@ public:
                     double  imu_get_heading(void);
                     double  imu_get_rotation(void);
     pros::c::imu_gyro_s_t   imu_get_gyro_readings(void);
-    pros::c::imu_accel_s_t  imu_get_accel_readings(void);
+    pros::c::imu_accel_s_t  imu_get_accel_readings(h_Sensors_IMU_Accel_Mode mode = h_Sensors_IMU_Accel_Mode::GFORCE);
     pros::c::imu_status_e   imu_get_status(void);
 
 
@@ -151,8 +159,9 @@ private:
 
 
     // Vision sensor config
-    const double    m_vision_sensor_height;  // Vision sensor height in inches
-    const double    m_vision_sensor_angle;   // Vision sensor angle in degrees
+    const double    m_vision_sensor_height;         // Vision sensor height in inches
+    const double    m_vision_sensor_angle;          // Vision sensor angle in degrees
+    pros::vision_zero_e_t   m_vision_zero_point;    // Vision sensor zero point
 
 
     // Tracking wheel config
