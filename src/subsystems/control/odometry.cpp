@@ -4,7 +4,7 @@
 //*                 Marco Tan   <marco.tan.200405@gmail.com>
 //*             Neil Sachdeva   <Wiserlightning090@gmail.com>
 //*
-//* Desc:       Odometry class declarations
+//* Desc:       Odometry class definitions
 
 #include "main.h"
 

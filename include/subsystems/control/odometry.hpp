@@ -4,7 +4,7 @@
 //*                 Marco Tan   <marco.tan.200405@gmail.com>
 //*             Neil Sachdeva   <Wiserlightning090@gmail.com>
 //*
-//* Desc:       Odometry class 
+//* Desc:       Odometry class declarations
 
 #ifndef ODOMETRY_HPP
 #define ODOMETRY_HPP
