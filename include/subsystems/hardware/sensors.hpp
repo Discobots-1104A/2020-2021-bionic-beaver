@@ -110,17 +110,19 @@ public:
 
     // Vision sensor
 
+                    double  vision_get_sensor_height(void);
+                    double  vision_get_sensor_angle(void);
     pros::vision_object_s_t vision_get_by_sig(int size, h_Sensors_Vision_Signatures sig_id);
     pros::vision_object_s_t vision_get_by_size(int size);
     pros::vision_zero_e_t   vision_get_zero_point(void);
-    h_Sensors& vision_set_signature(h_Sensors_Vision_Signatures sig_id, pros::vision_signature_s_t sig);
-    h_Sensors& vision_set_zero_point(pros::vision_zero_e_t zero_point);
+                h_Sensors&  vision_set_signature(h_Sensors_Vision_Signatures sig_id, pros::vision_signature_s_t sig);
+                h_Sensors&  vision_set_zero_point(pros::vision_zero_e_t zero_point);
 
 
     // IMU
 
-    double imu_get_heading(void);
-    double imu_get_rotation(void);
+                    double  imu_get_heading(void);
+                    double  imu_get_rotation(void);
     pros::c::imu_gyro_s_t   imu_get_gyro_readings(void);
     pros::c::imu_accel_s_t  imu_get_accel_readings(void);
     pros::c::imu_status_e   imu_get_status(void);
@@ -128,9 +130,12 @@ public:
 
     // Tracking wheels
 
-    int tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs track_id);
-    void tracking_wheels_reset(void);
-    void tracking_wheels_reset(h_Sensors_Tracking_Wheel_IDs track_id);
+    int     tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs track_id);
+    double  tracking_wheels_get_wheelbase(void);
+    double  tracking_wheels_get_side_radius(void);
+    double  tracking_wheels_get_middle_radius(void);
+    void    tracking_wheels_reset(void);
+    void    tracking_wheels_reset(h_Sensors_Tracking_Wheel_IDs track_id);
 
 
 private:
