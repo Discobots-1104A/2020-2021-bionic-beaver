@@ -50,6 +50,7 @@
 
 //* Control
 #include "subsystems/control/odometry.hpp"
+#include "subsystems/control/pid.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
