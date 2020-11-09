@@ -104,9 +104,9 @@ public:
     // Constructor and destructor
 
     h_Sensors(
-        h_Sensors_Scales        scales,
-        h_Sensors_Smart_Ports   smart_ports,
-        h_Sensors_ADI_Config    adi_ports
+        const h_Sensors_Scales&         scales,
+        const h_Sensors_Smart_Ports&    smart_ports,
+        const h_Sensors_ADI_Config&     adi_ports
     );
     ~h_Sensors();
 

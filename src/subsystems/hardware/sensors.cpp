@@ -66,9 +66,9 @@ h_Sensors_ADI_Config::h_Sensors_ADI_Config
 /// \param adi_ports ADI ports--you can use "_ADI" if you want to use 'char's over 'uint8_t's.
 h_Sensors::h_Sensors
 (
-    h_Sensors_Scales        scales,
-    h_Sensors_Smart_Ports   smart_ports,
-    h_Sensors_ADI_Config    adi_ports
+    const h_Sensors_Scales&         scales,
+    const h_Sensors_Smart_Ports&    smart_ports,
+    const h_Sensors_ADI_Config&     adi_ports
 )   : m_s_vision{smart_ports.m_imu}, m_s_imu{smart_ports.m_imu},
       m_adi_enc_l{pros::c::adi_encoder_init(adi_ports.m_adi_enc_lt, adi_ports.m_adi_enc_lb, adi_ports.m_adi_enc_l_reversed)},
       m_adi_enc_r{pros::c::adi_encoder_init(adi_ports.m_adi_enc_rt, adi_ports.m_adi_enc_rb, adi_ports.m_adi_enc_r_reversed)},
