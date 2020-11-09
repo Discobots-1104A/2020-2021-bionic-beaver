@@ -57,11 +57,11 @@ public:
     // Constructors and destructors
 
     h_Skid_Steer_Chassis(
-        h_Chassis_Port_Numbers      port_nums,
-        h_Chassis_Scales            scales,
-        pros::motor_gearset_e       cart        = pros::E_MOTOR_GEARSET_18,
-        pros::motor_brake_mode_e    brake_mode  = pros::E_MOTOR_BRAKE_COAST,
-        pros::motor_encoder_units_e enc_unit    = pros::E_MOTOR_ENCODER_COUNTS
+        const h_Chassis_Port_Numbers&   port_nums,
+        const h_Chassis_Scales&         scales,
+        pros::motor_gearset_e           cart        = pros::E_MOTOR_GEARSET_18,
+        pros::motor_brake_mode_e        brake_mode  = pros::E_MOTOR_BRAKE_COAST,
+        pros::motor_encoder_units_e     enc_unit    = pros::E_MOTOR_ENCODER_COUNTS
     );
     ~h_Skid_Steer_Chassis();
 

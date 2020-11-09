@@ -21,11 +21,11 @@
 /// \param enc_unit Supplied motor encoder units.
 h_Skid_Steer_Chassis::h_Skid_Steer_Chassis
 (
-    h_Chassis_Port_Numbers      port_nums,
-    h_Chassis_Scales            scales,
-    pros::motor_gearset_e       cart,
-    pros::motor_brake_mode_e    brake_mode,
-    pros::motor_encoder_units_e enc_unit
+    const h_Chassis_Port_Numbers&   port_nums,
+    const h_Chassis_Scales&         scales,
+    pros::motor_gearset_e           cart,
+    pros::motor_brake_mode_e        brake_mode,
+    pros::motor_encoder_units_e     enc_unit
 )   : m_motor_lf{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_lf))}, 
       m_motor_lb{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_lb))},
       m_motor_rf{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_rf))}, 
