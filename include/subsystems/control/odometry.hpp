@@ -174,6 +174,11 @@ private:
     double m_chord_middle;  // Middle chord
     double m_polar_offset;  // Angle + robot angle
 
+
+    // Update task
+    pros::Task m_update_task;
+    void m_update_func(void);
+
 };
 
 #endif  // ODOMETRY_HPP
