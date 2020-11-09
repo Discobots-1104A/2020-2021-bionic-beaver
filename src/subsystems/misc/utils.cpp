@@ -9,4 +9,7 @@
 #include "main.h"
 
 
-//
+//* Conversion functions *//
+
+double u_deg_to_rad(double deg) {return deg * M_PI / 180.0;}
+double u_rad_to_deg(double rad) {return rad / M_PI * 180.0;}

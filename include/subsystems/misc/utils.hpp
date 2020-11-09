@@ -12,6 +12,12 @@
 #include "api.h"
 
 
-//
+//* Conversion functions *//
+
+/// Degrees to radians
+double u_deg_to_rad(double deg);
+/// Radians to degrees
+double u_rad_to_deg(double rad);
+
 
 #endif  // UTILS_HPP
