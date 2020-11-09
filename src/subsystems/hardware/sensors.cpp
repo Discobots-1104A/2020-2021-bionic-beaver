@@ -77,7 +77,8 @@ h_Sensors::h_Sensors
       m_vision_zero_point{scales.m_vision_scales.m_vision_zero_point},
       m_tracking_wheel_wheelbase{scales.m_tracking_wheel_scales.m_tracking_wheel_wheelbase},
       m_side_tracking_wheel_radius{scales.m_tracking_wheel_scales.m_side_tracking_wheel_radius},
-      m_middle_tracking_wheel_radius{scales.m_tracking_wheel_scales.m_middle_tracking_wheel_radius}
+      m_middle_tracking_wheel_radius{scales.m_tracking_wheel_scales.m_middle_tracking_wheel_radius},
+      m_tracking_wheel_diameter{scales.m_tracking_wheel_scales.m_tracking_wheel_diameter}
 {}
 
 
@@ -209,6 +210,9 @@ double h_Sensors::tracking_wheels_get_side_radius(void) {return m_side_tracking_
 
 /// \return Radius from midpoint of line the wheel is on to center of robot.
 double h_Sensors::tracking_wheels_get_middle_radius(void) {return m_middle_tracking_wheel_radius;}
+
+/// \return Diameter of the tracking wheels.
+double h_Sensors::tracking_wheels_get_diameter(void) {return m_tracking_wheel_diameter;}
 
 /// Resets all tracking wheels.
 void h_Sensors::tracking_wheels_reset(void)

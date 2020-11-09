@@ -137,11 +137,17 @@ void c_Odometry::m_update_func(void)
         }(m_current_roll, m_last_roll);
         m_last_pitch = m_current_pitch;
 
+        // Getting gyroscopic values.
+        m_current_gyro_val = m_sensors_obj.imu_get_gyro_readings();
+
+        // Getting accelerometer values.
+        m_current_accel_vals = m_sensors_obj.imu_get_accel_readings();
+
         // Find out the length each encoder moved.
         m_len_right = m_sensors_obj.tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT) / 360.0 \
-                      * (m_sensors_obj.tracking_wheels_get_side_radius() * M_PI);
+                      * (m_sensors_obj.tracking_wheels_get_diameter() * M_PI);
         m_len_middle = m_sensors_obj.tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE) / 360.0 \
-                       * (m_sensors_obj.tracking_wheels_get_middle_radius() * M_PI);
+                       * (m_sensors_obj.tracking_wheels_get_diameter() * M_PI);
     
         // Find the change since last update.
         m_delta_right = m_len_right - m_prev_right;
@@ -151,6 +157,41 @@ void c_Odometry::m_update_func(void)
         m_prev_right = m_len_right;
         m_prev_right = m_len_middle;
 
-        // Determine change in angle
+        // Determine change in angle.
+        m_delta_theta = u_deg_to_rad(m_filtered_rotation) - m_global_angle;
+
+        // Determine if robot turned or not and calculate accordingly.
+        if (m_delta_theta)
+        {
+            m_alpha = m_delta_theta / 2.0;
+
+            m_radius_right = m_delta_right / m_delta_theta + m_sensors_obj.tracking_wheels_get_side_radius();
+            m_chord_right = (m_radius_right * sin(m_alpha)) * 2;
+
+            m_radius_middle = m_delta_middle / m_delta_theta + m_sensors_obj.tracking_wheels_get_middle_radius();
+            m_chord_middle = (m_radius_middle * sin(m_alpha)) * 2;
+        }
+        else
+        {
+            m_alpha = 0.0;
+            m_chord_right = m_delta_right;
+            m_chord_middle = m_delta_middle;
+        }
+
+        // Find the polar offset needed.
+        m_polar_offset = m_global_angle + m_alpha;
+
+        // Add the change to the global coordinates.
+        m_global_x += m_chord_right * sin(m_polar_offset);
+        m_global_x += m_chord_middle * cos(m_polar_offset);
+
+        m_global_y += m_chord_right * cos(m_polar_offset);
+        m_global_y += m_chord_middle * -sin(m_polar_offset);
+        
+        // Update the global angle.
+        m_global_angle += m_delta_theta;
+
+        // Delay.
+        pros::delay(10);
     }
 }

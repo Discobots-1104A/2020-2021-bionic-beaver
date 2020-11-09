@@ -65,6 +65,7 @@ struct h_Sensors_Scales
         double m_tracking_wheel_wheelbase;      // Wheelbase from left to right tracking wheel
         double m_side_tracking_wheel_radius;    // Half of the left-to-right wheelbase
         double m_middle_tracking_wheel_radius;  // Radius from midpoint of line the wheel is on to center of robot
+        double m_tracking_wheel_diameter;       // Diameter of tracking wheels
     } m_tracking_wheel_scales;
 };
 
@@ -144,6 +145,7 @@ public:
     double  tracking_wheels_get_wheelbase(void);
     double  tracking_wheels_get_side_radius(void);
     double  tracking_wheels_get_middle_radius(void);
+    double  tracking_wheels_get_diameter(void);
     void    tracking_wheels_reset(void);
     void    tracking_wheels_reset(h_Sensors_Tracking_Wheel_IDs track_id);
 
@@ -167,9 +169,10 @@ private:
 
 
     // Tracking wheel config
-    const double    m_tracking_wheel_wheelbase;        // Wheelbase from left to right tracking wheel
-    const double    m_side_tracking_wheel_radius;      // Half of the left-to-right wheelbase
-    const double    m_middle_tracking_wheel_radius;    // Radius from midpoint of line the wheel is on to center of robot
+    const double    m_tracking_wheel_wheelbase;         // Wheelbase from left to right tracking wheel
+    const double    m_side_tracking_wheel_radius;       // Half of the left-to-right wheelbase
+    const double    m_middle_tracking_wheel_radius;     // Radius from midpoint of line the wheel is on to center of robot
+    const double    m_tracking_wheel_diameter;          // Diameter of tracking wheels
 
 };
 
