@@ -107,10 +107,10 @@ public:
     // Constructors and destructors
 
     c_Odometry(
-        const c_Robot_Starting_Pos_Coords&      starting_cords,
-        const c_All_Goal_Coords&                goal_cords,
-        const c_Live_Comp_Setup_Startup_Coords& live_comp_cords,
-        const c_Skills_Setup_Startup_Coords&    skills_comp_cords,
+        const c_Robot_Starting_Positions&       starting_coords,
+        const c_All_Goal_Coords&                goal_coords,
+        const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
+        const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
         h_Sensors&                  sensors_obj,
         h_Skid_Steer_Chassis&       chassis_obj,
         g_Robot_Starting_Pos_Side   starting_side
@@ -128,6 +128,7 @@ public:
     // Getter methods
                     double      get_x(void);
                     double      get_y(void);
+                    double      get_angle(void);
                     double      get_rotation(void);
                     double      get_pitch(void);
                     double      get_roll(void);
@@ -137,46 +138,63 @@ public:
 private:
     // Starting position related values
     const g_Robot_Starting_Pos_Side     m_starting_side;    // Robot starting side
-    const double    m_starting_x;       // Robot starting X coord in inches
-    const double    m_starting_y;       // Robot starting Y coord in inches
-    const double    m_starting_rotate;  // Robot starting angle in degrees
-    double          m_offset_x;         // Robot starting X offset in inches
-    double          m_offset_y;         // Robot starting Y offset in inches
-    double          m_offset_rotate;    // Robot starting angle offset in degrees
+    double      m_starting_x;       // Robot starting X coord in inches
+    double      m_starting_y;       // Robot starting Y coord in inches
+    double      m_starting_rotate;  // Robot starting angle in degrees
+    double      m_offset_x;         // Robot starting X offset in inches
+    double      m_offset_y;         // Robot starting Y offset in inches
+    double      m_offset_rotate;    // Robot starting angle offset in degrees
+
+
+    // Field coords
+    c_All_Goal_Coords                   m_goal_coords;          // Goal coords
+    c_Live_Comp_Setup_Startup_Coords    m_live_comp_coords;     // Live comp ball coords
+    c_Skills_Setup_Startup_Coords       m_skills_comp_coords;   // Skills comp ball coords 
+
+
+    // References to other objects
+    h_Sensors&                  m_sensors_obj;      // Sensors
+    h_Skid_Steer_Chassis&       m_chassis_obj;      // Chassis
 
 
     // Global position values
-    double      m_global_x;         // Robot global X coord in inches
-    double      m_global_y;         // Robot global Y coord in inches
-    double      m_global_angle;     // Robot global angle in degrees
+    double      m_global_x {0.0};       // Robot global X coord in inches
+    double      m_global_y {0.0};       // Robot global Y coord in inches
+    double      m_global_angle {0.0};   // Robot global angle in degrees
     
 
     // Current position values
-                    double  m_current_rotation;     // Robot current rotation in degrees
-                    double  m_current_pitch;        // Robot current pitch in degrees
-                    double  m_current_roll;         // Robot current roll in degrees
-    pros::c::imu_gyro_s_t   m_current_gyro_val;     // Robot current gyro values in degrees/sec
-    pros::c::imu_accel_s_t  m_current_accel_vals;   // Robot current acceleration values in m/s2
+                    double  m_current_rotation {0.0};   // Robot current rotation in degrees
+                    double  m_filtered_rotation {0.0};  // Filtered robot rotations in degrees
+                    double  m_last_rotation {0.0};      // Previous robot rotations in degrees
+                    double  m_current_pitch {0.0};      // Robot current pitch in degrees
+                    double  m_filtered_pitch {0.0};     // Filtered robot pitch in degrees
+                    double  m_last_pitch {0.0};         // Previous robot rotation in degrees
+                    double  m_current_roll {0.0};       // Robot current roll in degrees
+                    double  m_filtered_roll {0.0};      // Filtered robot roll in degrees
+                    double  m_last_roll {0.0};          // Previous robot roll in degrees
+    pros::c::imu_gyro_s_t   m_current_gyro_val;         // Robot current gyro values in degrees/sec
+    pros::c::imu_accel_s_t  m_current_accel_vals;       // Robot current acceleration values in m/s2
 
 
     // local position values
-    double m_len_right;     // Distance right tracking wheel travelled in inches
-    double m_len_middle;    // Distance middle tracking wheel travelled in inches
-    double m_delta_right;   // Change in right distance from last calculated distance
-    double m_delta_middle;  // Change in middle distance from last calculated distance
-    double m_prev_right;    // Previous right distance value
-    double m_prev_middle;   // Previous middle distance value
-    double m_delta_theta;   // Change in rotation from last recorded distance
-    double m_alpha;         // Used for chord calc and offset later
-    double m_radius_right;  // Right radius
-    double m_radius_middle; // Middle radius
-    double m_chord_right;   // Right chord
-    double m_chord_middle;  // Middle chord
-    double m_polar_offset;  // Angle + robot angle
+    double m_len_right {0.0};       // Distance right tracking wheel travelled in inches
+    double m_len_middle {0.0};      // Distance middle tracking wheel travelled in inches
+    double m_delta_right {0.0};     // Change in right distance from last calculated distance
+    double m_delta_middle {0.0};    // Change in middle distance from last calculated distance
+    double m_prev_right {0.0};      // Previous right distance value
+    double m_prev_middle {0.0};     // Previous middle distance value
+    double m_delta_theta {0.0};     // Change in rotation from last recorded distance
+    double m_alpha {0.0};           // Used for chord calc and offset later
+    double m_radius_right {0.0};    // Right radius
+    double m_radius_middle {0.0};   // Middle radius
+    double m_chord_right {0.0};     // Right chord
+    double m_chord_middle {0.0};    // Middle chord
+    double m_polar_offset {0.0};    // Angle + robot angle
 
 
     // Update task
-    pros::Task m_update_task;
+    pros::Task *m_update_task {nullptr};
     void m_update_func(void);
 
 };

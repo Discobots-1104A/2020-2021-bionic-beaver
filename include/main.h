@@ -33,6 +33,7 @@
  * For instance, you can do `4_mtr = 50` to set motor 4's target velocity to 50
  */
 #define PROS_USE_LITERALS
+#define _USE_MATH_DEFINES
 
 #include "api.h"
 
