@@ -107,10 +107,10 @@ public:
     // Constructors and destructors
 
     c_Odometry(
-        c_Robot_Starting_Pos_Coords         starting_cords,
-        c_All_Goal_Coords                   goal_cords,
-        c_Live_Comp_Setup_Startup_Coords    live_comp_cords,
-        c_Skills_Setup_Startup_Coords       skills_comp_cords,
+        const c_Robot_Starting_Pos_Coords&      starting_cords,
+        const c_All_Goal_Coords&                goal_cords,
+        const c_Live_Comp_Setup_Startup_Coords& live_comp_cords,
+        const c_Skills_Setup_Startup_Coords&    skills_comp_cords,
         h_Sensors&              sensors_obj,
         h_Skid_Steer_Chassis&   chassis_obj
     );
