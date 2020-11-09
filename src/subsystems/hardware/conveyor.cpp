@@ -22,12 +22,12 @@
 /// \param enc_unit Supplied motor encoder units.
 h_Conveyor::h_Conveyor
 (
-    h_Conveyor_Port_Numbers     port_nums,
-    h_Conveyor_Scales           scales,
-    pros::motor_gearset_e       cart,
-    pros::motor_brake_mode_e    brake_mode_t,
-    pros::motor_brake_mode_e    brake_mode_b,
-    pros::motor_encoder_units_e enc_unit
+    const h_Conveyor_Port_Numbers&  port_nums,
+    const h_Conveyor_Scales&        scales,
+    pros::motor_gearset_e           cart,
+    pros::motor_brake_mode_e        brake_mode_t,
+    pros::motor_brake_mode_e        brake_mode_b,
+    pros::motor_encoder_units_e     enc_unit
 )   : m_motor_t{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_t))},
       m_motor_b{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_b))},
       m_max_motor_velocity{scales.m_max_motor_velocity},

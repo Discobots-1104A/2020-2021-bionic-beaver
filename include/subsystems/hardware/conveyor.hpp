@@ -36,12 +36,12 @@ public:
     // Constructor and destructor
 
     h_Conveyor(
-        h_Conveyor_Port_Numbers     port_nums,
-        h_Conveyor_Scales           scales,
-        pros::motor_gearset_e       cart            = pros::E_MOTOR_GEARSET_06,
-        pros::motor_brake_mode_e    brake_mode_t    = pros::E_MOTOR_BRAKE_HOLD,
-        pros::motor_brake_mode_e    brake_mode_b    = pros::E_MOTOR_BRAKE_HOLD,
-        pros::motor_encoder_units_e enc_unit        = pros::E_MOTOR_ENCODER_COUNTS
+        const h_Conveyor_Port_Numbers&  port_nums,
+        const h_Conveyor_Scales&        scales,
+        pros::motor_gearset_e           cart            = pros::E_MOTOR_GEARSET_06,
+        pros::motor_brake_mode_e        brake_mode_t    = pros::E_MOTOR_BRAKE_HOLD,
+        pros::motor_brake_mode_e        brake_mode_b    = pros::E_MOTOR_BRAKE_HOLD,
+        pros::motor_encoder_units_e     enc_unit        = pros::E_MOTOR_ENCODER_COUNTS
     );
     ~h_Conveyor();
 
