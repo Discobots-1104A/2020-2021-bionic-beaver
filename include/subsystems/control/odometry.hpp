@@ -111,8 +111,9 @@ public:
         const c_All_Goal_Coords&                goal_cords,
         const c_Live_Comp_Setup_Startup_Coords& live_comp_cords,
         const c_Skills_Setup_Startup_Coords&    skills_comp_cords,
-        h_Sensors&              sensors_obj,
-        h_Skid_Steer_Chassis&   chassis_obj
+        h_Sensors&                  sensors_obj,
+        h_Skid_Steer_Chassis&       chassis_obj,
+        g_Robot_Starting_Pos_Side   starting_side
     );
     ~c_Odometry();
 
@@ -127,7 +128,6 @@ public:
     // Getter methods
                     double      get_x(void);
                     double      get_y(void);
-                    double      get_head(void);
                     double      get_rotation(void);
                     double      get_pitch(void);
                     double      get_roll(void);
@@ -135,7 +135,44 @@ public:
     pros::c::imu_accel_s_t      get_accel_vals(void);
 
 private:
+    // Starting position related values
+    const g_Robot_Starting_Pos_Side     m_starting_side;    // Robot starting side
+    const double    m_starting_x;       // Robot starting X coord in inches
+    const double    m_starting_y;       // Robot starting Y coord in inches
+    const double    m_starting_rotate;  // Robot starting angle in degrees
+    double          m_offset_x;         // Robot starting X offset in inches
+    double          m_offset_y;         // Robot starting Y offset in inches
+    double          m_offset_rotate;    // Robot starting angle offset in degrees
 
+
+    // Global position values
+    double      m_global_x;         // Robot global X coord in inches
+    double      m_global_y;         // Robot global Y coord in inches
+    double      m_global_angle;     // Robot global angle in degrees
+    
+
+    // Current position values
+                    double  m_current_rotation;     // Robot current rotation in degrees
+                    double  m_current_pitch;        // Robot current pitch in degrees
+                    double  m_current_roll;         // Robot current roll in degrees
+    pros::c::imu_gyro_s_t   m_current_gyro_val;     // Robot current gyro values in degrees/sec
+    pros::c::imu_accel_s_t  m_current_accel_vals;   // Robot current acceleration values in m/s2
+
+
+    // local position values
+    double m_len_right;     // Distance right tracking wheel travelled in inches
+    double m_len_middle;    // Distance middle tracking wheel travelled in inches
+    double m_delta_right;   // Change in right distance from last calculated distance
+    double m_delta_middle;  // Change in middle distance from last calculated distance
+    double m_prev_right;    // Previous right distance value
+    double m_prev_middle;   // Previous middle distance value
+    double m_delta_theta;   // Change in rotation from last recorded distance
+    double m_alpha;         // Used for chord calc and offset later
+    double m_radius_right;  // Right radius
+    double m_radius_middle; // Middle radius
+    double m_chord_right;   // Right chord
+    double m_chord_middle;  // Middle chord
+    double m_polar_offset;  // Angle + robot angle
 
 };
 
