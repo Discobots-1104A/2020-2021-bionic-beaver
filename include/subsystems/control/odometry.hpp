@@ -116,6 +116,24 @@ public:
     );
     ~c_Odometry();
 
+
+    // General methods
+
+    void start_odom(void);
+    void stop_odom(void);
+    void calibrate(void);
+
+
+    // Getter methods
+                    double      get_x(void);
+                    double      get_y(void);
+                    double      get_head(void);
+                    double      get_rotation(void);
+                    double      get_pitch(void);
+                    double      get_roll(void);
+    pros::c::imu_gyro_s_t       get_gyro_vals(void);
+    pros::c::imu_accel_s_t      get_accel_vals(void);
+
 private:
 
 
