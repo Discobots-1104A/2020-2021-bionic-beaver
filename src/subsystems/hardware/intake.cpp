@@ -21,11 +21,11 @@
 /// \param enc_unit Supplied motor encoder units.
 h_Intake::h_Intake
 (
-    h_Intake_Port_Numbers       port_nums,
-    h_Intake_Scales             scales,
-    pros::motor_gearset_e       cart,
-    pros::motor_brake_mode_e    brake_mode,
-    pros::motor_encoder_units_e enc_unit
+    const h_Intake_Port_Numbers&    port_nums,
+    const h_Intake_Scales&          scales,
+    pros::motor_gearset_e           cart,
+    pros::motor_brake_mode_e        brake_mode,
+    pros::motor_encoder_units_e     enc_unit
 )   : m_motor_l{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_l))},
       m_motor_r{static_cast<std::uint8_t>(std::abs(port_nums.m_motor_r))},
       m_max_motor_velocity{scales.m_max_motor_velocity},
