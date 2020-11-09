@@ -157,6 +157,12 @@ double h_Sensors::imu_get_heading(void) {return pros::c::imu_get_heading(m_s_imu
 /// \return The current IMU rotation relative to starting position.
 double h_Sensors::imu_get_rotation(void) {return pros::c::imu_get_rotation(m_s_imu);}
 
+/// \return The current IMU pitch relative to starting position.
+double h_Sensors::imu_get_pitch(void) {return pros::c::imu_get_pitch(m_s_imu);}
+
+/// \return The current IMU roll relative to starting position.
+double h_Sensors::imu_get_roll(void) {return pros::c::imu_get_roll(m_s_imu);}
+
 /// \return The current IMU gyro readings in degrees/sec.
 pros::c::imu_gyro_s_t h_Sensors::imu_get_gyro_readings(void) {return pros::c::imu_get_gyro_rate(m_s_imu);}
 

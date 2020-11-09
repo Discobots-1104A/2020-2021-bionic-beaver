@@ -131,6 +131,8 @@ public:
 
                     double  imu_get_heading(void);
                     double  imu_get_rotation(void);
+                    double  imu_get_pitch(void);
+                    double  imu_get_roll(void);
     pros::c::imu_gyro_s_t   imu_get_gyro_readings(void);
     pros::c::imu_accel_s_t  imu_get_accel_readings(h_Sensors_IMU_Accel_Mode mode = h_Sensors_IMU_Accel_Mode::GFORCE);
     pros::c::imu_status_e   imu_get_status(void);
