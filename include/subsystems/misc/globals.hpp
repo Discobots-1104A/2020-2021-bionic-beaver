@@ -12,6 +12,11 @@
 #include "api.h"
 
 
-//
+enum class g_Robot_Starting_Pos_Side
+{
+    RED,
+    BLUE,
+    SKILLS
+};
 
 #endif  // GLOBALS_HPP
