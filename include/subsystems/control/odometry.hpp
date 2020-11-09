@@ -97,4 +97,28 @@ struct c_Robot_Starting_Positions
     c_Robot_Starting_Pos_Coords m_skills;           // Starting position for skills
 };
 
+/// Odometry class. Contains all variables and member functions pertaining to 
+/// the operation of odometry. Callibration method should be ran at the beginning 
+/// of program startup. Class automatically creates a thread to continuously update 
+/// current position.
+class c_Odometry
+{
+public:
+    // Constructors and destructors
+
+    c_Odometry(
+        c_Robot_Starting_Pos_Coords         starting_cords,
+        c_All_Goal_Coords                   goal_cords,
+        c_Live_Comp_Setup_Startup_Coords    live_comp_cords,
+        c_Skills_Setup_Startup_Coords       skills_comp_cords,
+        h_Sensors&              sensors_obj,
+        h_Skid_Steer_Chassis&   chassis_obj
+    );
+    ~c_Odometry();
+
+private:
+
+
+};
+
 #endif  // ODOMETRY_HPP
