@@ -21,6 +21,7 @@
 #define _USE_MATH_DEFINES
 
 #ifdef __cplusplus
+#include <algorithm>
 #include <cerrno>
 #include <cmath>
 #include <cstdbool>
@@ -29,6 +30,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <utility>
 #else /* (not) __cplusplus */
 #include <errno.h>
 #include <math.h>
