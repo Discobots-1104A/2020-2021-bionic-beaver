@@ -29,15 +29,7 @@ c_Odometry::c_Odometry
     h_Skid_Steer_Chassis*       chassis_obj,
     c_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
-      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords},
-      m_global_x{0.0}, m_global_y{0.0}, m_global_angle{0.0},
-      m_current_rotation{0.0}, m_filtered_rotation{0.0}, m_last_rotation{0.0},
-      m_current_pitch{0.0}, m_filtered_pitch{0.0}, m_last_pitch{0.0},
-      m_current_roll{0.0}, m_filtered_roll{0.0}, m_last_roll{0.0},
-      m_current_gyro_val{0.0, 0.0, 0.0}, m_current_accel_vals{0.0, 0.0, 0.0},
-      m_len_right{0.0}, m_len_middle{0.0}, m_delta_right{0.0}, m_delta_middle{0.0}, m_prev_right{0.0}, m_prev_middle{0.0},
-      m_delta_theta{0.0}, m_alpha{0.0}, m_radius_right{0.0}, m_radius_middle{0.0}, m_chord_right{0.0}, m_chord_middle{0.0},
-      m_polar_offset{0.0}
+      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
 {
     switch (m_starting_side)
     {
@@ -57,6 +49,34 @@ c_Odometry::c_Odometry
         m_starting_rotate = starting_coords.m_skills.head;
         break;
     }
+
+    m_global_x = 0.0;
+    m_global_y = 0.0;
+    m_global_angle = 0.0;
+    m_current_rotation = 0.0;
+    m_filtered_rotation = 0.0;
+    m_last_rotation = 0.0;
+    m_current_pitch = 0.0;
+    m_filtered_pitch = 0.0;
+    m_last_pitch = 0.0;
+    m_current_roll = 0.0;
+    m_filtered_roll = 0.0;
+    m_last_roll = 0.0;
+    m_current_gyro_val = {0.0, 0.0, 0.0};
+    m_current_accel_vals = {0.0, 0.0, 0.0};
+    m_len_right = 0.0;
+    m_len_middle = 0.0;
+    m_delta_right = 0.0;
+    m_delta_middle = 0.0;
+    m_delta_theta = 0.0;
+    m_prev_right = 0.0;
+    m_prev_middle = 0.0;
+    m_alpha = 0.0;
+    m_radius_right = 0.0;
+    m_radius_middle = 0.0;
+    m_chord_right = 0.0;
+    m_chord_middle = 0.0;
+    m_polar_offset = 0.0;
 }
 
 
