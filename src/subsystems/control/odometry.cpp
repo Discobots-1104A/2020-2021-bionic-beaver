@@ -150,7 +150,7 @@ void c_Odometry::m_update_func(void)
 
         // Update previous values.
         m_prev_right = m_len_right;
-        m_prev_right = m_len_middle;
+        m_prev_middle = m_len_middle;
 
         // Determine change in angle.
         m_delta_theta = u_deg_to_rad(m_filtered_rotation) - m_global_angle;
