@@ -121,7 +121,7 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
+        m_filtered_rotation += (std::fabs(m_current_rotation - m_last_rotation) < 0.01) ? 0.0 : (m_current_rotation - m_last_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
