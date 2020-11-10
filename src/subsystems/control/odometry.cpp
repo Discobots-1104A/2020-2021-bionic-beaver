@@ -110,8 +110,7 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 /// Filter values
 double c_Odometry::m_filter_values(double current_val, double last_val)
 {
-    double filter {current_val - last_val};
-    return (std::fabs(filter) < 0.001) ? 0.0 : filter;
+    return std::roundf((current_val - last_val) * 100) / 100.0;
 }
 
 /// Updates odometry values.
@@ -121,7 +120,7 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation += (std::fabs(m_current_rotation - m_last_rotation) < 0.01) ? 0.0 : (m_current_rotation - m_last_rotation);
+        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
