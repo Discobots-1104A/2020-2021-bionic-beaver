@@ -188,6 +188,7 @@ void c_Odometry::m_update_func(void)
         // Delay.
         pros::lcd::print(0, "%.2f, %.2f | %.2f, %.2f", m_len_right, m_len_middle, m_delta_right, m_delta_middle);
         pros::lcd::print(1, "%.2f, %.2f", m_delta_theta, m_alpha);
+        pros::lcd::print(2, "%.2f, %.2f", u_deg_to_rad(m_filtered_rotation), m_global_angle);
         pros::delay(10);
     }
 }
