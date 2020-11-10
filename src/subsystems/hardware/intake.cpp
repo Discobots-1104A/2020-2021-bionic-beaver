@@ -6,7 +6,7 @@
 //*
 //* Desc:       Intake class definitions
 
-#include "main.h"
+#include "subsystems/hardware/intake.hpp"
 
 
 //* Constructor and destructor *//
