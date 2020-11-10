@@ -9,11 +9,16 @@
 #include "subsystems/misc/globals.hpp"
 
 
+//* External pointers
 h_Skid_Steer_Chassis    *h_obj_chassis;
+pros::Controller         h_obj_controller {pros::E_CONTROLLER_MASTER};
 h_Conveyor              *h_obj_conveyor;
 h_Intake                *h_obj_intake;
 h_Sensors               *h_obj_sensors;
 c_Odometry              *c_obj_odom;
+
+
+//* Constants
 
 const c_Robot_Starting_Positions c_obj_default_starting_positions{
     {4.416, 35.121, 90.0},
@@ -62,3 +67,8 @@ const c_Skills_Setup_Startup_Coords c_obj_skills_setup_coords{
     {35.123, 3.15, h_Sensors_Vision_Signatures::RED_ID},
     {105.365, 3.15, h_Sensors_Vision_Signatures::RED_ID}
 };
+
+
+//* Globals namespace
+
+const int g_Constants::g_teleop_deadzone {10};
