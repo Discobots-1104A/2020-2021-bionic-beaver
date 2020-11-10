@@ -186,7 +186,7 @@ void c_Odometry::m_update_func(void)
         m_global_angle += m_delta_theta;
 
         // Delay.
-        pros::lcd::print(0, "x: %f, y: %f, theta: %f,", m_global_x, m_global_y, m_global_angle);
+        pros::lcd::print(0, "%.2f %.2f", m_len_right, m_len_middle);
         pros::delay(10);
     }
 }
