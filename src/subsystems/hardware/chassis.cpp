@@ -6,7 +6,7 @@
 //*
 //* Desc:       Chassis class definitions
 
-#include "main.h"
+#include "subsystems/hardware/chassis.hpp"
 
 
 //* Constructor and destructor *//
