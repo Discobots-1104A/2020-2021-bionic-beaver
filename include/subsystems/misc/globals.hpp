@@ -9,15 +9,18 @@
 #ifndef GLOBALS_HPP
 #define GLOBALS_HPP
 
-#include "main.h"
+//* Hardware
+#include "subsystems/hardware/chassis.hpp"
+#include "subsystems/hardware/conveyor.hpp"
+#include "subsystems/hardware/intake.hpp"
+#include "subsystems/hardware/sensors.hpp"
 
+//* Control
+#include "subsystems/control/odometry.hpp"
+#include "subsystems/control/pid.hpp"
 
-enum class g_Robot_Starting_Pos_Side
-{
-    RED,
-    BLUE,
-    SKILLS
-};
+//* Misc
+#include "subsystems/misc/utils.hpp"
 
 extern h_Skid_Steer_Chassis *h_obj_chassis;
 extern h_Conveyor           *h_obj_conveyor;

@@ -6,7 +6,7 @@
 //*
 //* Desc:       Global variables
 
-#include "main.h"
+#include "subsystems/misc/globals.hpp"
 
 
 h_Skid_Steer_Chassis    *h_obj_chassis;
@@ -61,4 +61,4 @@ const c_Skills_Setup_Startup_Coords c_obj_skills_setup_coords{
     {70.25, 23.416, h_Sensors_Vision_Signatures::RED_ID},
     {35.123, 3.15, h_Sensors_Vision_Signatures::RED_ID},
     {105.365, 3.15, h_Sensors_Vision_Signatures::RED_ID}
-}
+};
