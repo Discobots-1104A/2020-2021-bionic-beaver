@@ -6,7 +6,7 @@
 //*
 //* Desc:       Conveyor class definitions
 
-#include "main.h"
+#include "subsystems/hardware/conveyor.hpp"
 
 
 //* Constructor and destructor *//
