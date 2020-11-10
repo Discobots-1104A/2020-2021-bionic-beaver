@@ -6,7 +6,7 @@
 //*
 //* Desc:       PID class definitions
 
-#include "main.h"
+#include "subsystems/control/pid.hpp"
 
 
 //
