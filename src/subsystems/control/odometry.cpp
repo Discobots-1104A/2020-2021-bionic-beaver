@@ -6,7 +6,7 @@
 //*
 //* Desc:       Odometry class definitions
 
-#include "main.h"
+#include "subsystems/control/odometry.hpp"
 
 
 //* Constructor and destructors *//
@@ -27,23 +27,23 @@ c_Odometry::c_Odometry
     const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
     h_Sensors*                  sensors_obj,
     h_Skid_Steer_Chassis*       chassis_obj,
-    g_Robot_Starting_Pos_Side   starting_side
+    c_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
       m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
 {
     switch (m_starting_side)
     {
-    case g_Robot_Starting_Pos_Side::RED:
+    case c_Robot_Starting_Pos_Side::RED:
         m_starting_x = starting_coords.m_live_start_red.x;
         m_starting_y = starting_coords.m_live_start_red.y;
         m_starting_rotate = starting_coords.m_live_start_red.head;
         break;
-    case g_Robot_Starting_Pos_Side::BLUE:
+    case c_Robot_Starting_Pos_Side::BLUE:
         m_starting_x = starting_coords.m_live_start_blue.x;
         m_starting_y = starting_coords.m_live_start_blue.y;
         m_starting_rotate = starting_coords.m_live_start_blue.head;
         break;
-    case g_Robot_Starting_Pos_Side::SKILLS:
+    case c_Robot_Starting_Pos_Side::SKILLS:
         m_starting_x = starting_coords.m_skills.x;
         m_starting_y = starting_coords.m_skills.y;
         m_starting_rotate = starting_coords.m_skills.head;
@@ -57,7 +57,7 @@ c_Odometry::c_Odometry
 /// Start the odometry task.
 void c_Odometry::start_odom(void)
 {
-    m_update_task = new pros::Task(m_update_func);
+    m_update_task = new pros::Task(std::bind(&c_Odometry::m_update_func, this));
 }
 
 /// Stop the odometry task.

@@ -9,8 +9,23 @@
 #ifndef ODOMETRY_HPP
 #define ODOMETRY_HPP
 
+//* API
 #include "api.h"
 
+//* Hardware
+#include "subsystems/hardware/chassis.hpp"
+#include "subsystems/hardware/sensors.hpp"
+
+//* Misc
+#include "subsystems/misc/utils.hpp"
+
+
+enum class c_Robot_Starting_Pos_Side
+{
+    RED,
+    BLUE,
+    SKILLS
+};
 
 /// Tower center coords and optimal heading
 /// Values based on Desmos field abstraction
@@ -113,7 +128,7 @@ public:
         const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
         h_Sensors*                  sensors_obj,
         h_Skid_Steer_Chassis*       chassis_obj,
-        g_Robot_Starting_Pos_Side   starting_side
+        c_Robot_Starting_Pos_Side   starting_side
     );
     ~c_Odometry();
 
@@ -137,7 +152,7 @@ public:
 
 private:
     // Starting position related values
-    const g_Robot_Starting_Pos_Side     m_starting_side;    // Robot starting side
+    const c_Robot_Starting_Pos_Side     m_starting_side;    // Robot starting side
     double      m_starting_x;       // Robot starting X coord in inches
     double      m_starting_y;       // Robot starting Y coord in inches
     double      m_starting_rotate;  // Robot starting angle in degrees
