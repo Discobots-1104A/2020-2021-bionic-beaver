@@ -108,9 +108,9 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 //* Private methods *//
 
 /// Filter values
-double c_Odometry::m_filter_values(double current_val, double last_val)
+double c_Odometry::m_filter_values(double current_val)
 {
-    return std::roundf((current_val - last_val) * 100) / 100.0;
+    return std::roundf(current_val * 100) / 100.0;
 }
 
 /// Updates odometry values.
@@ -120,15 +120,15 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
+        m_filtered_rotation = m_filter_values(m_current_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
-        m_filtered_pitch += m_filter_values(m_current_pitch, m_last_pitch);
+        m_filtered_pitch = m_filter_values(m_current_pitch);
         m_last_pitch = m_current_pitch;
 
         m_current_roll = m_sensors_obj->imu_get_roll();
-        m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
+        m_filtered_roll = m_filter_values(m_current_roll);
         m_last_roll = m_current_roll;
 
         // Getting gyroscopic values.
