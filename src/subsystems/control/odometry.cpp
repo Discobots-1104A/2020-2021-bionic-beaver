@@ -193,6 +193,8 @@ void c_Odometry::m_update_func(void)
 
         // Delay.
         pros::lcd::print(0, "x: %f, y:%f, h:%f", m_global_x, m_global_y, m_global_angle);
+        pros::lcd::print(1, "%d", m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT));
+        pros::lcd::print(2, "%f", m_sensors_obj->imu_get_rotation());
         pros::delay(10);
     }
 }
