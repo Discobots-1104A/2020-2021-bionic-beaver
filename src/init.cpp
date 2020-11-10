@@ -12,6 +12,7 @@
 void initialize() 
 {
     pros::lcd::initialize();
+    pros::delay(1000);
     
     h_obj_chassis = new h_Skid_Steer_Chassis{
         h_Chassis_Port_Numbers{19, 20, -9, -10},
