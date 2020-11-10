@@ -25,8 +25,8 @@ c_Odometry::c_Odometry
     const c_All_Goal_Coords&                goal_coords,
     const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
     const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
-    h_Sensors&                  sensors_obj,
-    h_Skid_Steer_Chassis&       chassis_obj,
+    h_Sensors*                  sensors_obj,
+    h_Skid_Steer_Chassis*       chassis_obj,
     g_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
       m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
@@ -113,7 +113,7 @@ void c_Odometry::m_update_func(void)
     while(true)
     {
         // Getting rotation, pitch, and roll
-        m_current_rotation = m_sensors_obj.imu_get_rotation();
+        m_current_rotation = m_sensors_obj->imu_get_rotation();
         m_filtered_rotation += [](double a, double b){
             double x = a - b; 
             if (std::fabs(x) < 0.01) {x = 0;} 
@@ -121,7 +121,7 @@ void c_Odometry::m_update_func(void)
         }(m_current_rotation, m_last_rotation);
         m_last_rotation = m_current_rotation;
 
-        m_current_pitch = m_sensors_obj.imu_get_pitch();
+        m_current_pitch = m_sensors_obj->imu_get_pitch();
         m_filtered_pitch += [](double a, double b){
             double x = a - b; 
             if (std::fabs(x) < 0.01) {x = 0;} 
@@ -129,7 +129,7 @@ void c_Odometry::m_update_func(void)
         }(m_current_pitch, m_last_pitch);
         m_last_pitch = m_current_pitch;
 
-        m_current_roll = m_sensors_obj.imu_get_roll();
+        m_current_roll = m_sensors_obj->imu_get_roll();
         m_filtered_roll += [](double a, double b){
             double x = a - b; 
             if (std::fabs(x) < 0.01) {x = 0;} 
@@ -138,16 +138,16 @@ void c_Odometry::m_update_func(void)
         m_last_pitch = m_current_pitch;
 
         // Getting gyroscopic values.
-        m_current_gyro_val = m_sensors_obj.imu_get_gyro_readings();
+        m_current_gyro_val = m_sensors_obj->imu_get_gyro_readings();
 
         // Getting accelerometer values.
-        m_current_accel_vals = m_sensors_obj.imu_get_accel_readings();
+        m_current_accel_vals = m_sensors_obj->imu_get_accel_readings();
 
         // Find out the length each encoder moved.
-        m_len_right = m_sensors_obj.tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT) / 360.0 \
-                      * (m_sensors_obj.tracking_wheels_get_diameter() * M_PI);
-        m_len_middle = m_sensors_obj.tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE) / 360.0 \
-                       * (m_sensors_obj.tracking_wheels_get_diameter() * M_PI);
+        m_len_right = m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT) / 360.0 \
+                      * (m_sensors_obj->tracking_wheels_get_diameter() * M_PI);
+        m_len_middle = m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE) / 360.0 \
+                       * (m_sensors_obj->tracking_wheels_get_diameter() * M_PI);
     
         // Find the change since last update.
         m_delta_right = m_len_right - m_prev_right;
@@ -165,10 +165,10 @@ void c_Odometry::m_update_func(void)
         {
             m_alpha = m_delta_theta / 2.0;
 
-            m_radius_right = m_delta_right / m_delta_theta + m_sensors_obj.tracking_wheels_get_side_radius();
+            m_radius_right = m_delta_right / m_delta_theta + m_sensors_obj->tracking_wheels_get_side_radius();
             m_chord_right = (m_radius_right * sin(m_alpha)) * 2;
 
-            m_radius_middle = m_delta_middle / m_delta_theta + m_sensors_obj.tracking_wheels_get_middle_radius();
+            m_radius_middle = m_delta_middle / m_delta_theta + m_sensors_obj->tracking_wheels_get_middle_radius();
             m_chord_middle = (m_radius_middle * sin(m_alpha)) * 2;
         }
         else

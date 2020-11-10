@@ -66,7 +66,7 @@ struct c_Skills_Setup_Startup_Coords
     c_Ball_Center_Coords m_ball_e_l;    // Ball left of Goal E
     c_Ball_Center_Coords m_ball_e_r;    // Ball right of Goal E
     c_Ball_Center_Coords m_ball_e_b;    // Ball bottom of Goal E
-    c_Ball_Center_Coords m_ball_e_g;    // Ball between Goals E-G
+    c_Ball_Center_Coords m_ball_d_g;    // Ball between Goals D-G
     c_Ball_Center_Coords m_ball_f_i;    // Ball between Goals F-I
     c_Ball_Center_Coords m_ball_h;      // Ball in front of Goal H
     c_Ball_Center_Coords m_ball_g_h;    // Ball between Goals G-H
@@ -111,8 +111,8 @@ public:
         const c_All_Goal_Coords&                goal_coords,
         const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
         const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
-        h_Sensors&                  sensors_obj,
-        h_Skid_Steer_Chassis&       chassis_obj,
+        h_Sensors*                  sensors_obj,
+        h_Skid_Steer_Chassis*       chassis_obj,
         g_Robot_Starting_Pos_Side   starting_side
     );
     ~c_Odometry();
@@ -153,8 +153,8 @@ private:
 
 
     // References to other objects
-    h_Sensors&                  m_sensors_obj;      // Sensors
-    h_Skid_Steer_Chassis&       m_chassis_obj;      // Chassis
+    h_Sensors*                  m_sensors_obj;      // Sensors
+    h_Skid_Steer_Chassis*       m_chassis_obj;      // Chassis
 
 
     // Global position values
