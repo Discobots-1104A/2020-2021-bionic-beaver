@@ -29,7 +29,15 @@ c_Odometry::c_Odometry
     h_Skid_Steer_Chassis*       chassis_obj,
     c_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
-      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
+      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords},
+      m_global_x{0.0}, m_global_y{0.0}, m_global_angle{0.0},
+      m_current_rotation{0.0}, m_filtered_rotation{0.0}, m_last_rotation{0.0},
+      m_current_pitch{0.0}, m_filtered_pitch{0.0}, m_last_pitch{0.0},
+      m_current_roll{0.0}, m_filtered_roll{0.0}, m_last_roll{0.0},
+      m_current_gyro_val{0.0, 0.0, 0.0}, m_current_accel_vals{0.0, 0.0, 0.0},
+      m_len_right{0.0}, m_len_middle{0.0}, m_delta_right{0.0}, m_delta_middle{0.0}, m_prev_right{0.0}, m_prev_middle{0.0},
+      m_delta_theta{0.0}, m_alpha{0.0}, m_radius_right{0.0}, m_radius_middle{0.0}, m_chord_right{0.0}, m_chord_middle{0.0},
+      m_polar_offset{0.0}
 {
     switch (m_starting_side)
     {
@@ -108,9 +116,11 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 //* Private methods *//
 
 /// Filter values
-double c_Odometry::m_filter_values(double current_val)
+double c_Odometry::m_filter_values(double current_val, double last_val)
 {
-    return std::roundf(current_val * 100) / 100.0;
+    double filter = current_val - last_val;
+    if (std::fabs(filter) < 0.01, filter = 0);
+    return filter;
 }
 
 /// Updates odometry values.
@@ -120,16 +130,16 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation = m_filter_values(m_current_rotation);
+        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
-        m_filtered_pitch = m_filter_values(m_current_pitch);
+        m_filtered_pitch += m_filter_values(m_current_pitch, m_last_pitch);
         m_last_pitch = m_current_pitch;
 
         m_current_roll = m_sensors_obj->imu_get_roll();
-        m_filtered_roll = m_filter_values(m_current_roll);
-        m_last_roll = m_current_roll;
+        m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
+        m_last_pitch = m_current_pitch;
 
         // Getting gyroscopic values.
         m_current_gyro_val = m_sensors_obj->imu_get_gyro_readings();
@@ -186,9 +196,6 @@ void c_Odometry::m_update_func(void)
         m_global_angle += m_delta_theta;
 
         // Delay.
-        pros::lcd::print(0, "%.2f, %.2f | %.2f, %.2f", m_len_right, m_len_middle, m_delta_right, m_delta_middle);
-        pros::lcd::print(1, "%.2f, %.2f", m_delta_theta, m_alpha);
-        pros::lcd::print(2, "%.2f, %.2f", u_deg_to_rad(m_filtered_rotation), m_global_angle);
-        pros::delay(10);
+        pros::lcd::print(0, "%f, %f, %f,", m_global_x, m_global_y, m_global_angle);
     }
 }
