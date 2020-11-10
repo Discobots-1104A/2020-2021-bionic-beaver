@@ -20,22 +20,22 @@ struct h_Chassis_Scales
     {
         double  m_length;   // Length in inches
         double  m_width;    // Width in inches
-    } frame_dims;
+    } m_frame_dims;
 
     // Chassis wheel dimensions
     struct h_Chassis_Wheel_Dims
     {
         double  m_wheel_diameter;   // Diameter in inches
         double  m_wheelbase_length; // Wheelbase length in inches
-    } wheel_dims;
+    } m_wheel_dims;
 
     // Chassis configs
-    struct h_Chassis_Misc
+    struct h_Chassis_Motor_Config
     {
         int m_max_motor_velocity;   // Max motor velocity in RPM
         int m_max_total_velocity;   // Max total velocity in RPM
         double  m_gear_ratio;   // Overall gear ratio in decimal form
-    } misc;
+    } m_motor_config;
 };
 
 /// Chassis motor port numbers
@@ -57,11 +57,11 @@ public:
     // Constructors and destructors
 
     h_Skid_Steer_Chassis(
-        h_Chassis_Port_Numbers      port_nums,
-        h_Chassis_Scales            scales,
-        pros::motor_gearset_e       cart        = pros::E_MOTOR_GEARSET_18,
-        pros::motor_brake_mode_e    brake_mode  = pros::E_MOTOR_BRAKE_COAST,
-        pros::motor_encoder_units_e enc_unit    = pros::E_MOTOR_ENCODER_COUNTS
+        const h_Chassis_Port_Numbers&   port_nums,
+        const h_Chassis_Scales&         scales,
+        pros::motor_gearset_e           cart        = pros::E_MOTOR_GEARSET_18,
+        pros::motor_brake_mode_e        brake_mode  = pros::E_MOTOR_BRAKE_COAST,
+        pros::motor_encoder_units_e     enc_unit    = pros::E_MOTOR_ENCODER_COUNTS
     );
     ~h_Skid_Steer_Chassis();
 
