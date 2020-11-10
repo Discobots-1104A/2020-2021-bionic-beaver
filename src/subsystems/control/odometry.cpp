@@ -107,6 +107,14 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 
 //* Private methods *//
 
+/// Filter values
+double c_Odometry::m_filter_values(double current_val, double last_val)
+{
+    double filter = current_val - last_val;
+    if (std::fabs(filter) < 0.01, filter = 0);
+    return filter;
+}
+
 /// Updates odometry values.
 void c_Odometry::m_update_func(void)
 {
@@ -114,27 +122,15 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation += [](double a, double b){
-            double x = a - b; 
-            if (std::fabs(x) < 0.01) {x = 0;} 
-            return x;
-        }(m_current_rotation, m_last_rotation);
+        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
-        m_filtered_pitch += [](double a, double b){
-            double x = a - b; 
-            if (std::fabs(x) < 0.01) {x = 0;} 
-            return x;
-        }(m_current_pitch, m_last_pitch);
+        m_filtered_pitch += m_filter_values(m_current_pitch, m_last_pitch);
         m_last_pitch = m_current_pitch;
 
         m_current_roll = m_sensors_obj->imu_get_roll();
-        m_filtered_roll += [](double a, double b){
-            double x = a - b; 
-            if (std::fabs(x) < 0.01) {x = 0;} 
-            return x;
-        }(m_current_roll, m_last_roll);
+        m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
         m_last_pitch = m_current_pitch;
 
         // Getting gyroscopic values.
