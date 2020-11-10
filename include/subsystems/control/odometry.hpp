@@ -122,7 +122,6 @@ public:
     // Constructors and destructors
 
     c_Odometry(
-        const c_Robot_Starting_Positions&       starting_coords,
         const c_All_Goal_Coords&                goal_coords,
         const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
         const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
@@ -135,7 +134,7 @@ public:
 
     // General methods
 
-    void start_odom(void);
+    void start_odom(const c_Robot_Starting_Positions& starting_coords);
     void stop_odom(void);
     void calibrate(void);
 

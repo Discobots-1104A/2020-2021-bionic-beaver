@@ -32,7 +32,6 @@ void initialize()
         h_Sensors_ADI_Config{'E'_ADI, 'A'_ADI, 'C'_ADI, true, false, false}
     };
     c_obj_odom = new c_Odometry{
-        c_obj_default_starting_positions,
         c_obj_goal_coords,
         c_obj_live_comp_setup_coords,
         c_obj_skills_setup_coords,

@@ -31,7 +31,7 @@ void chassis_control()
 
 void opcontrol() 
 {
-    c_obj_odom->start_odom();
+    c_obj_odom->start_odom(c_obj_default_starting_positions);
 
     pros::Task t_chassis {chassis_control};
 }
