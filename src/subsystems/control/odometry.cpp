@@ -188,8 +188,8 @@ void c_Odometry::m_update_func(void)
 
         // Delay.
         pros::lcd::print(0, "%f, %f, %f", m_current_rotation, m_current_pitch, m_current_roll);
-        pros::lcd::print(0, "%f, %f, %f", m_filtered_rotation, m_filtered_pitch, m_filtered_roll);
-        pros::lcd::print(0, "%f, %f, %f", m_last_rotation, m_last_pitch, m_last_roll);
+        pros::lcd::print(1, "%f, %f, %f", m_filtered_rotation, m_filtered_pitch, m_filtered_roll);
+        pros::lcd::print(2, "%f, %f, %f", m_last_rotation, m_last_pitch, m_last_roll);
         pros::delay(10);
     }
 }
