@@ -11,6 +11,8 @@
 
 void initialize() 
 {
+    pros::lcd::initialize();
+    
     h_obj_chassis = new h_Skid_Steer_Chassis{
         h_Chassis_Port_Numbers{19, 20, -9, -10},
         h_Chassis_Scales{{17.5, 15.56}, {4.0, 12.5}, {200, 257, 1.25}}
