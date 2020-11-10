@@ -6,7 +6,7 @@
 //*
 //* Desc:       Sensors class definitions
 
-#include "main.h"
+#include "subsystems/hardware/sensors.hpp"
 
 
 //* Miscellaneous *//
