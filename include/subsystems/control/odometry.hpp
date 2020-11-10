@@ -211,7 +211,7 @@ private:
     // Update task
     pros::Task *m_update_task {nullptr};
     void m_update_func(void);
-    double m_filter_values(double current_val);
+    double m_filter_values(double current_val, double last_val);
 
 };
 
