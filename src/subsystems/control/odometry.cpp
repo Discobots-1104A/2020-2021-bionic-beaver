@@ -198,13 +198,17 @@ void c_Odometry::m_update_func(void)
         m_global_x += m_chord_middle * cos(m_polar_offset);
 
         m_global_y += m_chord_right * cos(m_polar_offset);
-        m_global_y += m_chord_middle * sin(m_polar_offset);
+        m_global_y += m_chord_middle * -sin(m_polar_offset);
         
         // Update the global angle.
         m_global_angle += m_delta_theta;
 
         // Delay.
-        pros::lcd::print(0, "%f, %f, %f", m_global_x, m_global_y, m_global_angle);
+        pros::lcd::print(0, "%f, %f, %f", m_len_middle, m_delta_middle, m_last_middle);
+        pros::lcd::print(1, "%f, %f, %f", m_current_rotation, m_filtered_rotation, m_last_rotation);
+        pros::lcd::print(2, "%f, %f", m_radius_middle, m_chord_middle);
+        pros::lcd::print(3, "%f, %f, %f", m_delta_theta, m_alpha, m_polar_offset);
+        pros::lcd::print(4, "%f, %f", m_global_x, m_global_angle);
         pros::delay(10);
     }
 }
