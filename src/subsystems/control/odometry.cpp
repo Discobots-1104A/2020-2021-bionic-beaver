@@ -209,6 +209,7 @@ void c_Odometry::m_update_func(void)
         pros::lcd::print(2, "%f, %f", m_radius_middle, m_chord_middle);
         pros::lcd::print(3, "%f, %f, %f", m_delta_theta, m_alpha, m_polar_offset);
         pros::lcd::print(4, "%f, %f", m_global_x, m_global_angle);
+        pros::lcd::print(5, "%d", m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE));
         pros::delay(10);
     }
 }
