@@ -110,8 +110,7 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 double c_Odometry::m_filter_values(double current_val, double last_val)
 {
     double filter = current_val - last_val;
-    if (std::fabs(filter) < 0.001, filter = 0);
-    return filter;
+    return (std::fabs(filter) < 0.01) ? 0 : filter;
 }
 
 /// Updates odometry values.
@@ -130,7 +129,7 @@ void c_Odometry::m_update_func(void)
 
         m_current_roll = m_sensors_obj->imu_get_roll();
         m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
-        m_last_pitch = m_current_pitch;
+        m_last_roll = m_current_roll;
 
         // Getting gyroscopic values.
         m_current_gyro_val = m_sensors_obj->imu_get_gyro_readings();
