@@ -37,6 +37,9 @@ void initialize()
         c_obj_skills_setup_coords,
         h_obj_sensors, h_obj_chassis, c_Robot_Starting_Pos_Side::BLUE
     };
+
+    h_obj_sensors->initialize();
+    c_obj_odom->calibrate();
 }
 
 void disabled() 
