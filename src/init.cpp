@@ -28,7 +28,7 @@ void initialize()
     h_obj_sensors = new h_Sensors{
         h_Sensors_Scales{{0.0, 0.0, pros::E_VISION_ZERO_TOPLEFT}, {12.0, 6.25, 6.5, 3.25}},
         h_Sensors_Smart_Ports{6, 16},
-        h_Sensors_ADI_Config{'E'_ADI, 'A'_ADI, 'C'_ADI, true, false, false}
+        h_Sensors_ADI_Config{'E'_ADI, 'A'_ADI, 'C'_ADI, true, false, true}
     };
     c_obj_odom = new c_Odometry{
         c_obj_default_starting_positions,
