@@ -114,7 +114,7 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 double c_Odometry::m_filter_values(double current_val, double last_val)
 {
     double filter = current_val - last_val;
-    if (std::fabs(filter) < 0.001)
+    if (std::fabs(filter) < 0.01)
         {filter = 0.0;}
     return filter;
 }
@@ -133,8 +133,6 @@ void c_Odometry::m_update_func(void)
     m_len_right = 0.0;    m_delta_right = 0.0;    m_last_right = 0.0;    m_radius_right = 0.0;    m_chord_right = 0.0;
     m_len_middle =0.0;    m_delta_middle = 0.0;   m_last_middle = 0.0;   m_radius_middle = 0.0;   m_chord_middle = 0.0;
     m_delta_theta = 0.0;  m_alpha = 0.0;          m_polar_offset = 0.0;
-
-    assert(!std::isnan(m_filtered_rotation));
 
     while(true)
     {
