@@ -110,7 +110,8 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 double c_Odometry::m_filter_values(double current_val, double last_val)
 {
     double filter = current_val - last_val;
-    return (std::fabs(filter) < 0.01) ? 0 : filter;
+    if (std::fabs(filter) < 0.001) filter = 0;
+    return filter;
 }
 
 /// Updates odometry values.
