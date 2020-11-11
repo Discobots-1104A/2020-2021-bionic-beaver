@@ -155,10 +155,10 @@ private:
     const c_Robot_Starting_Pos_Side     m_starting_side;    // Robot starting side
     double      m_starting_x;       // Robot starting X coord in inches
     double      m_starting_y;       // Robot starting Y coord in inches
-    double      m_starting_rotate;  // Robot starting angle in degrees
+    double      m_starting_angle;   // Robot starting angle in degrees
     double      m_offset_x;         // Robot starting X offset in inches
     double      m_offset_y;         // Robot starting Y offset in inches
-    double      m_offset_rotate;    // Robot starting angle offset in degrees
+    double      m_offset_angle;     // Robot starting angle offset in degrees
 
 
     // Field coords
@@ -197,8 +197,8 @@ private:
     double m_len_middle;      // Distance middle tracking wheel travelled in inches
     double m_delta_right;     // Change in right distance from last calculated distance
     double m_delta_middle;    // Change in middle distance from last calculated distance
-    double m_prev_right;      // Previous right distance value
-    double m_prev_middle;     // Previous middle distance value
+    double m_last_right;      // Previous right distance value
+    double m_last_middle;     // Previous middle distance value
     double m_delta_theta;     // Change in rotation from last recorded distance
     double m_alpha;           // Used for chord calc and offset later
     double m_radius_right;    // Right radius
