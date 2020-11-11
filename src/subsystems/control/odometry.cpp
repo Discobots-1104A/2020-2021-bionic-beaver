@@ -107,12 +107,9 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 //* Private methods *//
 
 /// Filter values
-double c_Odometry::m_filter_values(double current_val, double last_val)
+double c_Odometry::m_filter_values(double current_val)
 {
-    double filter = current_val - last_val;
-    if (std::fabs(filter) < 0.001)
-        {filter = 0.0;}
-    return filter;
+    return (std::roundf(current_val * 100.0) / 100.0);
 }
 
 /// Updates odometry values.
@@ -122,15 +119,15 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
+        m_filtered_rotation = m_filter_values(m_current_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
-        m_filtered_pitch += m_filter_values(m_current_pitch, m_last_pitch);
+        m_filtered_pitch = m_filter_values(m_current_pitch);
         m_last_pitch = m_current_pitch;
 
         m_current_roll = m_sensors_obj->imu_get_roll();
-        m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
+        m_filtered_roll = m_filter_values(m_current_roll);
         m_last_roll = m_current_roll;
 
         // Getting gyroscopic values.
@@ -191,7 +188,7 @@ void c_Odometry::m_update_func(void)
         pros::lcd::print(0, "%f, %f, %f", m_current_rotation, m_current_pitch, m_current_roll);
         pros::lcd::print(1, "%f, %f, %f", m_filtered_rotation, m_filtered_pitch, m_filtered_roll);
         pros::lcd::print(2, "%f, %f, %f", m_last_rotation, m_last_pitch, m_last_roll);
-        pros::lcd::print(3, "%f", m_filter_values(m_current_rotation, m_last_rotation));
+        pros::lcd::print(3, "%f", m_filter_values(m_current_rotation));
         pros::delay(10);
     }
 }
