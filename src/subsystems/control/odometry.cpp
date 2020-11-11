@@ -21,6 +21,7 @@
 /// \param starting_side Which side the robot is starting on on the field.
 c_Odometry::c_Odometry
 (
+    const c_Robot_Starting_Positions&       starting_coords,
     const c_All_Goal_Coords&                goal_coords,
     const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
     const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
@@ -28,14 +29,15 @@ c_Odometry::c_Odometry
     h_Skid_Steer_Chassis*       chassis_obj,
     c_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
-      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
-{}
-
-
-//* General methods *//
-
-/// Start the odometry task.
-void c_Odometry::start_odom(const c_Robot_Starting_Positions& starting_coords)
+      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords},
+      m_global_x{0.0}, m_global_y{0.0}, m_global_angle{0.0},
+      m_current_rotation{0.0}, m_filtered_rotation{0.0}, m_last_rotation{0.0},
+      m_current_pitch{0.0}, m_filtered_pitch{0.0}, m_last_pitch{0.0},
+      m_current_roll{0.0}, m_filtered_roll{0.0}, m_last_roll{0.0},
+      m_current_gyro_val{0.0, 0.0, 0.0}, m_current_accel_vals{0.0, 0.0, 0.0},
+      m_len_right{0.0}, m_delta_right{0.0}, m_prev_right{0.0}, m_radius_right{0.0}, m_chord_right{0.0},
+      m_len_middle{0.0}, m_delta_middle{0.0}, m_prev_middle{0.0}, m_radius_middle{0.0}, m_chord_middle{0.0},
+      m_delta_theta{0.0}, m_alpha{0.0}, m_polar_offset{0.0}
 {
     switch (m_starting_side)
     {
@@ -55,7 +57,14 @@ void c_Odometry::start_odom(const c_Robot_Starting_Positions& starting_coords)
         m_starting_rotate = starting_coords.m_skills.head;
         break;
     }
+}
 
+
+//* General methods *//
+
+/// Start the odometry task.
+void c_Odometry::start_odom(void)
+{
     m_update_task = new pros::Task(std::bind(&c_Odometry::m_update_func, this));
 }
 
@@ -107,9 +116,12 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 //* Private methods *//
 
 /// Filter values
-double c_Odometry::m_filter_values(double current_val)
+double c_Odometry::m_filter_values(double current_val, double last_val)
 {
-    return (std::roundf(current_val * 100.0) / 100.0);
+    double filter = current_val - last_val;
+    if (std::fabs(filter) < 0.001)
+        {filter = 0.0;}
+    return filter;
 }
 
 /// Updates odometry values.
@@ -119,15 +131,15 @@ void c_Odometry::m_update_func(void)
     {
         // Getting rotation, pitch, and roll
         m_current_rotation = m_sensors_obj->imu_get_rotation();
-        m_filtered_rotation = m_filter_values(m_current_rotation);
+        m_filtered_rotation += m_filter_values(m_current_rotation, m_last_rotation);
         m_last_rotation = m_current_rotation;
 
         m_current_pitch = m_sensors_obj->imu_get_pitch();
-        m_filtered_pitch = m_filter_values(m_current_pitch);
+        m_filtered_pitch += m_filter_values(m_current_pitch, m_last_pitch);
         m_last_pitch = m_current_pitch;
 
         m_current_roll = m_sensors_obj->imu_get_roll();
-        m_filtered_roll = m_filter_values(m_current_roll);
+        m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
         m_last_roll = m_current_roll;
 
         // Getting gyroscopic values.
@@ -188,7 +200,7 @@ void c_Odometry::m_update_func(void)
         pros::lcd::print(0, "%f, %f, %f", m_current_rotation, m_current_pitch, m_current_roll);
         pros::lcd::print(1, "%f, %f, %f", m_filtered_rotation, m_filtered_pitch, m_filtered_roll);
         pros::lcd::print(2, "%f, %f, %f", m_last_rotation, m_last_pitch, m_last_roll);
-        pros::lcd::print(3, "%f", m_filter_values(m_current_rotation));
+        pros::lcd::print(3, "%f", m_filter_values(m_current_rotation, m_last_rotation));
         pros::delay(10);
     }
 }

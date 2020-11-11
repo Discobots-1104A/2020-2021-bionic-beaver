@@ -122,6 +122,7 @@ public:
     // Constructors and destructors
 
     c_Odometry(
+        const c_Robot_Starting_Positions&       starting_coords,
         const c_All_Goal_Coords&                goal_coords,
         const c_Live_Comp_Setup_Startup_Coords& live_comp_coords,
         const c_Skills_Setup_Startup_Coords&    skills_comp_coords,
@@ -134,7 +135,7 @@ public:
 
     // General methods
 
-    void start_odom(const c_Robot_Starting_Positions& starting_coords);
+    void start_odom(void);
     void stop_odom(void);
     void calibrate(void);
 
@@ -210,7 +211,7 @@ private:
     // Update task
     pros::Task *m_update_task {nullptr};
     void m_update_func(void);
-    double m_filter_values(double current_val);
+    double m_filter_values(double current_val, double last_val);
 
 };
 
