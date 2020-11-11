@@ -198,7 +198,7 @@ void c_Odometry::m_update_func(void)
         m_global_x += m_chord_middle * cos(m_polar_offset);
 
         m_global_y += m_chord_right * cos(m_polar_offset);
-        m_global_y += m_chord_middle * -sin(m_polar_offset);
+        m_global_y += m_chord_middle * sin(m_polar_offset);
         
         // Update the global angle.
         m_global_angle += m_delta_theta;
