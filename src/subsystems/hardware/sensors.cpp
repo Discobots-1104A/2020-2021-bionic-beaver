@@ -100,7 +100,7 @@ h_Sensors& h_Sensors::initialize(void)
     pros::c::adi_encoder_reset(m_adi_enc_r);
     pros::c::adi_encoder_reset(m_adi_enc_m);
 
-    do {pros::delay(5);} while (imu_get_status() & pros::c::E_IMU_STATUS_CALIBRATING);
+    pros::delay(2500);
 }
 
 
