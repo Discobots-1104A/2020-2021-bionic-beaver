@@ -78,6 +78,10 @@ void c_Odometry::calibrate(void)
     m_offset_x = 0;
     m_offset_y = 0;
     m_offset_angle = 0;
+
+    m_global_x = m_starting_x + m_offset_x;
+    m_global_y = m_starting_y + m_offset_y;
+    m_global_angle = m_starting_angle + m_offset_angle;
 }
 
 
@@ -91,22 +95,6 @@ double c_Odometry::get_y(void) {return m_global_y;}
 
 /// \return Current angle in degrees.
 double c_Odometry::get_angle(void) {return m_global_angle;}
-
-/// \return Current rotations in degrees.
-double c_Odometry::get_rotation(void) {return m_current_rotation;}
-
-/// \return Current pitch in degrees.
-double c_Odometry::get_pitch(void) {return m_current_pitch;}
-
-/// \return Current roll in degrees.
-double c_Odometry::get_roll(void) {return m_current_roll;}
-
-/// \return Gyro values in degrees/sec.
-pros::c::imu_gyro_s_t c_Odometry::get_gyro_vals(void) {return m_current_gyro_val;}
-
-/// \return Accelerometer values in m/s2
-pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_vals;}
-
 
 //* Private methods *//
 
@@ -122,18 +110,32 @@ double c_Odometry::m_filter_values(double current_val, double last_val)
 /// Updates odometry values.
 void c_Odometry::m_update_func(void)
 {
-    m_global_x = m_starting_x + m_offset_x;
-    m_global_y = m_starting_y + m_offset_y;
-    m_global_angle = m_starting_angle + m_offset_angle;
+    // Current position values
+    double  m_current_rotation {0.0};   // Robot current rotation in degrees
+    double  m_filtered_rotation {0.0};  // Filtered robot rotations in degrees
+    double  m_last_rotation {0.0};      // Previous robot rotations in degrees
+    double  m_current_pitch {0.0};      // Robot current pitch in degrees
+    double  m_filtered_pitch {0.0};     // Filtered robot pitch in degrees
+    double  m_last_pitch {0.0};         // Previous robot rotation in degrees
+    double  m_current_roll {0.0};       // Robot current roll in degrees
+    double  m_filtered_roll {0.0};      // Filtered robot roll in degrees
+    double  m_last_roll {0.0};          // Previous robot roll in degrees
 
-    m_current_rotation = 0.0;   m_filtered_rotation = 0.0;  m_last_rotation = 0.0;
-    m_current_pitch = 0.0;      m_filtered_pitch = 0.0;     m_last_pitch = 0.0;
-    m_current_roll = 0.0;       m_filtered_roll = 0.0;      m_last_roll = 0.0;
-
-    m_len_right = 0.0;    m_delta_right = 0.0;    m_last_right = 0.0;    m_radius_right = 0.0;    m_chord_right = 0.0;
-    m_len_middle =0.0;    m_delta_middle = 0.0;   m_last_middle = 0.0;   m_radius_middle = 0.0;   m_chord_middle = 0.0;
-    m_delta_theta = 0.0;  m_alpha = 0.0;          m_polar_offset = 0.0;
-
+    // local position values
+    double m_len_right {0.0};       // Distance right tracking wheel travelled in inches
+    double m_len_middle {0.0};      // Distance middle tracking wheel travelled in inches
+    double m_delta_right {0.0};     // Change in right distance from last calculated distance
+    double m_delta_middle {0.0};    // Change in middle distance from last calculated distance
+    double m_last_right {0.0};      // Previous right distance value
+    double m_last_middle {0.0};     // Previous middle distance value
+    double m_delta_theta {0.0};     // Change in rotation from last recorded distance
+    double m_alpha {0.0};           // Used for chord calc and offset later
+    double m_radius_right {0.0};    // Right radius
+    double m_radius_middle {0.0};   // Middle radius
+    double m_chord_right {0.0};     // Right chord
+    double m_chord_middle {0.0};    // Middle chord
+    double m_polar_offset {0.0};    // Angle + robot angle
+    
     while(true)
     {
         // Getting rotation, pitch, and roll
@@ -148,12 +150,6 @@ void c_Odometry::m_update_func(void)
         m_current_roll = m_sensors_obj->imu_get_roll();
         m_filtered_roll += m_filter_values(m_current_roll, m_last_roll);
         m_last_roll = m_current_roll;
-
-        // Getting gyroscopic values.
-        m_current_gyro_val = m_sensors_obj->imu_get_gyro_readings();
-
-        // Getting accelerometer values.
-        m_current_accel_vals = m_sensors_obj->imu_get_accel_readings();
 
         // Find out the length each encoder moved.
         m_len_right = m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT) / 360.0 \

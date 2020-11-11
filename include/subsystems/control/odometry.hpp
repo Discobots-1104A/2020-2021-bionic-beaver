@@ -144,11 +144,6 @@ public:
                     double      get_x(void);
                     double      get_y(void);
                     double      get_angle(void);
-                    double      get_rotation(void);
-                    double      get_pitch(void);
-                    double      get_roll(void);
-    pros::c::imu_gyro_s_t       get_gyro_vals(void);
-    pros::c::imu_accel_s_t      get_accel_vals(void);
 
 private:
     // Starting position related values
@@ -176,37 +171,6 @@ private:
     double      m_global_x;       // Robot global X coord in inches
     double      m_global_y;       // Robot global Y coord in inches
     double      m_global_angle;   // Robot global angle in degrees
-    
-
-    // Current position values
-                    double  m_current_rotation;   // Robot current rotation in degrees
-                    double  m_filtered_rotation;  // Filtered robot rotations in degrees
-                    double  m_last_rotation;      // Previous robot rotations in degrees
-                    double  m_current_pitch;      // Robot current pitch in degrees
-                    double  m_filtered_pitch;     // Filtered robot pitch in degrees
-                    double  m_last_pitch;         // Previous robot rotation in degrees
-                    double  m_current_roll;       // Robot current roll in degrees
-                    double  m_filtered_roll;      // Filtered robot roll in degrees
-                    double  m_last_roll;          // Previous robot roll in degrees
-    pros::c::imu_gyro_s_t   m_current_gyro_val;         // Robot current gyro values in degrees/sec
-    pros::c::imu_accel_s_t  m_current_accel_vals;       // Robot current acceleration values in m/s2
-
-
-    // local position values
-    double m_len_right;       // Distance right tracking wheel travelled in inches
-    double m_len_middle;      // Distance middle tracking wheel travelled in inches
-    double m_delta_right;     // Change in right distance from last calculated distance
-    double m_delta_middle;    // Change in middle distance from last calculated distance
-    double m_last_right;      // Previous right distance value
-    double m_last_middle;     // Previous middle distance value
-    double m_delta_theta;     // Change in rotation from last recorded distance
-    double m_alpha;           // Used for chord calc and offset later
-    double m_radius_right;    // Right radius
-    double m_radius_middle;   // Middle radius
-    double m_chord_right;     // Right chord
-    double m_chord_middle;    // Middle chord
-    double m_polar_offset;    // Angle + robot angle
-
 
     // Update task
     pros::Task *m_update_task {nullptr};
