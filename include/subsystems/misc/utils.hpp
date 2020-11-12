@@ -21,4 +21,25 @@ double u_deg_to_rad(double deg);
 double u_rad_to_deg(double rad);
 
 
+//* Time utilities *//
+
+/// Timer utility.
+class u_Timer
+{
+public:
+    // Constructors and destructors
+
+    u_Timer(void);
+    ~u_Timer(void);
+
+
+    // General methods
+
+    std::uint32_t get_time(void);
+
+private:
+    const std::uint32_t start_time;
+
+};
+
 #endif  // UTILS_HPP
