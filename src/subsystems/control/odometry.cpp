@@ -29,7 +29,13 @@ c_Odometry::c_Odometry
     h_Skid_Steer_Chassis*       chassis_obj,
     c_Robot_Starting_Pos_Side   starting_side
 )   : m_starting_side{starting_side}, m_sensors_obj{sensors_obj}, m_chassis_obj{chassis_obj},
-      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords}
+      m_goal_coords{goal_coords}, m_live_comp_coords{live_comp_coords}, m_skills_comp_coords{skills_comp_coords},
+      m_current_rotation{0.0}, m_filtered_rotation{0.0}, m_last_rotation{0.0},
+      m_current_pitch{0.0}, m_filtered_pitch{0.0}, m_last_pitch{0.0},
+      m_current_roll{0.0}, m_filtered_roll{0.0}, m_last_roll{0.0},
+      m_len_right{0.0}, m_delta_right{0.0}, m_last_right{0.0}, m_radius_right{0.0}, m_chord_right{0.0},
+      m_len_middle{0.0}, m_delta_middle{0.0}, m_last_middle{0.0}, m_radius_middle{0.0}, m_chord_middle{0.0},
+      m_delta_theta{0.0}, m_alpha{0.0}, m_polar_offset{0.0}
 {
     switch (m_starting_side)
     {
@@ -78,6 +84,10 @@ void c_Odometry::calibrate(void)
     m_offset_x = 0;
     m_offset_y = 0;
     m_offset_angle = 0;
+
+    m_global_x = m_starting_x + m_offset_x;
+    m_global_y = m_starting_y + m_offset_y;
+    m_global_angle = m_starting_angle + m_offset_angle;
 }
 
 
@@ -122,18 +132,6 @@ double c_Odometry::m_filter_values(double current_val, double last_val)
 /// Updates odometry values.
 void c_Odometry::m_update_func(void)
 {
-    m_global_x = m_starting_x + m_offset_x;
-    m_global_y = m_starting_y + m_offset_y;
-    m_global_angle = m_starting_angle + m_offset_angle;
-
-    m_current_rotation = 0.0;   m_filtered_rotation = 0.0;  m_last_rotation = 0.0;
-    m_current_pitch = 0.0;      m_filtered_pitch = 0.0;     m_last_pitch = 0.0;
-    m_current_roll = 0.0;       m_filtered_roll = 0.0;      m_last_roll = 0.0;
-
-    m_len_right = 0.0;    m_delta_right = 0.0;    m_last_right = 0.0;    m_radius_right = 0.0;    m_chord_right = 0.0;
-    m_len_middle =0.0;    m_delta_middle = 0.0;   m_last_middle = 0.0;   m_radius_middle = 0.0;   m_chord_middle = 0.0;
-    m_delta_theta = 0.0;  m_alpha = 0.0;          m_polar_offset = 0.0;
-
     while(true)
     {
         // Getting rotation, pitch, and roll
@@ -159,7 +157,7 @@ void c_Odometry::m_update_func(void)
         m_len_right = m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::RIGHT) / 360.0 \
                       * (m_sensors_obj->tracking_wheels_get_diameter() * M_PI);
         m_len_middle = m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE) / 360.0 \
-                       * (m_sensors_obj->tracking_wheels_get_diameter() * M_PI);
+                       * (m_sensors_obj->tracking_wheels_get_diameter() * M_PI) * 2.0;
     
         // Find the change since last update.
         m_delta_right = m_len_right - m_last_right;
@@ -204,12 +202,7 @@ void c_Odometry::m_update_func(void)
         m_global_angle += m_delta_theta;
 
         // Delay.
-        pros::lcd::print(0, "%f, %f, %f", m_len_middle, m_delta_middle, m_last_middle);
-        pros::lcd::print(1, "%f, %f, %f", m_current_rotation, m_filtered_rotation, m_last_rotation);
-        pros::lcd::print(2, "%f, %f", m_radius_middle, m_chord_middle);
-        pros::lcd::print(3, "%f, %f, %f", m_delta_theta, m_alpha, m_polar_offset);
-        pros::lcd::print(4, "%f, %f", m_global_x, m_global_angle);
-        pros::lcd::print(5, "%d", m_sensors_obj->tracking_wheels_get(h_Sensors_Tracking_Wheel_IDs::MIDDLE));
+        pros::lcd::print(0, "%f, %f, %f", m_global_x, m_global_y, m_global_angle);
         pros::delay(10);
     }
 }
