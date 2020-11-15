@@ -124,7 +124,7 @@ pros::c::imu_accel_s_t c_Odometry::get_accel_vals(void) {return m_current_accel_
 double c_Odometry::m_filter_values(double current_val, double last_val)
 {
     double filter = current_val - last_val;
-    if (std::fabs(filter) < 0.01)
+    if (std::fabs(filter) < 0.05)
         {filter = 0.0;}
     return filter;
 }
@@ -202,7 +202,7 @@ void c_Odometry::m_update_func(void)
         m_global_angle += m_delta_theta;
 
         // Delay.
-        pros::lcd::print(0, "%f, %f, %f", m_global_x, m_global_y, m_global_angle);
+        pros::lcd::print(0, "%f, %f, %f", m_global_x, m_global_y, u_rad_to_deg(m_global_angle));
         pros::delay(10);
     }
 }
