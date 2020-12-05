@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="resources/banner.png" alt="Banner">
+  <a href="https://www.youtube.com/watch?v=8_ZCXUnsZbk">
+    <img src="resources/banner.png" alt="Banner">
+  </a>
 
   <h1 align="center">2020-2021-bionic-beaver</h1>
   <h4 align="center"><i>Discobots</i> <b>1104A's</b> code for the VEX VRC 2020-2021 Season—Change Up</h4>
@@ -14,11 +16,7 @@
     <a href="https://github.com/Discobots-1104A/2020-2021-bionic-beaver/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/Discobots-1104A/2020-2021-bionic-beaver?color=informational">
     </a>
-    <br>
-    <a href="https://www.codefactor.io/repository/github/discobots-1104a/2020-2021-bionic-beaver"> 
-      <img src="https://www.codefactor.io/repository/github/discobots-1104a/2020-2021-bionic-beaver/badge" alt="CodeFactor" />
-    </a>
-    <img src="https://bettercodehub.com/edge/badge/Discobots-1104A/2020-2021-bionic-beaver?branch=master">
+    <a href="https://www.codacy.com/gh/Discobots-1104A/2020-2021-bionic-beaver/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Discobots-1104A/2020-2021-bionic-beaver&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/a08ee74b055c49fc81d0b45768b81a80"/></a>
     <br>
     <a href="mailto:1104a@bramptonrobotics.org">
       <img src="https://img.shields.io/static/v1?label=&message=1104a@bramptonrobotics.org&color=red&logo=gmail&logoColor=white">
