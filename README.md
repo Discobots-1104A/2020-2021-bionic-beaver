@@ -11,10 +11,14 @@
     <a href="https://github.com/Discobots-1104A/2020-2021-bionic-beaver/commits">
       <img src="https://img.shields.io/github/last-commit/Discobots-1104A/2020-2021-bionic-beaver?color=informational">
     </a>
-    <img src="https://bettercodehub.com/edge/badge/Discobots-1104A/2020-2021-bionic-beaver?branch=master">
     <a href="https://github.com/Discobots-1104A/2020-2021-bionic-beaver/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/Discobots-1104A/2020-2021-bionic-beaver?color=informational">
     </a>
+    <br>
+    <a href="https://www.codefactor.io/repository/github/discobots-1104a/2020-2021-bionic-beaver"> 
+      <img src="https://www.codefactor.io/repository/github/discobots-1104a/2020-2021-bionic-beaver/badge" alt="CodeFactor" />
+    </a>
+    <img src="https://bettercodehub.com/edge/badge/Discobots-1104A/2020-2021-bionic-beaver?branch=master">
     <br>
     <a href="mailto:1104a@bramptonrobotics.org">
       <img src="https://img.shields.io/static/v1?label=&message=1104a@bramptonrobotics.org&color=red&logo=gmail&logoColor=white">
