@@ -45,6 +45,16 @@
 //* Hardware
 #include "subsystems/hardware/chassis.hpp"
 #include "subsystems/hardware/conveyor.hpp"
+#include "subsystems/hardware/intake.hpp"
+#include "subsystems/hardware/sensors.hpp"
+
+//* Control
+#include "subsystems/control/odometry.hpp"
+#include "subsystems/control/pid.hpp"
+
+//* Misc
+#include "subsystems/misc/globals.hpp"
+#include "subsystems/misc/utils.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do

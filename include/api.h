@@ -18,8 +18,11 @@
 
 #ifndef _PROS_API_H_
 #define _PROS_API_H_
+#define _USE_MATH_DEFINES
 
 #ifdef __cplusplus
+#include <algorithm>
+#include <cassert>
 #include <cerrno>
 #include <cmath>
 #include <cstdbool>
@@ -28,6 +31,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <utility>
 #else /* (not) __cplusplus */
 #include <errno.h>
 #include <math.h>
