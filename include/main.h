@@ -39,22 +39,8 @@
 /**
  * You should add more #includes here
  */
-//#include "okapi/api.hpp"
+#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
-
-//* Hardware
-#include "subsystems/hardware/chassis.hpp"
-#include "subsystems/hardware/conveyor.hpp"
-#include "subsystems/hardware/intake.hpp"
-#include "subsystems/hardware/sensors.hpp"
-
-//* Control
-#include "subsystems/control/odometry.hpp"
-#include "subsystems/control/pid.hpp"
-
-//* Misc
-#include "subsystems/misc/globals.hpp"
-#include "subsystems/misc/utils.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -67,6 +53,7 @@
 // using namespace pros;
 // using namespace pros::literals;
 // using namespace okapi;
+using namespace okapi::literals;
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
