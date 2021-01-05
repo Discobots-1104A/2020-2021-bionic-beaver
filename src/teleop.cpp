@@ -69,7 +69,7 @@ void controls(void)
             shooting();
         else if (controller.getDigital(okapi::ControllerDigital::L2))
             intake();
-        else if (controller.getDigital(okapi::ControllerDigital::up))
+        else if (controller.getDigital(okapi::ControllerDigital::left))
             eject();
         else if (controller.getDigital(okapi::ControllerDigital::down))
             convey_down();
