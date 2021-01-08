@@ -4,43 +4,18 @@
 #include "globals.hpp"
 #include "main.h"
 
+//* global vars
+
+int cycle_delay {0};
+
 //* functions
 
-/// indexing
-void indexing(void)
+/// regular move
+void regular_move(int bot, int top, int itk)
 {
-    convey_bot.moveVelocity(600);
-}
-
-void cycling(void)
-{
-    convey_bot.moveVelocity(600);
-    convey_top.moveVelocity(600);
-    intakes.moveVelocity(600);
-}
-
-void shooting(void)
-{
-    convey_bot.moveVelocity(600);
-    convey_top.moveVelocity(600);
-}
-
-void intake(void)
-{
-    intakes.moveVelocity(600);
-}
-
-void eject(void)
-{
-    convey_bot.moveVelocity(-600);
-    convey_top.moveVelocity(-600);
-    intakes.moveVelocity(-600);
-}
-
-void convey_down(void)
-{
-    convey_bot.moveVelocity(-600);
-    convey_top.moveVelocity(-600);
+    convey_bot.moveVelocity(bot);
+    convey_top.moveVelocity(top);
+    intakes.moveVelocity(itk);
 }
 
 /// driving
@@ -59,25 +34,33 @@ void driving(void)
 
 void controls(void)
 {
+    int log_time {0};
+
     while (!(pros::competition::is_autonomous() || pros::competition::is_disabled()))
     {
-        if (controller.getDigital(okapi::ControllerDigital::R1))
-            indexing();
-        else if (controller.getDigital(okapi::ControllerDigital::R2))
-            cycling();
-        else if (controller.getDigital(okapi::ControllerDigital::L1))
-            shooting();
-        else if (controller.getDigital(okapi::ControllerDigital::L2))
-            intake();
-        else if (controller.getDigital(okapi::ControllerDigital::up))
-            eject();
-        else if (controller.getDigital(okapi::ControllerDigital::down))
-            convey_down();
+        if (controller.getDigital(okapi::ControllerDigital::R1))        // index
+            regular_move(600, 0, 0);
+        else if (controller.getDigital(okapi::ControllerDigital::R2))   // cycle
+            {
+                ++log_time;
+                regular_move(600, 600, (log_time >= cycle_delay) ? 600 : 0);
+            }
+        else if (controller.getDigital(okapi::ControllerDigital::L1))   // shoot
+            regular_move(600, 600, 0);
+        else if (controller.getDigital(okapi::ControllerDigital::L2))   // intake
+            regular_move(0, 0, 600);
+        else if (controller.getDigital(okapi::ControllerDigital::up))   // eject
+            regular_move(-600, -600, -600);
+        else if (controller.getDigital(okapi::ControllerDigital::down)) // convey down
+            regular_move(-600, -600, 0);
+        else if (controller.getDigital(okapi::ControllerDigital::left)) // itk eject fast
+            regular_move(0, 0, -600);
+        else if (controller.getDigital(okapi::ControllerDigital::right))    // itk eject slow
+            regular_move(0, 0, -200);
         else
         {
-            convey_bot.moveVelocity(0);
-            convey_top.moveVelocity(0);
-            intakes.moveVelocity(0);
+            log_time = 0;
+            regular_move(0, 0, 0);
         }
         
         pros::delay(10);
