@@ -38,8 +38,8 @@ void initialize(void)
             okapi::AbstractMotor::gearset::green, 
             {{4_in, 12_in}, okapi::imev5GreenTPR * (4.0/3.0)})
         .withSensors(
-            okapi::ADIEncoder{'A', 'B', false},
-            okapi::ADIEncoder{'B', 'C', true}
+            okapi::ADIEncoder{'E', 'F', false},
+            okapi::ADIEncoder{'A', 'B', true}
         )
         .build();
 
